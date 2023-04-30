@@ -9,7 +9,7 @@ const NavLinks = (props) => {
         <NavLink to="/loads/total-car-loads">ΦΟΡΤΩΜΑΤΑ</NavLink>
       </li>
       <li>
-        <NavLink to="/destructions/total-car-loads">
+        <NavLink to="/destructions/total-car-destructions">
           ΚΑΤΑΣΤΡΟΦΕΣ ΟΧΗΜΑΤΩΝ
         </NavLink>
       </li>

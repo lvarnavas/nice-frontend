@@ -35,10 +35,10 @@ const App = () => {
         <Route path="/loads/add-new-load">
           <AddNewLoad />
         </Route>
-        <Route path="/destructions/single-car-loads">
+        <Route path="/destructions/single-car-destructions">
           <SingleCarDestructions />
         </Route>
-        <Route path="/destructions/total-car-loads">
+        <Route path="/destructions/total-car-destructions">
           <TotalCarDestructions />
         </Route>
         <Route path="/destructions/total-warehouse-destructions">
