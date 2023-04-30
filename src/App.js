@@ -1,25 +1,74 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-function App() {
+import MainNavigation from "./shared/components/hooks.js/Navigation/MainNavigation";
+
+import WarehouseStatus from "./products/pages/WarehouseStatus";
+import SingleCarLoads from "./products/pages/loads/SingleCarLoads";
+import TotalCarLoads from "./products/pages/loads/TotalCarLoads";
+import SingleCarDestructions from "./products/pages/destructions/SingleCarDestructions";
+import TotalCarDestructions from "./products/pages/destructions/TotalCarDestructions";
+import WarehouseDestructions from "./products/pages/destructions/WarehouseDestructions";
+import DailyCarDestructions from "./products/pages/destructions/DailyCarDestructions";
+import SingleCarReturns from "./products/pages/returns/SingleCarReturns";
+import TotalCarReturns from "./products/pages/returns/TotalCarReturns";
+import AddNewLoad from "./products/pages/loads/AddNewLoad";
+import AddNewReturn from "./products/pages/returns/AddNewReturn";
+import AddNewDestruction from "./products/pages/destructions/AddNewCarDestruction";
+import AddNewWarehouseDestruction from "./products/pages/destructions/AddNewWarehouseDestruction";
+import NotFound from "./NotFound";
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <MainNavigation />
+      <Switch>
+        <Route path="/" exact>
+          <WarehouseStatus />
+        </Route>
+        <Route path="/loads/single-car-loads">
+          <SingleCarLoads />
+        </Route>
+        <Route path="/loads/total-car-loads">
+          <TotalCarLoads />
+        </Route>
+        <Route path="/loads/add-new-load">
+          <AddNewLoad />
+        </Route>
+        <Route path="/destructions/single-car-loads">
+          <SingleCarDestructions />
+        </Route>
+        <Route path="/destructions/total-car-loads">
+          <TotalCarDestructions />
+        </Route>
+        <Route path="/destructions/total-warehouse-destructions">
+          <WarehouseDestructions />
+        </Route>
+        <Route path="/destructions/daily-car-destructions">
+          <DailyCarDestructions />
+        </Route>
+        <Route path="/destructions/add-new-destruction">
+          <AddNewDestruction />
+        </Route>
+        <Route path="/destructions/add-new-warehouse-destruction">
+          <AddNewWarehouseDestruction />
+        </Route>
+        <Route path="/returns/single-car-returns">
+          <SingleCarReturns />
+        </Route>
+        <Route path="/returns/total-car-returns">
+          <TotalCarReturns />
+        </Route>
+        <Route path="/returns/add-new-return">
+          <AddNewReturn />
+        </Route>
+
+        <Route>
+          <NotFound />
+        </Route>
+      </Switch>
+    </Router>
   );
-}
+};
 
 export default App;
