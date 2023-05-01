@@ -43,10 +43,6 @@ const TotalCarReturns = () => {
     fetchCarReturns();
   }, [sendRequest, location]);
 
-  const customColumnNames = {
-    pinakida: "Car Name",
-  };
-
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
@@ -56,10 +52,7 @@ const TotalCarReturns = () => {
         </div>
       )}
       {!isLoading && loadedCarReturns && (
-        <TotalCarReturnsList
-          items={loadedCarReturns}
-          customColumnNames={customColumnNames}
-        />
+        <TotalCarReturnsList items={loadedCarReturns} />
       )}
     </React.Fragment>
   );

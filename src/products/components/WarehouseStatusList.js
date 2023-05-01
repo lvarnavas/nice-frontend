@@ -5,20 +5,20 @@ const WarehouseStatusList = (props) => {
   if (props.items.length === 0) {
     return (
       <div>
-        <h2>WarehouseStatusList not found</h2>
+        <h2>Αδυναμία φόρτωσης δεδομένων.</h2>
       </div>
     );
   }
   return (
     <div className="components-container">
-      <h2 className="title">Current Warehouse Status</h2>
+      <h2 className="title">Κατάσταση θαλάμου:</h2>
       <div id="content">
         <table>
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Product Name</th>
-              <th>Quantity</th>
+              {/*<th>ID</th> */ }
+              <th>Όνομα Προίόντος</th>
+              <th>Ποσότητα</th>
             </tr>
           </thead>
           {props.items.map((warehouse) => {

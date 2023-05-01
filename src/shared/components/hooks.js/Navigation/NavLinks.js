@@ -22,13 +22,13 @@ const NavLinks = (props) => {
         <NavLink to="/returns/total-car-returns">ΕΠΙΣΤΡΟΦΕΣ</NavLink>
       </li>
       <li>
-        <NavLink to="/test">ΑΝΑΖΗΤΗΣΗ</NavLink>
+        <NavLink to="/search">ΑΝΑΖΗΤΗΣΗ</NavLink>
       </li>
       <li>
-        <NavLink to="/test">ΚΑΤΑΧΩΡΗΣΗ</NavLink>
+        <NavLink to="/addentry">ΚΑΤΑΧΩΡΗΣΗ</NavLink>
       </li>
       <li>
-        <NavLink to="/test">ΛΟΓΑΡΙΑΣΜΟΣ</NavLink>
+        <NavLink to="/account">ΛΟΓΑΡΙΑΣΜΟΣ</NavLink>
       </li>
     </ul>
   );
