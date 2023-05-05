@@ -1,36 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import moment from "moment";
 import { useHttpClient } from "../../../shared/components/hooks.js/http-hook";
 
 import ErrorModal from "../../../shared/components/hooks.js/UIElements/ErrorModal";
 import LoadingSpinner from "../../../shared/components/hooks.js/UIElements/LoadingSpinner";
 import TotalCarReturnsList from "../../components/returns/TotalCarReturnsList";
+import { dateFormater } from "../../../shared/components/hooks.js/dateFormatter";
 
 const TotalCarReturns = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedCarReturns, setLoadedCarReturns] = useState();
-  const location = useLocation();
+  const { formattedStartDate, formattedEndDate } = dateFormater(
+    "startdate",
+    "enddate",
+    "YYYY-MM-DD"
+  );
 
   useEffect(() => {
     const fetchCarReturns = async () => {
-      const queryParams = new URLSearchParams(location.search);
-      let startdate = queryParams.get("startdate");
-      let enddate = queryParams.get("enddate");
-
-      if (
-        !moment(startdate, "YYYY-MM-DD", true).isValid() ||
-        !moment(enddate, "YYYY-MM-DD", true).isValid()
-      ) {
-        startdate = moment().startOf("month").format("YYYY-MM-DD");
-        enddate = moment().endOf("month").format("YYYY-MM-DD");
-      }
-      console.log(startdate);
-      console.log(enddate);
-
       try {
         const carReturnsData = await sendRequest(
-          `http://localhost:5000/api/products/returns/${startdate}/${enddate}`,
+          `http://localhost:5000/api/products/returns/${formattedStartDate}/${formattedEndDate}`,
           "POST",
           JSON.stringify({
             flag: "totalCarReturns",
@@ -41,7 +30,7 @@ const TotalCarReturns = () => {
       } catch (err) {}
     };
     fetchCarReturns();
-  }, [sendRequest, location]);
+  }, [sendRequest, formattedStartDate, formattedEndDate]);
 
   return (
     <React.Fragment>

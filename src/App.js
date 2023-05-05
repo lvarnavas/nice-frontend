@@ -17,9 +17,9 @@ import AddNewReturn from "./products/pages/returns/AddNewReturn";
 import AddNewDestruction from "./products/pages/destructions/AddNewCarDestruction";
 import AddNewWarehouseDestruction from "./products/pages/destructions/AddNewWarehouseDestruction";
 import NotFound from "./NotFound";
-import SearchPage from './products/pages/searchpage';
-import AddEntry from './products/pages/AddEntry';
-import AccountPage from './products/pages/AccountPage';
+import SearchPage from "./products/pages/Search";
+import AddEntry from "./products/pages/AddEntry";
+import AccountPage from "./products/pages/AccountPage";
 import EditEntry from "./products/pages/EditEntry";
 
 const App = () => {
@@ -27,7 +27,6 @@ const App = () => {
     <Router>
       <MainNavigation />
       <Switch>
-
         <Route path="/" exact>
           <WarehouseStatus />
         </Route>
@@ -81,19 +80,16 @@ const App = () => {
         </Route>
 
         <Route path="/search" component={SearchPage} />
-       
+
         <Route path="/addentry" component={AddEntry} />
 
         <Route path="/editentry" component={EditEntry} />
-        
+
         <Route path="/account" component={AccountPage} />
-        
+
         <Route>
           <NotFound />
         </Route>
-
-        
-
       </Switch>
     </Router>
   );

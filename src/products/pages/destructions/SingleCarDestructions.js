@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import moment from "moment";
 import { useHttpClient } from "../../../shared/components/hooks.js/http-hook";
 
 import ErrorModal from "../../../shared/components/hooks.js/UIElements/ErrorModal";
@@ -10,28 +8,18 @@ import SingleCarDestructionsList from "../../components/destructions/SingleCarDe
 const SingleCarDestructions = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedCarDestructions, setLoadedCarDestructions] = useState();
-  const location = useLocation();
+  const [carName, setCarName] = useState("");
 
   useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const carId = urlParams.get("carid");
+    const startDate = urlParams.get("startdate");
+    const endDate = urlParams.get("enddate");
+
     const fetchCarDestructions = async () => {
-      const queryParams = new URLSearchParams(location.search);
-      const carid = queryParams.get("carid");
-      let startdate = queryParams.get("startdate");
-      let enddate = queryParams.get("enddate");
-
-      if (
-        !moment(startdate, "YYYY-MM-DD", true).isValid() ||
-        !moment(enddate, "YYYY-MM-DD", true).isValid()
-      ) {
-        startdate = moment().startOf("month").format("YYYY-MM-DD");
-        enddate = moment().endOf("month").format("YYYY-MM-DD");
-      }
-      console.log(startdate);
-      console.log(enddate);
-
       try {
         const carDestructionsData = await sendRequest(
-          `http://localhost:5000/api/products/destructions/${carid}/${startdate}/${enddate}`,
+          `http://localhost:5000/api/products/destructions/${carId}/${startDate}/${endDate}`,
           "POST",
           JSON.stringify({
             flag: "singleCarDestructions",
@@ -42,7 +30,27 @@ const SingleCarDestructions = () => {
       } catch (err) {}
     };
     fetchCarDestructions();
-  }, [sendRequest, location]);
+
+    const fetchCarList = async () => {
+      try {
+        const carListData = await sendRequest(
+          "http://localhost:5000/api/products/get-car-list"
+        );
+        const car = carListData.find((car) => car.id === parseInt(carId));
+        console.log(car);
+        if (car) {
+          setCarName(car.pinakida);
+        }
+      } catch (err) {}
+    };
+    fetchCarList();
+  }, [sendRequest]);
+
+  const itemDeleteHandler = (deletedItemId) => {
+    setLoadedCarDestructions((prevLoads) =>
+      prevLoads.filter((load) => load.id !== deletedItemId)
+    );
+  };
 
   return (
     <React.Fragment>
@@ -53,7 +61,11 @@ const SingleCarDestructions = () => {
         </div>
       )}
       {!isLoading && loadedCarDestructions && (
-        <SingleCarDestructionsList items={loadedCarDestructions} />
+        <SingleCarDestructionsList
+          items={loadedCarDestructions}
+          carName={carName}
+          onDeleteItem={itemDeleteHandler}
+        />
       )}
     </React.Fragment>
   );

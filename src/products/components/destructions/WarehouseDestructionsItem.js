@@ -1,16 +1,18 @@
 import React from "react";
 import "../TableItem.css";
-import moment from "moment";
 
 const WarehouseDestructionsItem = ({ item }) => {
   return (
     <tr>
       {Object.entries(item).map(([key, value], index) => {
-        if (index === 0) {
-          return <td key={index}>{moment(value).format("DD-MM-YYYY")}</td>;
-        } else {
-          return <td key={index}>{value}</td>;
+        if (key === "Date") {
+          const date = new Date(item.Date);
+          const year = date.getFullYear();
+          const month = String(date.getMonth() + 1).padStart(2, "0");
+          const day = String(date.getDate()).padStart(2, "0");
+          value = `${day}-${month}-${year}`;
         }
+        return <td key={index}>{value}</td>;
       })}
     </tr>
   );

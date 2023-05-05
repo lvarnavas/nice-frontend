@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import moment from "moment";
 import { useHttpClient } from "../../../shared/components/hooks.js/http-hook";
 
 import ErrorModal from "../../../shared/components/hooks.js/UIElements/ErrorModal";
@@ -10,26 +8,18 @@ import SingleCarReturnsList from "../../components/returns/SingleCarReturnsList"
 const SingleCarReturns = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedCarReturns, setLoadedCarReturns] = useState();
-  const location = useLocation();
+  const [carName, setCarName] = useState("");
 
   useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const carId = urlParams.get("carid");
+    const startDate = urlParams.get("startdate");
+    const endDate = urlParams.get("enddate");
+
     const fetchCarReturns = async () => {
-      const queryParams = new URLSearchParams(location.search);
-      const carid = queryParams.get("carid");
-      let startdate = queryParams.get("startdate");
-      let enddate = queryParams.get("enddate");
-
-      if (
-        !moment(startdate, "YYYY-MM-DD", true).isValid() ||
-        !moment(enddate, "YYYY-MM-DD", true).isValid()
-      ) {
-        startdate = moment().startOf("month").format("YYYY-MM-DD");
-        enddate = moment().endOf("month").format("YYYY-MM-DD");
-      }
-
       try {
         const carReturnsData = await sendRequest(
-          `http://localhost:5000/api/products/returns/${carid}/${startdate}/${enddate}`,
+          `http://localhost:5000/api/products/returns/${carId}/${startDate}/${endDate}`,
           "POST",
           JSON.stringify({
             flag: "singleCarReturns",
@@ -40,7 +30,27 @@ const SingleCarReturns = () => {
       } catch (err) {}
     };
     fetchCarReturns();
-  }, [sendRequest, location]);
+
+    const fetchCarList = async () => {
+      try {
+        const carListData = await sendRequest(
+          "http://localhost:5000/api/products/get-car-list"
+        );
+        const car = carListData.find((car) => car.id === parseInt(carId));
+        console.log(car);
+        if (car) {
+          setCarName(car.pinakida);
+        }
+      } catch (err) {}
+    };
+    fetchCarList();
+  }, [sendRequest]);
+
+  const itemDeleteHandler = (deletedItemId) => {
+    setLoadedCarReturns((prevLoads) =>
+      prevLoads.filter((load) => load.id !== deletedItemId)
+    );
+  };
 
   return (
     <React.Fragment>
@@ -51,7 +61,11 @@ const SingleCarReturns = () => {
         </div>
       )}
       {!isLoading && loadedCarReturns && (
-        <SingleCarReturnsList items={loadedCarReturns} />
+        <SingleCarReturnsList
+          items={loadedCarReturns}
+          carName={carName}
+          onDeleteItem={itemDeleteHandler}
+        />
       )}
     </React.Fragment>
   );
