@@ -27,12 +27,10 @@ const SingleCarLoadsList = (props) => {
     return columnName;
   };
 
-  console.log(props);
-
   return (
     <div className="components-container">
       <h2 className="title">
-        Φορτώματα οχήματος {props.carName.carName} από {formattedStartDate} έως{" "}
+        Φορτώματα οχήματος {props.carName} από {formattedStartDate} έως{" "}
         {formattedEndDate}:
       </h2>
       <div id="content">

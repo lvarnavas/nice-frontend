@@ -21,6 +21,7 @@ import SearchPage from "./products/pages/Search";
 import AddEntry from "./products/pages/AddEntry";
 import AccountPage from "./products/pages/AccountPage";
 import EditEntry from "./products/pages/EditEntry";
+import EditQuantities from "./products/pages/EditQuantities";
 
 const App = () => {
   return (
@@ -77,6 +78,9 @@ const App = () => {
 
         <Route path="/returns/add-new-return">
           <AddNewReturn />
+        </Route>
+        <Route path="/edit-quantities">
+          <EditQuantities />
         </Route>
 
         <Route path="/search" component={SearchPage} />

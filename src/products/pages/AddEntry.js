@@ -27,6 +27,15 @@ const AddEntry = () => {
   const [quantities, setQuantities] = useState({});
 
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [formState, inputHandler] = useForm(
+    {
+      product: {
+        value: "",
+        isValid: false,
+      },
+    },
+    false
+  );
 
   useEffect(() => {
     // Fetch cars
@@ -89,20 +98,6 @@ const AddEntry = () => {
     const day = String(dateObject.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
   };
-
-  // const pickDateFormatted = (date) => {
-  //   console.log(date);
-  //   let d = date ? new Date(date) : new Date(),
-  //     month = "" + (d.getMonth() + 1),
-  //     day = "" + d.getDate(),
-  //     year = d.getFullYear();
-
-  //   console.log(d);
-  //   if (month.length < 2) month = "0" + month;
-  //   if (day.length < 2) day = "0" + day;
-
-  //   return [year, month, day].join("-");
-  // };
 
   let history = useHistory();
 
@@ -194,18 +189,9 @@ const AddEntry = () => {
     currentDate.getDate() + 1
   );
 
-  // const [formState, inputHandler] = useForm(
-  //   {
-  //     product: {
-  //       value: "",
-  //       isValid: false,
-  //     },
-  //   },
-  //   false
-  // );
-
   return (
     <div className={styles.container}>
+      {console.log()}
       <h1>Νέα καταχώρηση:</h1>
       <select value={selectedOption} onChange={handleSelect}>
         <option value="">Επιλογή καταχώρησης</option>
@@ -231,11 +217,7 @@ const AddEntry = () => {
               <br />
               {productsList.map((product) => (
                 <div className={styles.product} key={product.id}>
-                  <label htmlFor={`product-${product.id}`}>
-                    {product.name}
-                  </label>
-                  {/* <Input
-                    // id={`product-${product.id}`}
+                  <Input
                     id="product"
                     element="input"
                     type="text"
@@ -251,13 +233,6 @@ const AddEntry = () => {
                     initialValue="0"
                     initialValid={true}
                     onChange={(e) => handleChange(e, product.id)}
-                  /> */}
-                  <input
-                    id={`product-${product.id}`}
-                    type="number"
-                    min="0"
-                    value={quantities[product.id]}
-                    onChange={(e) => handleChange(e, product.id)}
                   />
                 </div>
               ))}
@@ -271,7 +246,12 @@ const AddEntry = () => {
                   footer={<Button onClick={sumbitHandler}>OK</Button>}
                 ></Modal>
                 {isLoading && <LoadingSpinner asOverlay />}
-                <Button onClick={showWarningHandler}>ΚΑΤΑΧΩΡΗΣΗ</Button>
+                <Button
+                  disabled={!formState.isValid}
+                  onClick={showWarningHandler}
+                >
+                  ΚΑΤΑΧΩΡΗΣΗ
+                </Button>
               </React.Fragment>
             </>
           )}

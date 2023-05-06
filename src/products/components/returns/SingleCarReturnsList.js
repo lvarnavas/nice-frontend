@@ -30,7 +30,7 @@ const SingleCarReturnsList = (props) => {
   return (
     <div className="components-container">
       <h2 className="title">
-        Επιστροφές οχήματος {props.carName.carName} από {formattedStartDate} έως{" "}
+        Επιστροφές οχήματος {props.carName} από {formattedStartDate} έως{" "}
         {formattedEndDate}:
       </h2>
       <div id="content">

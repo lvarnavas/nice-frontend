@@ -33,6 +33,12 @@ const WarehouseDestructions = () => {
     fetchDestructions();
   }, [sendRequest, formattedStartDate, formattedEndDate]);
 
+  const itemDeleteHandler = (deletedItemId) => {
+    setLoadedDestructions((prevWarehouseDestructions) =>
+      prevWarehouseDestructions.filter((load) => load.id !== deletedItemId)
+    );
+  };
+
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
@@ -42,7 +48,10 @@ const WarehouseDestructions = () => {
         </div>
       )}
       {!isLoading && loadedDestructions && (
-        <WarehouseDestructionsList items={loadedDestructions} />
+        <WarehouseDestructionsList
+          items={loadedDestructions}
+          onDeleteItem={itemDeleteHandler}
+        />
       )}
     </React.Fragment>
   );

@@ -30,8 +30,8 @@ const SingleCarDestructionsList = (props) => {
   return (
     <div className="components-container">
       <h2 className="title">
-        Καταστροφές οχήματος {props.carName.carName} από {formattedStartDate}{" "}
-        έως {formattedEndDate}:
+        Καταστροφές οχήματος {props.carName} από {formattedStartDate} έως{" "}
+        {formattedEndDate}:
       </h2>
       <div id="content">
         <table>

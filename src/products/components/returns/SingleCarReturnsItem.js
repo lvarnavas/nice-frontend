@@ -71,6 +71,9 @@ const SingleCarReturnsItem = ({ item, onDelete }) => {
           <Button danger onClick={showDeleteWarningHandler}>
             x
           </Button>
+          <Button to={`/edit-quantities?tid=${item.id}&type=return`}>
+            Edit
+          </Button>
         </td>
       </tr>
     </React.Fragment>

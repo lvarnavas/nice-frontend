@@ -35,8 +35,10 @@ const SingleCarLoads = () => {
         const carListData = await sendRequest(
           "http://localhost:5000/api/products/get-car-list"
         );
-        const car = carListData.find((car) => car.id === parseInt(carId));
-        console.log(car);
+        const car = carListData.carslist.find(
+          (car) => car.id === parseInt(carId)
+        );
+
         if (car) {
           setCarName(car.pinakida);
         }

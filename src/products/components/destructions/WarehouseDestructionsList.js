@@ -40,7 +40,13 @@ const WarehouseDestructionsList = (props) => {
           </thead>
           <tbody>
             {props.items.map((item, index) => {
-              return <WarehouseDestructionsItem key={index} item={item} />;
+              return (
+                <WarehouseDestructionsItem
+                  key={index}
+                  item={item}
+                  onDelete={props.onDeleteItem}
+                />
+              );
             })}
           </tbody>
         </table>

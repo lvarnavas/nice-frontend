@@ -71,6 +71,7 @@ const SingleCarLoadsItem = ({ item, onDelete }) => {
           <Button danger onClick={showDeleteWarningHandler}>
             x
           </Button>
+          <Button to={`/edit-quantities?tid=${item.id}&type=load`}>Edit</Button>
         </td>
       </tr>
     </React.Fragment>
