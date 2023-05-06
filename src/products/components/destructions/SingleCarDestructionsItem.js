@@ -26,7 +26,7 @@ const SingleCarDestructionsItem = ({ item, onDelete }) => {
         `http://localhost:5000/api/products/delete-item/${item.id}`,
         "DELETE",
         JSON.stringify({
-          flag: "deleteDestructionItem",
+          flag: "deleteCarDestructionItem",
         }),
         { "Content-Type": "application/json" }
       );

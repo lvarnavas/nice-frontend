@@ -16,6 +16,7 @@ import Button from "../../shared/components/hooks.js/FormElements/Button";
 
 const EditQuantities = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const [requestCompleted, setRequestCompleted] = useState(false);
   const location = useLocation();
   const history = useHistory();
   const searchParams = new URLSearchParams(location.search);
@@ -127,8 +128,16 @@ const EditQuantities = () => {
         {
           "Content-Type": "application/json",
         }
-      );
+      )
+      
+      setRequestCompleted(true);;
+      showWarningHandler();
     } catch (err) {}
+  };
+
+  const handleOkClick = () => {
+    history.goBack();
+    //setShowConfirmModal(false)
   };
 
   const showWarningHandler = () => {
@@ -166,41 +175,48 @@ const EditQuantities = () => {
     <div className="edit-entry-page">
       {getTitle()}
       <div className="edit-entry-container">
-        {productsList.map((product, index) => (
-          <div key={product.id}>
-            <Input
-              id={`product-${product.id}`}
-              element="input"
-              type="text"
-              label={product.name}
-              validators={[
-                VALIDATOR_MIN(0),
-                VALIDATOR_MAX(1999),
-                VALIDATOR_REQUIRE(),
-              ]}
-              errorText="Παρακαλώ εισάγετε έναν έγκυρο αιρθμό."
-              onInput={inputHandler}
-              initialValue={toStringQuantitiesArray[index].quantity}
-              initialValid={true}
-            />
-          </div>
-        ))}
+      {productsList.map((product, index) => (
+  <div key={product.id}>
+    <Input
+      id={`product-${product.id}`}
+      element="input"
+      type="text"
+      label={product.name}
+      validators={[
+        VALIDATOR_MIN(0),
+        VALIDATOR_MAX(1999),
+        VALIDATOR_REQUIRE(),
+      ]}
+      errorText="Παρακαλώ εισάγετε έναν έγκυρο αιρθμό."
+      onInput={inputHandler}
+      initialValue={
+        requestCompleted
+          ? formState.inputs[`product-${product.id}`].value
+          : toStringQuantitiesArray[index].quantity
+      }
+      initialValid={true}
+    />
+  </div>
+))}
       </div>
       {tid && type && (
         <div className="button-container">
           <React.Fragment>
             <ErrorModal error={error} onClear={clearError} />
-            <Modal
-              show={showConfirmModal}
-              header={<div>ΕΠΙΤΥΧΗΣ ΚΑΤΑΧΩΡΗΣΗ</div>}
-              contentClass="specific-item__modal-content"
-              footerClass="specific-item__modal-actions"
-              footer={<Button onClick={handleSubmit}>OK</Button>}
-            ></Modal>
+            {/* Show the Modal only when requestCompleted is true */}
+            {requestCompleted && (
+              <Modal
+                show={showConfirmModal}
+                header={<div>ΕΠΙΤΥΧΗΣ ΚΑΤΑΧΩΡΗΣΗ</div>}
+                contentClass="specific-item__modal-content"
+                footerClass="specific-item__modal-actions"
+                footer={<Button onClick={handleOkClick}>OK</Button>}
+              ></Modal>
+            )}
             {isLoading && <LoadingSpinner asOverlay />}
-            <Button onClick={showWarningHandler}>ΕΠΕΞΕΡΓΑΣΙΑ</Button>
+            <Button disabled={!formState.isValid} onClick={handleSubmit}>ΥΠΟΒΟΛΗ</Button>
           </React.Fragment>
-          <button onClick={handleBackClick}>Επιστροφή πίσω</button>
+          <button onClick={handleBackClick}>ΕΠΙΣΤΡΟΦΗ ΠΙΣΩ</button>
         </div>
       )}
     </div>

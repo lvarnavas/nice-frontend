@@ -33,9 +33,11 @@ const WarehouseDestructions = () => {
     fetchDestructions();
   }, [sendRequest, formattedStartDate, formattedEndDate]);
 
+  console.log(loadedDestructions);
+
   const itemDeleteHandler = (deletedItemId) => {
     setLoadedDestructions((prevWarehouseDestructions) =>
-      prevWarehouseDestructions.filter((load) => load.id !== deletedItemId)
+      prevWarehouseDestructions.filter((warehouse) => warehouse.ID !== deletedItemId)
     );
   };
 

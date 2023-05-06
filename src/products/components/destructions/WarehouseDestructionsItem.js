@@ -21,16 +21,17 @@ const WarehouseDestructionsItem = ({ item, onDelete }) => {
 
   const confirmDeleteHandler = async () => {
     setShowConfirmModal(false);
+    console.log(item);
     try {
       await sendRequest(
-        `http://localhost:5000/api/products/delete-item/${item.id}`,
+        `http://localhost:5000/api/products/delete-item/${item.ID}`,
         "DELETE",
         JSON.stringify({
-          flag: "deleteDestructionItem",
+          flag: "deleteWarehouseDestructionItem",
         }),
         { "Content-Type": "application/json" }
       );
-      onDelete(item.id);
+      onDelete(item.ID);
     } catch (err) {}
   };
 
@@ -72,7 +73,7 @@ const WarehouseDestructionsItem = ({ item, onDelete }) => {
             x
           </Button>
           <Button
-            to={`/edit-quantities?tid=${item.id}&type=warehousedestruction`}
+            to={`/edit-quantities?tid=${item.ID}&type=warehousedestruction`}
           >
             Edit
           </Button>
