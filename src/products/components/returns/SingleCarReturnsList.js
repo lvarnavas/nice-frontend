@@ -13,7 +13,8 @@ const SingleCarReturnsList = (props) => {
 
   const { formattedStartDate, formattedEndDate } = dateFormater(
     "startdate",
-    "enddate"
+    "enddate",
+    "DD-MM-YYYY"
   );
 
   const columnNames = Object.keys(props.items[0]);

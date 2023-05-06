@@ -17,6 +17,8 @@ const TotalCarLoadsList = (props) => {
     "DD-MM-YYYY"
   );
 
+  console.log(formattedStartDate);
+
   const columnNames = Object.keys(props.items[0]);
 
   const getCustomColumnName = (columnName) => {

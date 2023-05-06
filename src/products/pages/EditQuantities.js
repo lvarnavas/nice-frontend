@@ -60,7 +60,7 @@ const EditQuantities = () => {
             { "Content-Type": "application/json" }
           );
           setLoadedQuantities(quantitiesData.quantities);
-
+          console.log(quantitiesData);
           setFormData({
             product: {
               value: quantitiesData.quantities[0].quantity,
@@ -98,10 +98,16 @@ const EditQuantities = () => {
             <h2>Επεξεργασία επιστροφής: {tid}</h2>
           </div>
         );
-      } else if (type === "destruction") {
+      } else if (type === "cardestruction") {
         return (
           <div className="edit-entry-page empty">
             <h2>Επεξεργασία καταστροφής οχήματος: {tid}</h2>
+          </div>
+        );
+      } else if (type === "warehousedestruction") {
+        return (
+          <div className="edit-entry-page empty">
+            <h2>Επεξεργασία καταστροφής αποθήκης: {tid}</h2>
           </div>
         );
       }
@@ -128,9 +134,9 @@ const EditQuantities = () => {
         {
           "Content-Type": "application/json",
         }
-      )
-      
-      setRequestCompleted(true);;
+      );
+
+      setRequestCompleted(true);
       showWarningHandler();
     } catch (err) {}
   };
@@ -175,29 +181,29 @@ const EditQuantities = () => {
     <div className="edit-entry-page">
       {getTitle()}
       <div className="edit-entry-container">
-      {productsList.map((product, index) => (
-  <div key={product.id}>
-    <Input
-      id={`product-${product.id}`}
-      element="input"
-      type="text"
-      label={product.name}
-      validators={[
-        VALIDATOR_MIN(0),
-        VALIDATOR_MAX(1999),
-        VALIDATOR_REQUIRE(),
-      ]}
-      errorText="Παρακαλώ εισάγετε έναν έγκυρο αιρθμό."
-      onInput={inputHandler}
-      initialValue={
-        requestCompleted
-          ? formState.inputs[`product-${product.id}`].value
-          : toStringQuantitiesArray[index].quantity
-      }
-      initialValid={true}
-    />
-  </div>
-))}
+        {productsList.map((product, index) => (
+          <div key={product.id}>
+            <Input
+              id={`product-${product.id}`}
+              element="input"
+              type="text"
+              label={product.name}
+              validators={[
+                VALIDATOR_MIN(0),
+                VALIDATOR_MAX(1999),
+                VALIDATOR_REQUIRE(),
+              ]}
+              errorText="Παρακαλώ εισάγετε έναν έγκυρο αιρθμό."
+              onInput={inputHandler}
+              initialValue={
+                requestCompleted
+                  ? formState.inputs[`product-${product.id}`].value
+                  : toStringQuantitiesArray[index].quantity
+              }
+              initialValid={true}
+            />
+          </div>
+        ))}
       </div>
       {tid && type && (
         <div className="button-container">
@@ -214,7 +220,9 @@ const EditQuantities = () => {
               ></Modal>
             )}
             {isLoading && <LoadingSpinner asOverlay />}
-            <Button disabled={!formState.isValid} onClick={handleSubmit}>ΥΠΟΒΟΛΗ</Button>
+            <Button disabled={!formState.isValid} onClick={handleSubmit}>
+              ΥΠΟΒΟΛΗ
+            </Button>
           </React.Fragment>
           <button onClick={handleBackClick}>ΕΠΙΣΤΡΟΦΗ ΠΙΣΩ</button>
         </div>

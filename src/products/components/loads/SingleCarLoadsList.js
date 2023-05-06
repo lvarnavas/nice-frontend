@@ -13,7 +13,8 @@ const SingleCarLoadsList = (props) => {
 
   const { formattedStartDate, formattedEndDate } = dateFormater(
     "startdate",
-    "enddate"
+    "enddate",
+    "DD-MM-YYYY"
   );
 
   const columnNames = Object.keys(props.items[0]);
@@ -26,6 +27,8 @@ const SingleCarLoadsList = (props) => {
     }
     return columnName;
   };
+
+  console.log(formattedStartDate);
 
   return (
     <div className="components-container">

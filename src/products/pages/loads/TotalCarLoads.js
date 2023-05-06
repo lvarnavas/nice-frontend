@@ -15,6 +15,7 @@ const TotalCarLoads = () => {
     "YYYY-MM-DD"
   );
 
+  console.log(formattedStartDate);
   useEffect(() => {
     const fetchCarLoads = async () => {
       try {

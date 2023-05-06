@@ -30,8 +30,8 @@ const AddEntry = () => {
   const [formState, inputHandler] = useForm(
     {
       product: {
-        value: "",
-        isValid: false,
+        value: "0",
+        isValid: true,
       },
     },
     false
@@ -83,6 +83,7 @@ const AddEntry = () => {
   };
 
   const handleChange = (e, productId) => {
+    console.log("handleChange");
     console.log(e, productId);
     setQuantities({ ...quantities, [productId]: e.target.value });
   };
@@ -114,7 +115,12 @@ const AddEntry = () => {
           JSON.stringify({
             carId: selectedCar,
             date: formattedDate,
-            products: quantities,
+            products: productsList.map((product, index) => ({
+              productId: product.id,
+              quantity: parseInt(
+                formState.inputs[`product-${product.id}`].value
+              ),
+            })),
           }),
           {
             "Content-Type": "application/json",
@@ -126,12 +132,17 @@ const AddEntry = () => {
       try {
         setShowConfirmModal(false);
         await sendRequest(
-          "http://localhost:5000/api/products/add-car-returns",
+          "http://localhost:5000/api/products/add-returns",
           "POST",
           JSON.stringify({
             carId: selectedCar,
             date: formattedDate,
-            products: quantities,
+            products: productsList.map((product, index) => ({
+              productId: product.id,
+              quantity: parseInt(
+                formState.inputs[`product-${product.id}`].value
+              ),
+            })),
           }),
           {
             "Content-Type": "application/json",
@@ -142,13 +153,19 @@ const AddEntry = () => {
     } else if (selectedOption === "Καταστροφή οχήματος") {
       try {
         setShowConfirmModal(false);
+        console.log(typeof selectedCar);
         await sendRequest(
           "http://localhost:5000/api/products/add-car-destructions",
           "POST",
           JSON.stringify({
             carId: selectedCar,
             date: formattedDate,
-            products: quantities,
+            products: productsList.map((product, index) => ({
+              productId: product.id,
+              quantity: parseInt(
+                formState.inputs[`product-${product.id}`].value
+              ),
+            })),
           }),
           {
             "Content-Type": "application/json",
@@ -157,8 +174,7 @@ const AddEntry = () => {
         history.push("/destructions/total-car-destructions");
       } catch (err) {}
     } else if (selectedOption === "Καταστροφή αποθήκης") {
-      console.log("test");
-      console.log(quantities);
+      // console.log(formState.inputs[`product-${product.id}`].value);
       setShowConfirmModal(false);
       try {
         await sendRequest(
@@ -166,7 +182,12 @@ const AddEntry = () => {
           "POST",
           JSON.stringify({
             date: formattedDate,
-            products: quantities,
+            products: productsList.map((product, index) => ({
+              productId: product.id,
+              quantity: parseInt(
+                formState.inputs[`product-${product.id}`].value
+              ),
+            })),
           }),
           {
             "Content-Type": "application/json",
@@ -218,7 +239,8 @@ const AddEntry = () => {
               {productsList.map((product) => (
                 <div className={styles.product} key={product.id}>
                   <Input
-                    id="product"
+                    // id="product"
+                    id={`product-${product.id}`}
                     element="input"
                     type="text"
                     placeholder="0"
@@ -232,7 +254,7 @@ const AddEntry = () => {
                     onInput={inputHandler}
                     initialValue="0"
                     initialValid={true}
-                    onChange={(e) => handleChange(e, product.id)}
+                    // onChange={(e) => handleChange(e, product.id)}
                   />
                 </div>
               ))}
@@ -277,19 +299,35 @@ const AddEntry = () => {
                 onChange={handleDateChange}
                 dateFormat="dd/MM/yyyy"
                 locale={el}
+                minDate={minDate}
+                maxDate={maxDate}
               />
               {productsList.map((product) => (
                 <div className={styles.product} key={product.id}>
-                  <label htmlFor={`product-${product.id}`}>
-                    {product.name}
-                  </label>
-                  <input
+                  <Input
+                    id={`product-${product.id}`}
+                    element="input"
+                    type="text"
+                    placeholder="0"
+                    label={product.name}
+                    validators={[
+                      VALIDATOR_MIN(0),
+                      VALIDATOR_MAX(1999),
+                      VALIDATOR_REQUIRE(),
+                    ]}
+                    errorText="Παρακαλώ εισάγετε έναν έγκυρο αιρθμό."
+                    onInput={inputHandler}
+                    initialValue="0"
+                    initialValid={true}
+                    // onChange={(e) => handleChange(e, product.id)}
+                  />
+                  {/* <input
                     id={`product-${product.id}`}
                     type="number"
                     min="0"
                     value={quantities[product.id]}
                     onChange={(e) => handleChange(e, product.id)}
-                  />
+                  /> */}
                 </div>
               ))}
               <React.Fragment>
@@ -302,7 +340,12 @@ const AddEntry = () => {
                   footer={<Button onClick={sumbitHandler}>OK</Button>}
                 ></Modal>
                 {isLoading && <LoadingSpinner asOverlay />}
-                <Button onClick={showWarningHandler}>ΚΑΤΑΧΩΡΗΣΗ</Button>
+                <Button
+                  disabled={!formState.isValid}
+                  onClick={showWarningHandler}
+                >
+                  ΚΑΤΑΧΩΡΗΣΗ
+                </Button>
               </React.Fragment>
             </>
           )}

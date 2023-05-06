@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { dateFormater } from "../../shared/components/hooks.js/dateFormatter";
 import { useHttpClient } from "../../shared/components/hooks.js/http-hook";
 import DatePicker from "react-datepicker";
 import Button from "../../shared/components/hooks.js/FormElements/Button";
@@ -43,12 +42,17 @@ const SearchPage = () => {
     }
   }, [sendRequest, searchType]);
 
+  function formatDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }
+  let formattedStartDate;
+  let formattedEndDate;
   const noCarSearch = () => {
-    const { formattedStartDate, formattedEndDate } = dateFormater(
-      "startdate",
-      "enddate",
-      "YYYY-MM-DD"
-    );
+    formattedStartDate = formatDate(startDate);
+    formattedEndDate = formatDate(endDate);
 
     const dropDownOptions = {
       "Αναζήτηση βάσει οχήματος": "",
@@ -69,11 +73,8 @@ const SearchPage = () => {
   };
 
   const carSearch = () => {
-    const { formattedStartDate, formattedEndDate } = dateFormater(
-      "startdate",
-      "enddate",
-      "YYYY-MM-DD"
-    );
+    formattedStartDate = formatDate(startDate);
+    formattedEndDate = formatDate(endDate);
 
     const categoryUrls = {
       Φορτώματα: `/loads/single-car-loads`,

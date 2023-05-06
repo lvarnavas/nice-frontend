@@ -14,6 +14,7 @@ export const dateFormater = (sDate, eDate, dateType = "") => {
     return `${year}-${month}-${day}`;
   }
 
+  // ΑΝ ΔΕΝ ΥΠΑΡΧΕΙ ΣΤΟ URL STARTDATE ΚΑΙ ENDDATE TOTE
   if (!startDate || !endDate) {
     const today = new Date();
     let firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
@@ -33,28 +34,52 @@ export const dateFormater = (sDate, eDate, dateType = "") => {
         "el-GR",
         dateFormatOptions
       );
+      // DD-MM-YYYY
       formattedStartDate = formattedStartDate.split("/").join("-");
       formattedEndDate = formattedEndDate.split("/").join("-");
     } else if (dateType === "YYYY-MM-DD") {
+      // YYYY-MM-DD
       formattedStartDate = formatDate(firstDayOfMonth);
       formattedEndDate = formatDate(lastDayOfMonth);
     }
   } else {
-    const dateFormatOptions = {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    };
-    formattedStartDate = new Date(startDate).toLocaleDateString(
-      "el-GR",
-      dateFormatOptions
-    );
-    formattedEndDate = new Date(endDate).toLocaleDateString(
-      "el-GR",
-      dateFormatOptions
-    );
-    formattedStartDate = formattedStartDate.split("/").join("-");
-    formattedEndDate = formattedEndDate.split("/").join("-");
+    // ΑΝ ΥΠΑΡΧΕΙ STARTDATE KAI ENDDATE ΣΤΟ URL TOTE
+    if (dateType === "DD-MM-YYYY") {
+      const dateFormatOptions = {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      };
+      formattedStartDate = new Date(startDate).toLocaleDateString(
+        "el-GR",
+        dateFormatOptions
+      );
+      formattedEndDate = new Date(endDate).toLocaleDateString(
+        "el-GR",
+        dateFormatOptions
+      );
+      // DD-MM-YYYY
+      formattedStartDate = formattedStartDate.split("/").join("-");
+      formattedEndDate = formattedEndDate.split("/").join("-");
+    } else if (dateType === "YYYY-MM-DD") {
+      const dateFormatOptions = {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      };
+
+      formattedStartDate = new Date(startDate).toLocaleDateString(
+        "en-GB",
+        dateFormatOptions
+      );
+      formattedEndDate = new Date(endDate).toLocaleDateString(
+        "en-GB",
+        dateFormatOptions
+      );
+      // YYYY-MM-DD
+      formattedStartDate = formattedStartDate.split("/").reverse().join("-");
+      formattedEndDate = formattedEndDate.split("/").reverse().join("-");
+    }
   }
 
   return { formattedStartDate, formattedEndDate };
