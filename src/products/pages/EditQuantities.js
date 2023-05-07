@@ -15,6 +15,7 @@ import ErrorModal from "../../shared/components/hooks.js/UIElements/ErrorModal";
 import Button from "../../shared/components/hooks.js/FormElements/Button";
 
 const EditQuantities = () => {
+  const [entryExists, setEntryExists] = useState(false);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [requestCompleted, setRequestCompleted] = useState(false);
   const location = useLocation();
@@ -36,6 +37,29 @@ const EditQuantities = () => {
     false
   );
 
+  const checkIfEntryExists = async () => {
+    if (tid && type) {
+      try {
+        const response = await sendRequest(
+          "http://localhost:5000/api/products/check-entry",
+          "POST",
+          JSON.stringify({
+            flag: `edit${type}`,
+            transactionid: tid,
+          }),
+          {
+            "Content-Type": "application/json",
+          }
+        );
+  
+        setEntryExists(response.exists);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  };
+  
+
   useEffect(() => {
     if (tid && type) {
       const fetchProductsList = async () => {
@@ -48,6 +72,8 @@ const EditQuantities = () => {
       };
       fetchProductsList();
 
+      checkIfEntryExists();
+      
       const fetchQuantities = async () => {
         try {
           const quantitiesData = await sendRequest(
@@ -179,32 +205,40 @@ const EditQuantities = () => {
 
   return (
     <div className="edit-entry-page">
-      {getTitle()}
-      <div className="edit-entry-container">
-        {productsList.map((product, index) => (
-          <div key={product.id}>
-            <Input
-              id={`product-${product.id}`}
-              element="input"
-              type="text"
-              label={product.name}
-              validators={[
-                VALIDATOR_MIN(0),
-                VALIDATOR_MAX(1999),
-                VALIDATOR_REQUIRE(),
-              ]}
-              errorText="Παρακαλώ εισάγετε έναν έγκυρο αιρθμό."
-              onInput={inputHandler}
-              initialValue={
-                requestCompleted
-                  ? formState.inputs[`product-${product.id}`].value
-                  : toStringQuantitiesArray[index].quantity
-              }
-              initialValid={true}
-            />
-          </div>
-        ))}
-      </div>
+      
+      {entryExists ? (
+        
+        <div className="edit-entry-container">
+          {getTitle()}
+          {productsList.map((product, index) => (
+            <div key={product.id}>
+              <Input
+                id={`product-${product.id}`}
+                element="input"
+                type="text"
+                label={product.name}
+                validators={[
+                  VALIDATOR_MIN(0),
+                  VALIDATOR_MAX(1999),
+                  VALIDATOR_REQUIRE(),
+                ]}
+                errorText="Παρακαλώ εισάγετε έναν έγκυρο αιρθμό."
+                onInput={inputHandler}
+                initialValue={
+                  requestCompleted
+                    ? formState.inputs[`product-${product.id}`].value
+                    : toStringQuantitiesArray[index].quantity
+                }
+                initialValid={true}
+              />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div>
+          <h2>Η καταχώρηση δεν βρέθηκε.</h2>
+        </div>
+      )}
       {tid && type && (
         <div className="button-container">
           <React.Fragment>
@@ -220,15 +254,19 @@ const EditQuantities = () => {
               ></Modal>
             )}
             {isLoading && <LoadingSpinner asOverlay />}
-            <Button disabled={!formState.isValid} onClick={handleSubmit}>
+            {entryExists===1 && (
+              <Button disabled={!formState.isValid} onClick={handleSubmit}>
               ΥΠΟΒΟΛΗ
-            </Button>
+              </Button>
+            )}
+         
           </React.Fragment>
           <button onClick={handleBackClick}>ΕΠΙΣΤΡΟΦΗ ΠΙΣΩ</button>
         </div>
       )}
     </div>
   );
+  
 };
 
 export default EditQuantities;
