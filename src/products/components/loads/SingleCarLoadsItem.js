@@ -68,10 +68,12 @@ const SingleCarLoadsItem = ({ item, onDelete }) => {
         })}
         <td>
           {isLoading && <LoadingSpinner asOverlay />}
-          <Button danger onClick={showDeleteWarningHandler}>
-            x
+          <Button to={`/edit-quantities?tid=${item.id}&type=load`}>
+            Επεξεργασία
           </Button>
-          <Button to={`/edit-quantities?tid=${item.id}&type=load`}>Edit</Button>
+          <Button danger onClick={showDeleteWarningHandler}>
+            Διαγραφή
+          </Button>
         </td>
       </tr>
     </React.Fragment>

@@ -69,11 +69,11 @@ const SingleCarDestructionsItem = ({ item, onDelete }) => {
         })}
         <td>
           {isLoading && <LoadingSpinner asOverlay />}
-          <Button danger onClick={showDeleteWarningHandler}>
-            x
-          </Button>
           <Button to={`/edit-quantities?tid=${item.id}&type=cardestruction`}>
-            Edit
+            Επεξεργασία
+          </Button>
+          <Button danger onClick={showDeleteWarningHandler}>
+            Διαγραφή
           </Button>
         </td>
       </tr>

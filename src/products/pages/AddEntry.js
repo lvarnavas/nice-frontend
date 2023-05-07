@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import styles from "./AddEntry.module.css";
+
 import el from "date-fns/locale/el";
 import { useHttpClient } from "../../shared/components/hooks.js/http-hook";
 import Button from "../../shared/components/hooks.js/FormElements/Button";
@@ -16,6 +16,7 @@ import {
   VALIDATOR_REQUIRE,
 } from "../../shared/components/hooks.js/util/validators";
 import Input from "../../shared/components/hooks.js/FormElements/Input";
+import "./AddEntry.css";
 
 const AddEntry = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -211,7 +212,7 @@ const AddEntry = () => {
   );
 
   return (
-    <div className={styles.container}>
+    <div className="add-entry_container">
       {console.log()}
       <h1>Νέα καταχώρηση:</h1>
       <select value={selectedOption} onChange={handleSelect}>
@@ -237,7 +238,7 @@ const AddEntry = () => {
               <br />
               <br />
               {productsList.map((product) => (
-                <div className={styles.product} key={product.id}>
+                <div className="add-entry_product" key={product.id}>
                   <Input
                     // id="product"
                     id={`product-${product.id}`}
@@ -303,7 +304,7 @@ const AddEntry = () => {
                 maxDate={maxDate}
               />
               {productsList.map((product) => (
-                <div className={styles.product} key={product.id}>
+                <div className="add-entry_product" key={product.id}>
                   <Input
                     id={`product-${product.id}`}
                     element="input"
