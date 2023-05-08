@@ -58,46 +58,55 @@ const EditQuantities = () => {
       }
     }
   };
+
+  const fetchProductsList = async () => {
+    try {
+      const productListData = await sendRequest(
+        "http://localhost:5000/api/products/get-products"
+      );
+      setProductsList(productListData.productsList);
+    } catch (err) {
+    }
+  };
+
+  const fetchQuantities = async () => {
+    try {
+      const quantitiesData = await sendRequest(
+        "http://localhost:5000/api/products/get-quantities",
+        "POST",
+        JSON.stringify({
+          id: `${tid}`,
+          flag: `${type}`,
+        }),
+        { "Content-Type": "application/json" }
+      );
+      setLoadedQuantities(quantitiesData.quantities);
+      console.log(quantitiesData);
+      setFormData({
+        product: {
+          value: quantitiesData.quantities[0].quantity,
+          isValid: true,
+        },
+      });
+    } catch (err) {
+    }
+  };
   
 
   useEffect(() => {
-    if (tid && type) {
-      const fetchProductsList = async () => {
-        try {
-          const productListData = await sendRequest(
-            "http://localhost:5000/api/products/get-products"
-          );
-          setProductsList(productListData.productsList);
-        } catch (err) {}
-      };
-      fetchProductsList();
+    const loadData = async () => {
+      await checkIfEntryExists();
 
-      checkIfEntryExists();
-      
-      const fetchQuantities = async () => {
-        try {
-          const quantitiesData = await sendRequest(
-            "http://localhost:5000/api/products/get-quantities",
-            "POST",
-            JSON.stringify({
-              id: `${tid}`,
-              flag: `${type}`,
-            }),
-            { "Content-Type": "application/json" }
-          );
-          setLoadedQuantities(quantitiesData.quantities);
-          console.log(quantitiesData);
-          setFormData({
-            product: {
-              value: quantitiesData.quantities[0].quantity,
-              isValid: true,
-            },
-          });
-        } catch (err) {}
-      };
-      fetchQuantities();
+      if (entryExists) {
+        await fetchProductsList();
+        await fetchQuantities();
+      }
+    };
+
+    if (tid && type) {
+      loadData();
     }
-  }, [sendRequest, tid, type, setFormData]);
+  }, [sendRequest, tid, type, setFormData, entryExists]);
 
   const getTitle = () => {
     if (!tid || !type) {
@@ -190,18 +199,24 @@ const EditQuantities = () => {
 
   if (!loadedQuantities && !error) {
     return (
-      <div className="center">
-        <h2>Could not find Event!</h2>
+      <div className="edit-entry-page">      
+        <div className="edit-entry-container">
+      <h2>Η καταχώρηση δε βρέθηκε.</h2>
+      <button onClick={handleBackClick}>ΕΠΙΣΤΡΟΦΗ ΠΙΣΩ</button>
       </div>
+      </div>
+
     );
   }
 
-  const toStringQuantitiesArray = loadedQuantities.map((obj) => {
-    return {
-      ...obj,
-      quantity: obj.quantity.toString(),
-    };
-  });
+  const toStringQuantitiesArray = loadedQuantities
+  ? loadedQuantities.map((obj) => {
+      return {
+        ...obj,
+        quantity: obj.quantity.toString(),
+      };
+    })
+  : [];
 
   return (
     <div className="edit-entry-page">
@@ -236,13 +251,13 @@ const EditQuantities = () => {
         </div>
       ) : (
         <div>
-          <h2>Η καταχώρηση δεν βρέθηκε.</h2>
+          <h2>Η καταχώρηση δε βρέθηκε.</h2>
         </div>
       )}
       {tid && type && (
         <div className="button-container">
           <React.Fragment>
-            <ErrorModal error={error} onClear={clearError} />
+           
             {/* Show the Modal only when requestCompleted is true */}
             {requestCompleted && (
               <Modal
