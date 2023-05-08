@@ -58,32 +58,32 @@ const Auth = () => {
       <ErrorModal error={error} onClear={clearError} />
       <Card className="authentication">
         {isLoading && <LoadingSpinner asOverlay />}
-        <h2>Login Required</h2>
+        <h2>Απαιτείται σύνδεση</h2>
         <hr />
         <form onSubmit={authSubmitHandler}>
           <Input
             element="input"
             id="username"
             type="text"
-            label="Username"
-            placeholder="Enter your username"
+            label="Όνομα χρήστη"
+            placeholder="Εισάγετε το όνομα χρήστη"
             validators={[VALIDATOR_REQUIRE(), VALIDATOR_MAXLENGTH(50)]}
-            errorText="Please enter a valid username."
+            errorText="Παρακαλώ εισάγετε το όνομα χρήστη."
             onInput={inputHandler}
           />
           <Input
             element="input"
             id="password"
             type="password"
-            label="Password"
-            placeholder="Enter your password"
+            label="Κωδικός πρόσβασης"
+            placeholder="Εισάγετε κωδικό πρόσβασης"
             validators={[VALIDATOR_REQUIRE()]}
-            errorText="Please enter a valid password, at least 6 characters."
+            errorText="Παρακαλώ εισάγετε τον κωδικό πρόσβασης."
             onInput={inputHandler}
           />
           <div>
             <Button type="submit" disabled={!formState.isValid}>
-              {"LOGIN"}
+              {"Σύνδεση"}
             </Button>
           </div>
         </form>

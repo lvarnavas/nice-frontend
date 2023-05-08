@@ -41,20 +41,20 @@ const WarehouseDestructionsItem = ({ item, onDelete }) => {
       <Modal
         show={showConfirmModal}
         onCancel={cancelDeleteHandler}
-        header="Είστε σίγουροι ότι θέλετε να διαγράψετε αυτό το στοιχείο;"
+        header="Επιβεβαίωση διαγραφής"
         footerClass="place-item__modal-actions"
         footer={
           <React.Fragment>
             <Button inverse onClick={cancelDeleteHandler}>
-              CANCEL
+              ΑΚΥΡΩΣΗ
             </Button>
             <Button danger onClick={confirmDeleteHandler}>
-              DELETE
+              ΔΙΑΓΡΑΦΗ
             </Button>
           </React.Fragment>
         }
       >
-        <p>Θέλετε να συνεχίσετε και να διαγράψετε αυτό το στοιχείο;</p>
+        <p>Είστε σίγουροι ότι θέλετε να διαγράψετε αυτό το στοιχείο;</p>
       </Modal>
       <tr>
         {Object.entries(item).map(([key, value], index) => {
