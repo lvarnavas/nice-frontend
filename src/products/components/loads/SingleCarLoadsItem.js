@@ -4,7 +4,6 @@ import ErrorModal from "../../../shared/components/hooks.js/UIElements/ErrorModa
 import LoadingSpinner from "../../../shared/components/hooks.js/UIElements/LoadingSpinner";
 import Button from "../../../shared/components/hooks.js/FormElements/Button";
 import { useHttpClient } from "../../../shared/components/hooks.js/http-hook";
-import "../TableItem.css";
 
 const SingleCarLoadsItem = ({ item, onDelete }) => {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -44,7 +43,7 @@ const SingleCarLoadsItem = ({ item, onDelete }) => {
         footer={
           <React.Fragment>
             <Button inverse onClick={cancelDeleteHandler}>
-            ΑΚΥΡΩΣΗ
+              ΑΚΥΡΩΣΗ
             </Button>
             <Button danger onClick={confirmDeleteHandler}>
               ΔΙΑΓΡΑΦΗ

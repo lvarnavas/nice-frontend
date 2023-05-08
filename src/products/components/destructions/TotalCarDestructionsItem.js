@@ -1,5 +1,3 @@
-import "../TableItem.css";
-
 const TotalCarDestructionsItem = ({ item }) => {
   console.log(item);
   return (

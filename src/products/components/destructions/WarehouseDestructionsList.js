@@ -1,6 +1,7 @@
 import WarehouseDestructionsItem from "./WarehouseDestructionsItem";
 import { dateFormater } from "../../../shared/components/hooks.js/dateFormatter";
-import "../TableList.css";
+import Card from "../../../shared/components/hooks.js/UIElements/Card";
+import "../shared.css";
 
 const WarehouseDestructionsList = (props) => {
   if (props.items.length === 0) {
@@ -20,12 +21,14 @@ const WarehouseDestructionsList = (props) => {
   const columnNames = Object.keys(props.items[0]);
 
   return (
-    <div className="components-container">
-      <h2 className="title">
-        Συνολικές καταστροφές αποθήκης από {formattedStartDate} έως{" "}
-        {formattedEndDate}:
-      </h2>
-      <div id="content">
+    <div className="products-components__container-list ">
+      <Card>
+        <h2>
+          ΣΥΝΟΛΙΚΕΣ ΚΑΤΑΣΤΡΟΦΕΣ ΑΠΟΘΗΚΗΣ ΑΠΟ <span>{formattedStartDate}</span>{" "}
+          ΕΩΣ <span>{formattedEndDate}</span>
+        </h2>
+      </Card>
+      <div className="products-components__container-list-content">
         <table>
           <thead>
             <tr>

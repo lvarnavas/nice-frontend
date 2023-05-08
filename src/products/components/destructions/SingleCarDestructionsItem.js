@@ -5,8 +5,6 @@ import LoadingSpinner from "../../../shared/components/hooks.js/UIElements/Loadi
 import Button from "../../../shared/components/hooks.js/FormElements/Button";
 import { useHttpClient } from "../../../shared/components/hooks.js/http-hook";
 
-import "../TableItem.css";
-
 const SingleCarDestructionsItem = ({ item, onDelete }) => {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();

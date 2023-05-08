@@ -56,38 +56,40 @@ const Auth = () => {
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
-      <Card className="authentication">
-        {isLoading && <LoadingSpinner asOverlay />}
-        <h2>Σύνδεση χρήστη</h2>
-        <hr />
-        <form onSubmit={authSubmitHandler}>
-          <Input
-            element="input"
-            id="username"
-            type="text"
-            label="Όνομα χρήστη"
-            placeholder="Εισάγετε το όνομα χρήστη"
-            validators={[VALIDATOR_REQUIRE(), VALIDATOR_MAXLENGTH(50)]}
-            errorText="Παρακαλώ εισάγετε το όνομα χρήστη."
-            onInput={inputHandler}
-          />
-          <Input
-            element="input"
-            id="password"
-            type="password"
-            label="Κωδικός πρόσβασης"
-            placeholder="Εισάγετε κωδικό πρόσβασης"
-            validators={[VALIDATOR_REQUIRE()]}
-            errorText="Παρακαλώ εισάγετε τον κωδικό πρόσβασης."
-            onInput={inputHandler}
-          />
-          <div>
+      <div className="authentication">
+        <Card className="authentication-card">
+          {isLoading && <LoadingSpinner asOverlay />}
+          <h2>ΣΥΝΔΕΣΗ ΧΡΗΣΤΗ</h2>
+          <hr />
+          <br />
+          <form onSubmit={authSubmitHandler}>
+            <Input
+              element="input"
+              id="username"
+              type="text"
+              label="Όνομα χρήστη"
+              placeholder="Εισάγετε το όνομα χρήστη"
+              validators={[VALIDATOR_REQUIRE(), VALIDATOR_MAXLENGTH(50)]}
+              errorText="Παρακαλώ εισάγετε το όνομα χρήστη."
+              onInput={inputHandler}
+            />
+            <Input
+              element="input"
+              id="password"
+              type="password"
+              label="Κωδικός πρόσβασης"
+              placeholder="Εισάγετε κωδικό πρόσβασης"
+              validators={[VALIDATOR_REQUIRE()]}
+              errorText="Παρακαλώ εισάγετε τον κωδικό πρόσβασης."
+              onInput={inputHandler}
+            />
+            <br />
             <Button type="submit" disabled={!formState.isValid}>
               {"Σύνδεση"}
             </Button>
-          </div>
-        </form>
-      </Card>
+          </form>
+        </Card>
+      </div>
     </React.Fragment>
   );
 };

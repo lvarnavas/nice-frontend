@@ -11,8 +11,8 @@ import {
   VALIDATOR_REQUIRE,
 } from "../../shared/components/hooks.js/util/validators";
 import Modal from "../../shared/components/hooks.js/UIElements/Modal";
-import ErrorModal from "../../shared/components/hooks.js/UIElements/ErrorModal";
 import Button from "../../shared/components/hooks.js/FormElements/Button";
+import Card from "../../shared/components/hooks.js/UIElements/Card";
 
 const EditQuantities = () => {
   const [entryExists, setEntryExists] = useState(false);
@@ -51,7 +51,7 @@ const EditQuantities = () => {
             "Content-Type": "application/json",
           }
         );
-  
+
         setEntryExists(response.exists);
       } catch (err) {
         console.error(err);
@@ -65,8 +65,7 @@ const EditQuantities = () => {
         "http://localhost:5000/api/products/get-products"
       );
       setProductsList(productListData.productsList);
-    } catch (err) {
-    }
+    } catch (err) {}
   };
 
   const fetchQuantities = async () => {
@@ -88,10 +87,8 @@ const EditQuantities = () => {
           isValid: true,
         },
       });
-    } catch (err) {
-    }
+    } catch (err) {}
   };
-  
 
   useEffect(() => {
     const loadData = async () => {
@@ -123,27 +120,27 @@ const EditQuantities = () => {
     } else {
       if (type === "load") {
         return (
-          <div className="edit-entry-page empty">
+          <Card>
             <h2>Επεξεργασία φορτώματος: {tid}</h2>
-          </div>
+          </Card>
         );
       } else if (type === "return") {
         return (
-          <div className="edit-entry-page empty">
+          <Card>
             <h2>Επεξεργασία επιστροφής: {tid}</h2>
-          </div>
+          </Card>
         );
       } else if (type === "cardestruction") {
         return (
-          <div className="edit-entry-page empty">
+          <Card>
             <h2>Επεξεργασία καταστροφής οχήματος: {tid}</h2>
-          </div>
+          </Card>
         );
       } else if (type === "warehousedestruction") {
         return (
-          <div className="edit-entry-page empty">
-            <h2>Επεξεργασία καταστροφής αποθήκης: {tid}</h2>
-          </div>
+          <Card>
+            <h2>ΕΠΕΞΕΡΓΑΣΙΑ ΚΑΤΑΣΤΡΟΦΗΣ ΑΠΟΘΗΚΗΣ: {tid}</h2>
+          </Card>
         );
       }
     }
@@ -199,32 +196,34 @@ const EditQuantities = () => {
 
   if (!loadedQuantities && !error) {
     return (
-      <div className="edit-entry-page">      
-        <div className="edit-entry-container">
-      <h2>Η καταχώρηση δε βρέθηκε.</h2>
-      <button onClick={handleBackClick}>ΕΠΙΣΤΡΟΦΗ ΠΙΣΩ</button>
+      <div className="edit-quantities_container">
+        <Card className="edit-quantities_container-title">
+          <h2>Η ΚΑΤΑΧΩΡΗΣΗ ΔΕ ΒΡΕΘΗΚΕ</h2>
+        </Card>
+        <br />
+        <Button inverse onClick={handleBackClick}>
+          ΕΠΙΣΤΡΟΦΗ ΠΙΣΩ
+        </Button>
       </div>
-      </div>
-
     );
   }
 
   const toStringQuantitiesArray = loadedQuantities
-  ? loadedQuantities.map((obj) => {
-      return {
-        ...obj,
-        quantity: obj.quantity.toString(),
-      };
-    })
-  : [];
+    ? loadedQuantities.map((obj) => {
+        return {
+          ...obj,
+          quantity: obj.quantity.toString(),
+        };
+      })
+    : [];
 
   return (
-    <div className="edit-entry-page">
-      
+    <div className="edit-quantities_container">
       {entryExists ? (
-        
-        <div className="edit-entry-container">
+        <div className="edit-quantities_container-title">
           {getTitle()}
+          <br />
+          <br />
           {productsList.map((product, index) => (
             <div key={product.id}>
               <Input
@@ -250,14 +249,13 @@ const EditQuantities = () => {
           ))}
         </div>
       ) : (
-        <div>
-          <h2>Η καταχώρηση δε βρέθηκε.</h2>
-        </div>
+        <Card className="edit-quantities_container-title">
+          <h2>Η ΚΑΤΑΧΩΡΗΣΗ ΔΕ ΒΡΕΘΗΚΕ</h2>
+        </Card>
       )}
       {tid && type && (
-        <div className="button-container">
+        <div className="edit-quantities_btn">
           <React.Fragment>
-           
             {/* Show the Modal only when requestCompleted is true */}
             {requestCompleted && (
               <Modal
@@ -269,19 +267,19 @@ const EditQuantities = () => {
               ></Modal>
             )}
             {isLoading && <LoadingSpinner asOverlay />}
-            {entryExists===1 && (
+            {entryExists === 1 && (
               <Button disabled={!formState.isValid} onClick={handleSubmit}>
-              ΥΠΟΒΟΛΗ
+                ΥΠΟΒΟΛΗ
               </Button>
             )}
-         
           </React.Fragment>
-          <button onClick={handleBackClick}>ΕΠΙΣΤΡΟΦΗ ΠΙΣΩ</button>
+          <Button inverse onClick={handleBackClick}>
+            ΕΠΙΣΤΡΟΦΗ ΠΙΣΩ
+          </Button>
         </div>
       )}
     </div>
   );
-  
 };
 
 export default EditQuantities;

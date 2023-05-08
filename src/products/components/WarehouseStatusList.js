@@ -1,5 +1,6 @@
 import WarehouseStatusItem from "./WarehouseStatusItem";
-import "./WarehouseStatusList.css";
+import Card from "../../shared/components/hooks.js/UIElements/Card";
+import "./shared.css";
 
 const WarehouseStatusList = (props) => {
   if (props.items.length === 0) {
@@ -10,13 +11,15 @@ const WarehouseStatusList = (props) => {
     );
   }
   return (
-    <div className="components-container">
-      <h2 className="title">Κατάσταση θαλάμου:</h2>
-      <div id="content">
+    <div className="products-components__container-list">
+      <Card>
+        <h2>ΚΑΤΑΣΤΑΣΗ ΘΑΛΑΜΟΥ</h2>
+      </Card>
+      <div className="products-components__container-list-content">
         <table>
           <thead>
             <tr>
-              {/*<th>ID</th> */ }
+              {/*<th>ID</th> */}
               <th>Όνομα Προίόντος</th>
               <th>Ποσότητα</th>
             </tr>

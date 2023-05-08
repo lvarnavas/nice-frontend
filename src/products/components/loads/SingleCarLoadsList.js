@@ -1,6 +1,7 @@
 import SingleCarLoadsItem from "./SingleCarLoadsItem";
 import { dateFormater } from "../../../shared/components/hooks.js/dateFormatter";
-import "../TableList.css";
+import Card from "../../../shared/components/hooks.js/UIElements/Card";
+import "../shared.css";
 
 const SingleCarLoadsList = (props) => {
   if (props.items.length === 0) {
@@ -28,15 +29,15 @@ const SingleCarLoadsList = (props) => {
     return columnName;
   };
 
-  console.log(formattedStartDate);
-
   return (
-    <div className="components-container">
-      <h2 className="title">
-        Φορτώματα οχήματος {props.carName} από {formattedStartDate} έως{" "}
-        {formattedEndDate}:
-      </h2>
-      <div id="content">
+    <div className="products-components__container-list">
+      <Card>
+        <h2>
+          ΦΟΡΤΩΜΑΤΑ ΟΧΗΜΑΤΟΣ <span>{props.carName}</span> ΑΠΟ{" "}
+          <span>{formattedStartDate}</span> ΕΩΣ <span>{formattedEndDate}</span>
+        </h2>
+      </Card>
+      <div className="products-components__container-list-content">
         <table>
           <thead>
             <tr>

@@ -5,8 +5,6 @@ import ErrorModal from "../../../shared/components/hooks.js/UIElements/ErrorModa
 import Modal from "../../../shared/components/hooks.js/UIElements/Modal";
 import { useHttpClient } from "../../../shared/components/hooks.js/http-hook";
 
-import "../TableItem.css";
-
 const WarehouseDestructionsItem = ({ item, onDelete }) => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [showConfirmModal, setShowConfirmModal] = useState(false);

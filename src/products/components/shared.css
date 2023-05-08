@@ -1,0 +1,34 @@
+.products-components__container-list {
+  margin-top: 24px;
+  text-align: center;
+}
+
+.products-components__container-list-content {
+  width: 80%;
+  margin: 24px auto;
+}
+
+.products-components__container-list span {
+  color: #55c4d1;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.1);
+}
+
+th,
+td {
+  padding: 16px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+tr:nth-child(even) {
+  /* background-color: #f2f2f2; */
+}
+
+tr:hover {
+  background-color: #ddd;
+}

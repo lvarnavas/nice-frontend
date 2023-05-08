@@ -6,6 +6,7 @@ import Button from "../../shared/components/hooks.js/FormElements/Button";
 import LoadingSpinner from "../../shared/components/hooks.js/UIElements/LoadingSpinner";
 import ErrorModal from "../../shared/components/hooks.js/UIElements/ErrorModal";
 import el from "date-fns/locale/el";
+import Card from "../../shared/components/hooks.js/UIElements/Card";
 import "./Search.css";
 
 const SearchPage = () => {
@@ -98,8 +99,10 @@ const SearchPage = () => {
       case "Αναζήτηση συνολικών επιστροφών":
       case "Αναζήτηση καταστροφών αποθήκης":
         return (
-          <>
-            <span>Αναζήτηση από:</span>
+          <div className="search-container__content-date">
+            <div className="search-container__content-title">
+              Αναζήτηση από:
+            </div>
             <div className="date-container">
               <DatePicker
                 selected={startDate}
@@ -108,7 +111,9 @@ const SearchPage = () => {
                 locale={el}
               />
             </div>
-            <span>Αναζήτηση εώς:</span>
+            <div className="search-container__content-title">
+              Αναζήτηση εώς:
+            </div>
             <div className="date-container">
               <DatePicker
                 selected={endDate}
@@ -118,12 +123,14 @@ const SearchPage = () => {
               />
             </div>
             {isLoading && <LoadingSpinner asOverlay />}
-            <Button onClick={noCarSearch}>Αναζήτηση</Button>
-          </>
+            <div className="search-container__content-btn">
+              <Button onClick={noCarSearch}>Αναζήτηση</Button>
+            </div>
+          </div>
         );
       case "Αναζήτηση βάσει οχήματος":
         return (
-          <>
+          <div>
             <select
               value={selectedCar || ""}
               onChange={(e) => setSelectedCar(e.target.value)}
@@ -138,7 +145,7 @@ const SearchPage = () => {
               ))}
             </select>
             {selectedCar && (
-              <>
+              <div>
                 <select
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
@@ -151,8 +158,10 @@ const SearchPage = () => {
                   <option value="Καταστροφές">Καταστροφές</option>
                 </select>
                 {selectedCategory && (
-                  <div>
-                    <span>Αναζήτηση από:</span>
+                  <div className="search-container__content-date">
+                    <div className="search-container__content-title">
+                      Αναζήτηση από:
+                    </div>
                     <div className="date-container">
                       <DatePicker
                         selected={startDate}
@@ -161,7 +170,9 @@ const SearchPage = () => {
                         locale={el}
                       />
                     </div>
-                    <span>Αναζήτηση εώς:</span>
+                    <div className="search-container__content-title">
+                      Αναζήτηση εώς:
+                    </div>
                     <div className="date-container">
                       <DatePicker
                         selected={endDate}
@@ -177,13 +188,15 @@ const SearchPage = () => {
                           <LoadingSpinner />
                         </div>
                       )}
-                      <Button onClick={carSearch}>Αναζήτηση</Button>
+                      <div className="search-container__content-btn">
+                        <Button onClick={carSearch}>Αναζήτηση</Button>
+                      </div>
                     </React.Fragment>
                   </div>
                 )}
-              </>
+              </div>
             )}
-          </>
+          </div>
         );
       default:
         return null;
@@ -192,31 +205,35 @@ const SearchPage = () => {
 
   return (
     <div className="search-container">
-      <h2>Αναζήτηση καταχωρήσεων:</h2>
-      <select
-        value={searchType}
-        onChange={(e) => setSearchType(e.target.value)}
-      >
-        <option value="" disabled>
-          Επιλέξτε τύπο αναζήτησης
-        </option>
-        <option value="Αναζήτηση συνολικών φορτωμάτων">
-          Αναζήτηση συνολικών φορτωμάτων
-        </option>
-        <option value="Αναζήτηση συνολικών καταστροφών οχημάτων">
-          Αναζήτηση συνολικών καταστροφών οχημάτων
-        </option>
-        <option value="Αναζήτηση καταστροφών αποθήκης">
-          Αναζήτηση καταστροφών αποθήκης
-        </option>
-        <option value="Αναζήτηση συνολικών επιστροφών">
-          Αναζήτηση συνολικών επιστροφών
-        </option>
-        <option value="Αναζήτηση βάσει οχήματος">
-          Αναζήτηση βάσει οχήματος
-        </option>
-      </select>
-      {renderForm()}
+      <Card className="search-container-title">
+        <h2>ΑΝΑΖΗΤΗΣΗ ΚΑΤΑΧΩΡΗΣΕΩΝ</h2>
+      </Card>
+      <div className="search-container__content">
+        <select
+          value={searchType}
+          onChange={(e) => setSearchType(e.target.value)}
+        >
+          <option value="" disabled>
+            Επιλέξτε τύπο αναζήτησης
+          </option>
+          <option value="Αναζήτηση συνολικών φορτωμάτων">
+            Αναζήτηση συνολικών φορτωμάτων
+          </option>
+          <option value="Αναζήτηση συνολικών καταστροφών οχημάτων">
+            Αναζήτηση συνολικών καταστροφών οχημάτων
+          </option>
+          <option value="Αναζήτηση καταστροφών αποθήκης">
+            Αναζήτηση καταστροφών αποθήκης
+          </option>
+          <option value="Αναζήτηση συνολικών επιστροφών">
+            Αναζήτηση συνολικών επιστροφών
+          </option>
+          <option value="Αναζήτηση βάσει οχήματος">
+            Αναζήτηση βάσει οχήματος
+          </option>
+        </select>
+        {renderForm()}
+      </div>
     </div>
   );
 };

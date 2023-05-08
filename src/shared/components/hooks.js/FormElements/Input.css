@@ -1,5 +1,7 @@
 .form-control {
   margin: 1rem 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 .form-control label,
@@ -62,6 +64,10 @@
 .form-control--invalid label,
 .form-control--invalid p {
   color: red;
+}
+
+.form-control--invalid p {
+  grid-column: 2;
 }
 
 .form-control--invalid input,

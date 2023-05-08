@@ -1,6 +1,7 @@
 import TotalCarLoadsItem from "./TotalCarLoadsItem";
 import { dateFormater } from "../../../shared/components/hooks.js/dateFormatter";
-import "../TableList.css";
+import Card from "../../../shared/components/hooks.js/UIElements/Card";
+import "../shared.css";
 
 const TotalCarLoadsList = (props) => {
   if (props.items.length === 0) {
@@ -29,11 +30,14 @@ const TotalCarLoadsList = (props) => {
   };
 
   return (
-    <div className="components-container">
-      <h2 className="title">
-        Συνολικά φορτώματα από {formattedStartDate} έως {formattedEndDate}:
-      </h2>
-      <div id="content">
+    <div className="products-components__container-list">
+      <Card>
+        <h2>
+          ΣΥΝΟΛΙΚΑ ΦΟΡΤΩΜΑΤΑ ΑΠΟ <span>{formattedStartDate}</span> ΕΩΣ{" "}
+          <span>{formattedEndDate}</span>
+        </h2>
+      </Card>
+      <div className="products-components__container-list-content">
         <table>
           <thead>
             <tr>

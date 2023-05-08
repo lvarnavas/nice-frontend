@@ -1,62 +1,18 @@
-.edit-entry-page {
+.edit-quantities_container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  width: 100%;
-  padding: 1rem;
+  text-align: center;
 }
 
-.edit-entry-page.empty {
-  justify-content: center;
+.edit-quantities_container-title {
+  margin-top: 24px;
 }
 
-.edit-entry-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 1rem 0;
+.edit-quantities_btn {
+  margin-top: 24px;
 }
 
-.edit-entry-container > div {
-  display: flex;
-  align-items: center;
-  margin-bottom: 0.5rem;
-}
-
-.edit-entry-container > div > span {
-  margin-right: 0.5rem;
-}
-
-.edit-entry-container > div > input {
-  width: 100px;
-  height: 2rem;
-  font-size: 1rem;
-}
-
-.edit-entry-container button {
-  background-color: #28a745;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  margin: 0.5rem;
-  border-radius: 5px;
-}
-
-.edit-entry-container button:hover {
-  background-color: #218838;
-}
-
-.message-box {
-  color: red;
-  margin: 0.5rem;
-}
-
-.button-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+.edit-quantities_btn button:hover {
+  background-color: #55c4d1;
 }

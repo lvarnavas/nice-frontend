@@ -1,6 +1,7 @@
 import TotalCarDestructionsItem from "./TotalCarDestructionsItem";
 import { dateFormater } from "../../../shared/components/hooks.js/dateFormatter";
-import "../TableList.css";
+import Card from "../../../shared/components/hooks.js/UIElements/Card";
+import "../shared.css";
 
 const TotalCarDestructionsList = (props) => {
   if (props.items.length === 0) {
@@ -25,12 +26,14 @@ const TotalCarDestructionsList = (props) => {
   };
 
   return (
-    <div className="components-container">
-      <h2 className="title">
-        Συνολικές καταστροφές οχημάτων από {formattedStartDate} έως{" "}
-        {formattedEndDate}:
-      </h2>
-      <div id="content">
+    <div className="products-components__container-list">
+      <Card>
+        <h2>
+          ΣΥΝΟΛΙΚΕΣ ΚΑΤΑΣΤΡΟΦΕΣ ΟΧΗΜΑΤΩΝ ΑΠΟ <span>{formattedStartDate}</span>{" "}
+          ΕΩΣ <span>{formattedEndDate}</span>
+        </h2>
+      </Card>
+      <div className="products-components__container-list-content">
         <table>
           <thead>
             <tr>

@@ -1,8 +1,12 @@
 .card {
-  margin: 0;
+  /* margin: 0 auto; */
+  padding: 0 46px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   border-radius: 6px;
-  padding: 0rem;
   overflow: hidden;
   background: white;
+  text-align: center;
+  display: inline-block;
+  align-items: center;
+  justify-content: center;
 }
