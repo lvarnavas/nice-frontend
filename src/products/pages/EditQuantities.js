@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useLocation, useHistory } from "react-router-dom";
 import "./EditEntry.css";
 import { useHttpClient } from "../../shared/components/hooks.js/http-hook";
@@ -16,7 +16,7 @@ import Card from "../../shared/components/hooks.js/UIElements/Card";
 
 const EditQuantities = () => {
   const [entryExists, setEntryExists] = useState(false);
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { isLoading, error, sendRequest } = useHttpClient();
   const [requestCompleted, setRequestCompleted] = useState(false);
   const location = useLocation();
   const history = useHistory();
@@ -37,7 +37,7 @@ const EditQuantities = () => {
     false
   );
 
-  const checkIfEntryExists = async () => {
+  const checkIfEntryExists = useCallback(async () => {
     if (tid && type) {
       try {
         const response = await sendRequest(
@@ -57,18 +57,18 @@ const EditQuantities = () => {
         console.error(err);
       }
     }
-  };
+  }, [sendRequest, tid, type]);
 
-  const fetchProductsList = async () => {
+  const fetchProductsList = useCallback(async () => {
     try {
       const productListData = await sendRequest(
         "http://localhost:5000/api/products/get-products"
       );
       setProductsList(productListData.productsList);
     } catch (err) {}
-  };
+  }, [sendRequest]);
 
-  const fetchQuantities = async () => {
+  const fetchQuantities = useCallback(async () => {
     try {
       const quantitiesData = await sendRequest(
         "http://localhost:5000/api/products/get-quantities",
@@ -80,7 +80,7 @@ const EditQuantities = () => {
         { "Content-Type": "application/json" }
       );
       setLoadedQuantities(quantitiesData.quantities);
-      console.log(quantitiesData);
+      
       setFormData({
         product: {
           value: quantitiesData.quantities[0].quantity,
@@ -88,7 +88,7 @@ const EditQuantities = () => {
         },
       });
     } catch (err) {}
-  };
+  }, [sendRequest, tid, type, setFormData]);
 
   useEffect(() => {
     const loadData = async () => {
@@ -103,7 +103,7 @@ const EditQuantities = () => {
     if (tid && type) {
       loadData();
     }
-  }, [sendRequest, tid, type, setFormData, entryExists]);
+  }, [sendRequest, tid, type, setFormData, entryExists, checkIfEntryExists, fetchProductsList, fetchQuantities]);
 
   const getTitle = () => {
     if (!tid || !type) {
