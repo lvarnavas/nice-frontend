@@ -27,7 +27,8 @@ const AddEntry = () => {
   const [date, setDate] = useState(new Date());
   const [productsList, setProductsList] = useState([]);
 
-  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  
   const [formState, inputHandler] = useForm(
     {
       product: {
@@ -75,9 +76,9 @@ const AddEntry = () => {
     setDate(date);
   };
 
-  const showWarningHandler = () => {
-    setShowConfirmModal(true);
-  };
+  // const showWarningHandler = () => {
+  //   setShowSuccessModal(true);
+  // };
 
   const formatDate = (inputDate) => {
     const dateObject = new Date(inputDate);
@@ -89,13 +90,13 @@ const AddEntry = () => {
 
   let history = useHistory();
 
-  const sumbitHandler = async (event) => {
+  const submitHandler = async (event) => {
     event.preventDefault();
     const formattedDate = formatDate(date);
 
     if (selectedOption === "Φόρτωμα") {
       try {
-        setShowConfirmModal(false);
+        setShowSuccessModal(false);
         await sendRequest(
           "http://localhost:5000/api/products/add-loads",
           "POST",
@@ -113,11 +114,12 @@ const AddEntry = () => {
             "Content-Type": "application/json",
           }
         );
-        history.push("loads/total-car-loads");
+        setShowSuccessModal(true);
+        //history.push("loads/total-car-loads");
       } catch (err) {}
     } else if (selectedOption === "Επιστροφή") {
       try {
-        setShowConfirmModal(false);
+        setShowSuccessModal(false);
         await sendRequest(
           "http://localhost:5000/api/products/add-returns",
           "POST",
@@ -135,11 +137,12 @@ const AddEntry = () => {
             "Content-Type": "application/json",
           }
         );
-        history.push("/returns/total-car-returns");
+        setShowSuccessModal(true);
+        //history.push("/returns/total-car-returns");
       } catch (err) {}
     } else if (selectedOption === "Καταστροφή οχήματος") {
       try {
-        setShowConfirmModal(false);
+        setShowSuccessModal(false);
         console.log(typeof selectedCar);
         await sendRequest(
           "http://localhost:5000/api/products/add-car-destructions",
@@ -158,10 +161,11 @@ const AddEntry = () => {
             "Content-Type": "application/json",
           }
         );
-        history.push("/destructions/total-car-destructions");
+        setShowSuccessModal(true);
+        //history.push("/destructions/total-car-destructions");
       } catch (err) {}
     } else if (selectedOption === "Καταστροφή αποθήκης") {
-      setShowConfirmModal(false);
+      setShowSuccessModal(false);
       try {
         await sendRequest(
           "http://localhost:5000/api/products/add-warehouse-destructions",
@@ -179,10 +183,36 @@ const AddEntry = () => {
             "Content-Type": "application/json",
           }
         );
-        history.push("/destructions/total-warehouse-destructions");
+        setShowSuccessModal(true);
+        //history.push("/destructions/total-warehouse-destructions");
       } catch (err) {}
     }
   };
+
+  const successHandler = async (event) => 
+  {
+    if (selectedOption === "Φόρτωμα")
+    {
+      history.push("loads/total-car-loads");
+    }
+    else if (selectedOption === "Επιστροφή")
+    {
+      history.push("returns/total-car-returns");
+    }
+    else if (selectedOption === "Καταστροφή οχήματος")
+    {
+      history.push("destructions/total-car-destructions");
+    }
+    else if (selectedOption === "Καταστροφή αποθήκης")
+    {
+      history.push("destructions/total-warehouse-destructions");
+    }
+    else
+    {
+      history.push("warehouse-status");
+    }
+  
+  }
 
   const currentDate = new Date();
   const minDate = new Date(
@@ -255,17 +285,17 @@ const AddEntry = () => {
               <React.Fragment>
                 <ErrorModal error={error} onClear={clearError} />
                 <Modal
-                  show={showConfirmModal}
+                  show={showSuccessModal}
                   header={<div>ΕΠΙΤΥΧΗΣ ΚΑΤΑΧΩΡΗΣΗ</div>}
                   contentClass="specific-item__modal-content"
                   footerClass="specific-item__modal-actions"
-                  footer={<Button onClick={sumbitHandler}>OK</Button>}
+                  footer={<Button onClick={successHandler}>OK</Button>}
                 ></Modal>
                 {isLoading && <LoadingSpinner asOverlay />}
                 <div className="add-entry_content-btn">
                   <Button
                     disabled={!formState.isValid}
-                    onClick={showWarningHandler}
+                    onClick={submitHandler}
                   >
                     ΚΑΤΑΧΩΡΗΣΗ
                   </Button>
@@ -331,17 +361,17 @@ const AddEntry = () => {
               <React.Fragment>
                 <ErrorModal error={error} onClear={clearError} />
                 <Modal
-                  show={showConfirmModal}
+                  show={showSuccessModal}
                   header={<div>ΕΠΙΤΥΧΗΣ ΚΑΤΑΧΩΡΗΣΗ</div>}
                   contentClass="specific-item__modal-content"
                   footerClass="specific-item__modal-actions"
-                  footer={<Button onClick={sumbitHandler}>OK</Button>}
+                  footer={<Button onClick={successHandler}>OK</Button>}
                 ></Modal>
                 {isLoading && <LoadingSpinner asOverlay />}
                 <div className="add-entry_content-btn">
                   <Button
                     disabled={!formState.isValid}
-                    onClick={showWarningHandler}
+                    onClick={submitHandler}
                   >
                     ΚΑΤΑΧΩΡΗΣΗ
                   </Button>
