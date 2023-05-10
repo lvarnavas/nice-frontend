@@ -40,9 +40,5 @@
 }
 
 .search-container__content-btn {
-  margin: 24px 0;
-}
-
-.search-container__content-btn button:hover {
-  background-color: #55c4d1;
+  margin: 46px 0;
 }

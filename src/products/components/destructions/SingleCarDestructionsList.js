@@ -6,8 +6,10 @@ import "../shared.css";
 const SingleCarDestructionsList = (props) => {
   if (props.items.length === 0) {
     return (
-      <div className="center">
-        <h2>ΔΕΝ ΒΡΕΘΗΚΑΝ ΚΑΤΑΣΤΡΟΦΕΣ</h2>
+      <div className="products-components__container-list">
+        <Card>
+          <h2>ΔΕΝ ΒΡΕΘΗΚΑΝ ΚΑΤΑΣΤΡΟΦΕΣ</h2>
+        </Card>
       </div>
     );
   }

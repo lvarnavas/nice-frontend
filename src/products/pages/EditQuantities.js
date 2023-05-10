@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useLocation, useHistory } from "react-router-dom";
-import "./EditEntry.css";
 import { useHttpClient } from "../../shared/components/hooks.js/http-hook";
 import Input from "../../shared/components/hooks.js/FormElements/Input";
 import { useForm } from "../../shared/components/hooks.js/form-hook";
@@ -13,10 +12,12 @@ import {
 import Modal from "../../shared/components/hooks.js/UIElements/Modal";
 import Button from "../../shared/components/hooks.js/FormElements/Button";
 import Card from "../../shared/components/hooks.js/UIElements/Card";
+import ErrorModal from "../../shared/components/hooks.js/UIElements/ErrorModal";
+import "./EditQuantities.css";
 
 const EditQuantities = () => {
   const [entryExists, setEntryExists] = useState(false);
-  const { isLoading, error, sendRequest } = useHttpClient();
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [requestCompleted, setRequestCompleted] = useState(false);
   const location = useLocation();
   const history = useHistory();
@@ -80,7 +81,7 @@ const EditQuantities = () => {
         { "Content-Type": "application/json" }
       );
       setLoadedQuantities(quantitiesData.quantities);
-      
+
       setFormData({
         product: {
           value: quantitiesData.quantities[0].quantity,
@@ -103,46 +104,42 @@ const EditQuantities = () => {
     if (tid && type) {
       loadData();
     }
-  }, [sendRequest, tid, type, setFormData, entryExists, checkIfEntryExists, fetchProductsList, fetchQuantities]);
+  }, [
+    sendRequest,
+    tid,
+    type,
+    setFormData,
+    entryExists,
+    checkIfEntryExists,
+    fetchProductsList,
+    fetchQuantities,
+  ]);
 
   const getTitle = () => {
-    if (!tid || !type) {
+    if (type === "load") {
       return (
-        <div className="edit-entry-page empty">
-          <h2>Δεν επιλέχθηκε καταχώρηση</h2>
-          {!tid && !type && (
-            <button onClick={() => history.push("/")}>
-              Επιστροφή στην αρχική
-            </button>
-          )}
-        </div>
+        <Card>
+          <h2>ΕΠΕΞΕΡΓΑΣΙΑ ΦΟΡΤΩΜΑΤΟΣ ΜΕ ΚΩΔΙΚΟ {tid}</h2>
+        </Card>
       );
-    } else {
-      if (type === "load") {
-        return (
-          <Card>
-            <h2>Επεξεργασία φορτώματος: {tid}</h2>
-          </Card>
-        );
-      } else if (type === "return") {
-        return (
-          <Card>
-            <h2>Επεξεργασία επιστροφής: {tid}</h2>
-          </Card>
-        );
-      } else if (type === "cardestruction") {
-        return (
-          <Card>
-            <h2>Επεξεργασία καταστροφής οχήματος: {tid}</h2>
-          </Card>
-        );
-      } else if (type === "warehousedestruction") {
-        return (
-          <Card>
-            <h2>ΕΠΕΞΕΡΓΑΣΙΑ ΚΑΤΑΣΤΡΟΦΗΣ ΑΠΟΘΗΚΗΣ: {tid}</h2>
-          </Card>
-        );
-      }
+    } else if (type === "return") {
+      return (
+        <Card>
+          <h2>ΕΠΕΞΕΡΓΑΣΙΑ ΕΠΙΣΤΡΟΦΗΣ ΜΕ ΚΩΔΙΚΟ {tid}</h2>
+        </Card>
+      );
+    } else if (type === "cardestruction") {
+      return (
+        <Card>
+          <h2>ΕΠΕΞΕΡΓΑΣΙΑ ΚΑΤΑΣΤΡΟΦΗΣ ΟΧΗΜΑΤΟΣ ΜΕ ΚΩΔΙΚΟ {tid}</h2>
+        </Card>
+      );
+    } else if (type === "warehousedestruction") {
+      return (
+        <Card>
+          <h2>ΕΠΕΞΕΡΓΑΣΙΑ ΚΑΤΑΣΤΡΟΦΗΣ ΑΠΟΘΗΚΗΣ ΜΕ ΚΩΔΙΚΟ {tid}</h2>
+        </Card>
+      );
     }
   };
 
@@ -173,11 +170,6 @@ const EditQuantities = () => {
     } catch (err) {}
   };
 
-  const handleOkClick = () => {
-    history.goBack();
-    //setShowConfirmModal(false)
-  };
-
   const showWarningHandler = () => {
     setShowConfirmModal(true);
   };
@@ -194,7 +186,7 @@ const EditQuantities = () => {
     );
   }
 
-  if (!loadedQuantities && !error) {
+  if ((!loadedQuantities && !error) || !entryExists) {
     return (
       <div className="edit-quantities_container">
         <Card className="edit-quantities_container-title">
@@ -219,7 +211,7 @@ const EditQuantities = () => {
 
   return (
     <div className="edit-quantities_container">
-      {entryExists ? (
+      {entryExists && (
         <div className="edit-quantities_container-title">
           {getTitle()}
           <br />
@@ -248,22 +240,18 @@ const EditQuantities = () => {
             </div>
           ))}
         </div>
-      ) : (
-        <Card className="edit-quantities_container-title">
-          <h2>Η ΚΑΤΑΧΩΡΗΣΗ ΔΕ ΒΡΕΘΗΚΕ</h2>
-        </Card>
       )}
       {tid && type && (
         <div className="edit-quantities_btn">
           <React.Fragment>
-            {/* Show the Modal only when requestCompleted is true */}
+            <ErrorModal error={error} onClear={clearError} />
             {requestCompleted && (
               <Modal
                 show={showConfirmModal}
                 header={<div>ΕΠΙΤΥΧΗΣ ΚΑΤΑΧΩΡΗΣΗ</div>}
                 contentClass="specific-item__modal-content"
                 footerClass="specific-item__modal-actions"
-                footer={<Button onClick={handleOkClick}>OK</Button>}
+                footer={<Button onClick={handleBackClick}>OK</Button>}
               ></Modal>
             )}
             {isLoading && <LoadingSpinner asOverlay />}
@@ -273,9 +261,13 @@ const EditQuantities = () => {
               </Button>
             )}
           </React.Fragment>
-          <Button inverse onClick={handleBackClick}>
-            ΕΠΙΣΤΡΟΦΗ ΠΙΣΩ
-          </Button>
+          <br />
+          <br />
+          <div>
+            <Button inverse onClick={handleBackClick}>
+              ΕΠΙΣΤΡΟΦΗ ΠΙΣΩ
+            </Button>
+          </div>
         </div>
       )}
     </div>

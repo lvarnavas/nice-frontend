@@ -6,8 +6,10 @@ import "../shared.css";
 const WarehouseDestructionsList = (props) => {
   if (props.items.length === 0) {
     return (
-      <div className="center">
-        <h2>ΔΕΝ ΒΡΕΘΗΚΑΝ ΚΑΤΑΣΤΡΟΦΕΣ ΑΠΟΘΗΚΗΣ</h2>
+      <div className="products-components__container-list">
+        <Card>
+          <h2>ΔΕΝ ΒΡΕΘΗΚΑΝ ΚΑΤΑΣΤΡΟΦΕΣ ΑΠΟΘΗΚΗΣ</h2>
+        </Card>
       </div>
     );
   }

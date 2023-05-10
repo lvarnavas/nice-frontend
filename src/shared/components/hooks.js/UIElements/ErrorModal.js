@@ -7,7 +7,7 @@ const ErrorModal = (props) => {
   return (
     <Modal
       onCancel={props.onClear}
-      header="Πρόβλημα σύνδεσης!"
+      header="ΠΡΟΒΛΗΜΑ ΣΥΝΔΕΣΗΣ"
       show={!!props.error}
       footer={<Button onClick={props.onClear}>OK</Button>}
     >

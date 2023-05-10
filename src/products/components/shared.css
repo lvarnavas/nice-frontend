@@ -12,6 +12,10 @@
   color: #55c4d1;
 }
 
+.products-components__item-modal-btn button {
+  margin: 0 8px;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -25,10 +29,22 @@ td {
   border-bottom: 1px solid #ddd;
 }
 
+.products-components__item-btn {
+  margin-bottom: 12px;
+}
+
+.products-components__item-btn a {
+  padding: 6px;
+}
+
+.products-components__item-btn button {
+  padding: 6px;
+}
+
 tr:nth-child(even) {
   /* background-color: #f2f2f2; */
 }
 
 tr:hover {
-  background-color: #ddd;
+  background-color: #f1f0f0;
 }

@@ -38,16 +38,18 @@ const SingleCarReturnsItem = ({ item, onDelete }) => {
       <Modal
         show={showConfirmModal}
         onCancel={cancelDeleteHandler}
-        header="Επιβεβαίωση διαγραφής"
+        header="ΕΠΙΒΕΒΑΙΩΣΗ ΔΙΑΓΡΑΦΗΣ"
         footerClass="place-item__modal-actions"
         footer={
           <React.Fragment>
-            <Button inverse onClick={cancelDeleteHandler}>
-              ΑΚΥΡΩΣΗ
-            </Button>
-            <Button danger onClick={confirmDeleteHandler}>
-              ΔΙΑΓΡΑΦΗ
-            </Button>
+            <div className="products-components__item-modal-btn">
+              <Button inverse onClick={cancelDeleteHandler}>
+                ΑΚΥΡΩΣΗ
+              </Button>
+              <Button danger onClick={confirmDeleteHandler}>
+                ΔΙΑΓΡΑΦΗ
+              </Button>
+            </div>
           </React.Fragment>
         }
       >
@@ -66,13 +68,17 @@ const SingleCarReturnsItem = ({ item, onDelete }) => {
           return <td key={index}>{value}</td>;
         })}
         <td>
-          {isLoading && <LoadingSpinner asOverlay />}
-          <Button to={`/edit-quantities?tid=${item.id}&type=return`}>
-            Επεξεργασία
-          </Button>
-          <Button danger onClick={showDeleteWarningHandler}>
-            Διαγραφή
-          </Button>
+          <div className="products-components__item-btn">
+            {isLoading && <LoadingSpinner asOverlay />}
+            <Button inverse to={`/edit-quantities?tid=${item.id}&type=return`}>
+              <img src={require("../../../edit-btn.png")} alt="edit-btn" />
+            </Button>
+          </div>
+          <div className="products-components__item-btn">
+            <Button danger onClick={showDeleteWarningHandler}>
+              <img src={require("../../../delete-btn.png")} alt="delete-btn" />
+            </Button>
+          </div>
         </td>
       </tr>
     </React.Fragment>

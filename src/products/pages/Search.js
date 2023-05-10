@@ -124,7 +124,7 @@ const SearchPage = () => {
             </div>
             {isLoading && <LoadingSpinner asOverlay />}
             <div className="search-container__content-btn">
-              <Button onClick={noCarSearch}>Αναζήτηση</Button>
+              <Button onClick={noCarSearch}>ΑΝΑΖΗΤΗΣΗ</Button>
             </div>
           </div>
         );
@@ -189,7 +189,7 @@ const SearchPage = () => {
                         </div>
                       )}
                       <div className="search-container__content-btn">
-                        <Button onClick={carSearch}>Αναζήτηση</Button>
+                        <Button onClick={carSearch}>ΑΝΑΖΗΤΗΣΗ</Button>
                       </div>
                     </React.Fragment>
                   </div>

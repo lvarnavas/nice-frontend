@@ -1,12 +1,12 @@
-import { Link } from 'react-router-dom';
+import Card from "./shared/components/hooks.js/UIElements/Card";
+import "./products/components/shared.css";
 
 const NotFound = () => {
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', height: '100vh' }}>
-      <h2>Η σελίδα δεν βρέθηκε.</h2>
-      <Link to="/">
-        <button style={{ marginTop: '10px' }}>Επιστροφή στην αρχική</button>
-      </Link>
+    <div className="products-components__container-list">
+      <Card>
+        <h2>Η ΣΕΛΙΔΑ ΔΕ ΒΡΕΘΗΚΕ</h2>
+      </Card>
     </div>
   );
 };

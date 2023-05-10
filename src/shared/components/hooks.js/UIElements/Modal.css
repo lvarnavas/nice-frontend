@@ -10,22 +10,31 @@
 }
 
 .modal__header {
-  width: 100%;
+  /* width: 100%; */
   padding: 1rem 0.5rem;
-  background: #2a006e;
+  background: #55c4d1;
   color: white;
 }
 
 .modal__header h2 {
   margin: 0.5rem;
+  text-align: center;
+}
+
+.modal form {
+  text-align: center;
+}
+
+.modal footer {
+  padding: 1.5rem;
 }
 
 .modal__content {
+  text-align: center;
   padding: 1rem 0.5rem;
 }
 
 .modal__footer {
-  padding: 1rem 0.5rem;
 }
 
 .modal-enter {

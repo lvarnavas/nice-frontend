@@ -69,7 +69,7 @@ const Auth = () => {
               type="text"
               label="Όνομα χρήστη"
               placeholder="Εισάγετε το όνομα χρήστη"
-              validators={[VALIDATOR_REQUIRE(), VALIDATOR_MAXLENGTH(50)]}
+              validators={[VALIDATOR_REQUIRE(), VALIDATOR_MAXLENGTH(20)]}
               errorText="Παρακαλώ εισάγετε το όνομα χρήστη."
               onInput={inputHandler}
             />
@@ -79,13 +79,13 @@ const Auth = () => {
               type="password"
               label="Κωδικός πρόσβασης"
               placeholder="Εισάγετε κωδικό πρόσβασης"
-              validators={[VALIDATOR_REQUIRE()]}
+              validators={[VALIDATOR_REQUIRE(), VALIDATOR_MAXLENGTH(20)]}
               errorText="Παρακαλώ εισάγετε τον κωδικό πρόσβασης."
               onInput={inputHandler}
             />
             <br />
             <Button type="submit" disabled={!formState.isValid}>
-              {"Σύνδεση"}
+              {"ΣΥΝΔΕΣΗ"}
             </Button>
           </form>
         </Card>
