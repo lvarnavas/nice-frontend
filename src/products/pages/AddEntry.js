@@ -28,7 +28,7 @@ const AddEntry = () => {
   const [productsList, setProductsList] = useState([]);
 
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  
+
   const [formState, inputHandler] = useForm(
     {
       product: {
@@ -189,30 +189,19 @@ const AddEntry = () => {
     }
   };
 
-  const successHandler = async (event) => 
-  {
-    if (selectedOption === "Φόρτωμα")
-    {
+  const successHandler = async (event) => {
+    if (selectedOption === "Φόρτωμα") {
       history.push("loads/total-car-loads");
-    }
-    else if (selectedOption === "Επιστροφή")
-    {
+    } else if (selectedOption === "Επιστροφή") {
       history.push("returns/total-car-returns");
-    }
-    else if (selectedOption === "Καταστροφή οχήματος")
-    {
+    } else if (selectedOption === "Καταστροφή οχήματος") {
       history.push("destructions/total-car-destructions");
-    }
-    else if (selectedOption === "Καταστροφή αποθήκης")
-    {
+    } else if (selectedOption === "Καταστροφή αποθήκης") {
       history.push("destructions/total-warehouse-destructions");
-    }
-    else
-    {
+    } else {
       history.push("warehouse-status");
     }
-  
-  }
+  };
 
   const currentDate = new Date();
   const minDate = new Date(
@@ -240,6 +229,7 @@ const AddEntry = () => {
       </select>
       {selectedOption && (
         <div className="add-entry_content">
+          <br />
           {selectedOption === "Καταστροφή αποθήκης" && (
             <div className="add-entry_content">
               <br />
@@ -293,10 +283,7 @@ const AddEntry = () => {
                 ></Modal>
                 {isLoading && <LoadingSpinner asOverlay />}
                 <div className="add-entry_content-btn">
-                  <Button
-                    disabled={!formState.isValid}
-                    onClick={submitHandler}
-                  >
+                  <Button disabled={!formState.isValid} onClick={submitHandler}>
                     ΚΑΤΑΧΩΡΗΣΗ
                   </Button>
                 </div>
@@ -317,6 +304,7 @@ const AddEntry = () => {
           )}
           {selectedCar && (
             <div>
+              <br />
               <br />
               <div className="add-entry_content-title">
                 Ημ/νία καταχώρησης:<br></br>
@@ -369,10 +357,7 @@ const AddEntry = () => {
                 ></Modal>
                 {isLoading && <LoadingSpinner asOverlay />}
                 <div className="add-entry_content-btn">
-                  <Button
-                    disabled={!formState.isValid}
-                    onClick={submitHandler}
-                  >
+                  <Button disabled={!formState.isValid} onClick={submitHandler}>
                     ΚΑΤΑΧΩΡΗΣΗ
                   </Button>
                 </div>

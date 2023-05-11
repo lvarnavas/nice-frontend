@@ -21,6 +21,7 @@ const SingleCarLoadsList = (props) => {
   );
 
   const columnNames = Object.keys(props.items[0]);
+  columnNames.push("#");
 
   const getCustomColumnName = (columnName) => {
     if (columnName === "date") {

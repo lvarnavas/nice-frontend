@@ -118,26 +118,34 @@ const EditQuantities = () => {
   const getTitle = () => {
     if (type === "load") {
       return (
-        <Card>
-          <h2>ΕΠΕΞΕΡΓΑΣΙΑ ΦΟΡΤΩΜΑΤΟΣ ΜΕ ΚΩΔΙΚΟ {tid}</h2>
+        <Card className="edit-quantities_title">
+          <h2>
+            ΕΠΕΞΕΡΓΑΣΙΑ ΦΟΡΤΩΜΑΤΟΣ ΜΕ ΚΩΔΙΚΟ <span>{tid}</span>{" "}
+          </h2>
         </Card>
       );
     } else if (type === "return") {
       return (
-        <Card>
-          <h2>ΕΠΕΞΕΡΓΑΣΙΑ ΕΠΙΣΤΡΟΦΗΣ ΜΕ ΚΩΔΙΚΟ {tid}</h2>
+        <Card className="edit-quantities_title">
+          <h2>
+            ΕΠΕΞΕΡΓΑΣΙΑ ΕΠΙΣΤΡΟΦΗΣ ΜΕ ΚΩΔΙΚΟ <span>{tid}</span>
+          </h2>
         </Card>
       );
     } else if (type === "cardestruction") {
       return (
-        <Card>
-          <h2>ΕΠΕΞΕΡΓΑΣΙΑ ΚΑΤΑΣΤΡΟΦΗΣ ΟΧΗΜΑΤΟΣ ΜΕ ΚΩΔΙΚΟ {tid}</h2>
+        <Card className="edit-quantities_title">
+          <h2>
+            ΕΠΕΞΕΡΓΑΣΙΑ ΚΑΤΑΣΤΡΟΦΗΣ ΟΧΗΜΑΤΟΣ ΜΕ ΚΩΔΙΚΟ <span>{tid}</span>
+          </h2>
         </Card>
       );
     } else if (type === "warehousedestruction") {
       return (
-        <Card>
-          <h2>ΕΠΕΞΕΡΓΑΣΙΑ ΚΑΤΑΣΤΡΟΦΗΣ ΑΠΟΘΗΚΗΣ ΜΕ ΚΩΔΙΚΟ {tid}</h2>
+        <Card className="edit-quantities_title">
+          <h2>
+            ΕΠΕΞΕΡΓΑΣΙΑ ΚΑΤΑΣΤΡΟΦΗΣ ΑΠΟΘΗΚΗΣ ΜΕ ΚΩΔΙΚΟ <span>{tid}</span>
+          </h2>
         </Card>
       );
     }

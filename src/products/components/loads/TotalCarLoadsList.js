@@ -22,7 +22,7 @@ const TotalCarLoadsList = (props) => {
 
   console.log(formattedStartDate);
 
-  const columnNames = Object.keys(props.items[0]);
+  let columnNames = Object.keys(props.items[0]);
 
   const getCustomColumnName = (columnName) => {
     if (columnName === "Pinakida") {

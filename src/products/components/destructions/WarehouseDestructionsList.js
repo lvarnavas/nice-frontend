@@ -21,6 +21,8 @@ const WarehouseDestructionsList = (props) => {
   );
 
   const columnNames = Object.keys(props.items[0]);
+  columnNames.push("#");
+  console.log(columnNames);
 
   return (
     <div className="products-components__container-list ">
@@ -35,7 +37,7 @@ const WarehouseDestructionsList = (props) => {
           <thead>
             <tr>
               {columnNames.map((columnName, index) => {
-                if (columnName === "Date") {
+                if (columnName === "date") {
                   return <th key={index}>Ημ/νία</th>;
                 } else {
                   return <th key={index}>{columnName}</th>;
