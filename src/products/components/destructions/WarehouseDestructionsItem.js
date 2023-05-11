@@ -4,8 +4,19 @@ import LoadingSpinner from "../../../shared/components/hooks.js/UIElements/Loadi
 import ErrorModal from "../../../shared/components/hooks.js/UIElements/ErrorModal";
 import Modal from "../../../shared/components/hooks.js/UIElements/Modal";
 import { useHttpClient } from "../../../shared/components/hooks.js/http-hook";
+import moment from "moment"; 
 
 const WarehouseDestructionsItem = ({ item, onDelete }) => {
+  const currentDate = moment();
+  const itemDate = moment(item.Date);
+
+  // Compute the difference in days
+  const diffInDays = itemDate.diff(currentDate, 'days');
+
+  // Determine if the item date is within one day of the current date
+  const isWithinOneDay = diffInDays >= -1 && diffInDays <= 1;
+  //END DELETE CHECK
+
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
@@ -68,20 +79,24 @@ const WarehouseDestructionsItem = ({ item, onDelete }) => {
           return <td key={index}>{value}</td>;
         })}
         <td>
-          {isLoading && <LoadingSpinner asOverlay />}
-          <div className="products-components__item-btn">
-            <Button
-              inverse
-              to={`/edit-quantities?tid=${item.ID}&type=warehousedestruction`}
-            >
-              <img src={require("../../../edit-btn.png")} alt="edit-btn" />
-            </Button>
-          </div>
-          <div className="products-components__item-btn">
-            <Button danger onClick={showDeleteWarningHandler}>
-              <img src={require("../../../delete-btn.png")} alt="delete-btn" />
-            </Button>
-          </div>
+        {isLoading && <LoadingSpinner asOverlay />}
+          {isWithinOneDay && (
+            <div className="products-components__item-btn">
+              <Button
+                inverse
+                to={`/edit-quantities?tid=${item.ID}&type=warehousedestruction`}
+              >
+                <img src={require("../../../edit-btn.png")} alt="edit-btn" />
+              </Button>
+            </div>
+          )}
+          {isWithinOneDay && (
+            <div className="products-components__item-btn">
+              <Button danger onClick={showDeleteWarningHandler}>
+                <img src={require("../../../delete-btn.png")} alt="delete-btn" />
+              </Button>
+            </div>
+          )}
         </td>
       </tr>
     </React.Fragment>

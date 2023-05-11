@@ -4,8 +4,14 @@ import ErrorModal from "../../../shared/components/hooks.js/UIElements/ErrorModa
 import LoadingSpinner from "../../../shared/components/hooks.js/UIElements/LoadingSpinner";
 import Button from "../../../shared/components/hooks.js/FormElements/Button";
 import { useHttpClient } from "../../../shared/components/hooks.js/http-hook";
+import moment from "moment"; 
 
 const SingleCarReturnsItem = ({ item, onDelete }) => {
+  const currentDate = moment();
+  const itemDate = moment(item.date, "YYYY-MM-DD"); // assuming date format is "YYYY-MM-DD"
+  const diffInDays = itemDate.diff(currentDate, 'days');
+  const isWithinOneDay = diffInDays >= -1 && diffInDays <= 1;
+  //END DATE
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
@@ -67,18 +73,22 @@ const SingleCarReturnsItem = ({ item, onDelete }) => {
           }
           return <td key={index}>{value}</td>;
         })}
-        <td>
-          <div className="products-components__item-btn">
-            {isLoading && <LoadingSpinner asOverlay />}
-            <Button inverse to={`/edit-quantities?tid=${item.id}&type=return`}>
-              <img src={require("../../../edit-btn.png")} alt="edit-btn" />
-            </Button>
-          </div>
-          <div className="products-components__item-btn">
-            <Button danger onClick={showDeleteWarningHandler}>
-              <img src={require("../../../delete-btn.png")} alt="delete-btn" />
-            </Button>
-          </div>
+      <td>
+          {isLoading && <LoadingSpinner asOverlay />}
+          {isWithinOneDay && (
+            <div className="products-components__item-btn">
+              <Button inverse to={`/edit-quantities?tid=${item.id}&type=return`}>
+                <img src={require("../../../edit-btn.png")} alt="edit-btn" />
+              </Button>
+            </div>
+          )}
+          {isWithinOneDay && (
+            <div className="products-components__item-btn">
+              <Button danger onClick={showDeleteWarningHandler}>
+                <img src={require("../../../delete-btn.png")} alt="delete-btn" />
+              </Button>
+            </div>
+          )}
         </td>
       </tr>
     </React.Fragment>
