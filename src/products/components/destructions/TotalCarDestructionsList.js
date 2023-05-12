@@ -20,6 +20,13 @@ const TotalCarDestructionsList = (props) => {
   );
   const columnNames = Object.keys(props.items[0]);
 
+  // Add a reducer to calculate the sum of all quantities starting from the fourth column
+  const sums = columnNames.slice(1).map((columnName) => {
+    return props.items.reduce((acc, item) => {
+      return acc + item[columnName];
+    }, 0);
+  });
+
   const getCustomColumnName = (columnName) => {
     if (columnName === "car_name") {
       return "Πινακίδα";
@@ -48,6 +55,13 @@ const TotalCarDestructionsList = (props) => {
             {props.items.map((item, index) => {
               return <TotalCarDestructionsItem key={index} item={item} />;
             })}
+            <tr>
+              <td>Σύνολο</td>
+
+              {sums.map((sum, index) => (
+                <td key={index}>{sum}</td>
+              ))}
+            </tr>
           </tbody>
         </table>
       </div>

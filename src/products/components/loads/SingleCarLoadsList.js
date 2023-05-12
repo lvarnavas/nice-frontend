@@ -21,7 +21,13 @@ const SingleCarLoadsList = (props) => {
   );
 
   const columnNames = Object.keys(props.items[0]);
-  columnNames.push("#");
+  columnNames.push("-");
+  // Add a reducer to calculate the sum of all quantities starting from the fourth column
+  const sums = columnNames.slice(2, -1).map((columnName) => {
+    return props.items.reduce((acc, item) => {
+      return acc + item[columnName];
+    }, 0);
+  });
 
   const getCustomColumnName = (columnName) => {
     if (columnName === "date") {
@@ -59,6 +65,14 @@ const SingleCarLoadsList = (props) => {
                 />
               );
             })}
+            <tr>
+              <td>Σύνολο</td>
+              <td>-</td>
+              {sums.map((sum, index) => (
+                <td key={index}>{sum}</td>
+              ))}
+              <td>-</td>
+            </tr>
           </tbody>
         </table>
       </div>

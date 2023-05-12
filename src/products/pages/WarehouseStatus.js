@@ -8,6 +8,7 @@ import WarehouseStatusList from "../components/WarehouseStatusList";
 const WarehouseStatus = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedWarehouse, setLoadedWarehouse] = useState();
+  const [destructionStatus, setDestructionStatus] = useState([]);
 
   useEffect(() => {
     const fetchWarehouse = async () => {
@@ -21,6 +22,18 @@ const WarehouseStatus = () => {
     fetchWarehouse();
   }, [sendRequest]);
 
+  useEffect(() => {
+    const fetchDestructionStatus = async () => {
+      try {
+        const destructionData = await sendRequest(
+          "http://localhost:5000/api/products/total-products-destructions-status"
+        );
+        setDestructionStatus(destructionData.totalProductsDestructions);
+      } catch (err) {}
+    };
+    fetchDestructionStatus();
+  }, [sendRequest]);
+
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
@@ -30,7 +43,10 @@ const WarehouseStatus = () => {
         </div>
       )}
       {!isLoading && loadedWarehouse && (
-        <WarehouseStatusList items={loadedWarehouse} />
+        <WarehouseStatusList
+          items={loadedWarehouse}
+          destructionStatus={destructionStatus}
+        />
       )}
     </React.Fragment>
   );

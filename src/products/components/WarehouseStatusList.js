@@ -10,6 +10,13 @@ const WarehouseStatusList = (props) => {
       </div>
     );
   }
+
+  const getDestructionStatus = (id) => {
+    const status = props.destructionStatus.find(
+      (item) => item.product_id === id
+    );
+    return status ? status.total_quantity : "N/A";
+  };
   return (
     <div className="products-components__container-list">
       <Card>
@@ -22,6 +29,7 @@ const WarehouseStatusList = (props) => {
               {/*<th>ID</th> */}
               <th>Όνομα Προίόντος</th>
               <th>Ποσότητα</th>
+              <th>Κατεστραμμένα</th>
             </tr>
           </thead>
           {props.items.map((warehouse) => {
@@ -31,6 +39,7 @@ const WarehouseStatusList = (props) => {
                 id={warehouse.product_id}
                 productName={warehouse.product_name}
                 quantity={warehouse.current_quantity}
+                totalQuantity={getDestructionStatus(warehouse.product_id)}
               />
             );
           })}

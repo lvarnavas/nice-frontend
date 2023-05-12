@@ -21,8 +21,13 @@ const WarehouseDestructionsList = (props) => {
   );
 
   const columnNames = Object.keys(props.items[0]);
-  columnNames.push("#");
-  console.log(columnNames);
+  columnNames.push("-");
+  // Add a reducer to calculate the sum of all quantities starting from the fourth column
+  const sums = columnNames.slice(2, -1).map((columnName) => {
+    return props.items.reduce((acc, item) => {
+      return acc + item[columnName];
+    }, 0);
+  });
 
   return (
     <div className="products-components__container-list ">
@@ -55,6 +60,14 @@ const WarehouseDestructionsList = (props) => {
                 />
               );
             })}
+            <tr>
+              <td>Σύνολο</td>
+              <td>-</td>
+              {sums.map((sum, index) => (
+                <td key={index}>{sum}</td>
+              ))}
+              <td>-</td>
+            </tr>
           </tbody>
         </table>
       </div>
