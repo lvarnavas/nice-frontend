@@ -28,6 +28,7 @@ const AddEntry = () => {
   const [productsList, setProductsList] = useState([]);
 
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [originalCarList, setOriginalCarList] = useState([]);
 
   const [formState, inputHandler] = useForm(
     {
@@ -47,6 +48,7 @@ const AddEntry = () => {
           "http://localhost:5000/api/products/get-car-list"
         );
         console.log(carListData);
+        setOriginalCarList(carListData.carslist);
         setCarList(carListData.carslist);
       } catch (err) {}
     };
@@ -66,6 +68,15 @@ const AddEntry = () => {
   const handleSelect = (e) => {
     setSelectedOption(e.target.value);
     setSelectedCar("");
+    if (
+      e.target.value === "Επιστροφή" ||
+      e.target.value === "Καταστροφή οχήματος" ||
+      e.target.value === "Καταστροφή αποθήκης"
+    ) {
+      setCarList(originalCarList.filter((car) => car.pinakida !== "ΝΤΑΛΙΚΑ"));
+    } else {
+      setCarList(originalCarList);
+    }
   };
 
   const handleCarSelect = (e) => {

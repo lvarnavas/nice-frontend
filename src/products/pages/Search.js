@@ -136,7 +136,7 @@ const SearchPage = () => {
               onChange={(e) => setSelectedCar(e.target.value)}
             >
               <option value="" disabled>
-                Επιλέξτε οχήμα
+                Επιλέξτε όχημα
               </option>
               {carList.map((car) => (
                 <option key={car.id} value={car.id}>
@@ -154,9 +154,14 @@ const SearchPage = () => {
                     Επιλέξτε κατηγορία
                   </option>
                   <option value="Φορτώματα">Φορτώματα</option>
-                  <option value="Επιστροφές">Επιστροφές</option>
-                  <option value="Καταστροφές">Καταστροφές</option>
+                  <option value="Επιστροφές" disabled={selectedCar === "1"}>
+                    Επιστροφές
+                  </option>
+                  <option value="Καταστροφές" disabled={selectedCar === "1"}>
+                    Καταστροφές
+                  </option>
                 </select>
+
                 {selectedCategory && (
                   <div className="search-container__content-date">
                     <div className="search-container__content-title">
