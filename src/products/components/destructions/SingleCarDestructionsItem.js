@@ -5,6 +5,7 @@ import LoadingSpinner from "../../../shared/components/hooks.js/UIElements/Loadi
 import Button from "../../../shared/components/hooks.js/FormElements/Button";
 import { useHttpClient } from "../../../shared/components/hooks.js/http-hook";
 import moment from "moment";
+import "../shared.css";
 
 const SingleCarDestructionsItem = ({ item, onDelete }) => {
   const currentDate = moment();
@@ -74,31 +75,25 @@ const SingleCarDestructionsItem = ({ item, onDelete }) => {
           }
           return <td key={index}>{value}</td>;
         })}
-        <td>
+        <td className="products-compontents__edit-item">
           {isLoading && <LoadingSpinner asOverlay />}
           {isWithinOneDay ? (
-            <div className="products-components__item-btn">
-              <Button
-                inverse
-                to={`/edit-quantities?tid=${item.id}&type=cardestruction`}
-              >
-                <img src={require("../../../edit-btn.png")} alt="edit-btn" />
-              </Button>
-            </div>
+            <Button
+              inverse
+              to={`/edit-quantities?tid=${item.id}&type=cardestruction`}
+            >
+              <img src={require("../../../edit-btn.png")} alt="edit-btn" />
+            </Button>
           ) : (
             <Button disabled inverse>
               <img src={require("../../../edit-btn.png")} alt="edit-btn" />
             </Button>
           )}
+          <div className="spacer"></div>
           {isWithinOneDay ? (
-            <div className="products-components__item-btn">
-              <Button danger onClick={showDeleteWarningHandler}>
-                <img
-                  src={require("../../../delete-btn.png")}
-                  alt="delete-btn"
-                />
-              </Button>
-            </div>
+            <Button danger onClick={showDeleteWarningHandler}>
+              <img src={require("../../../delete-btn.png")} alt="delete-btn" />
+            </Button>
           ) : (
             <Button disabled danger>
               <img src={require("../../../delete-btn.png")} alt="delete-btn" />

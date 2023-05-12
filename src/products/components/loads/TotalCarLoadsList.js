@@ -60,7 +60,7 @@ const TotalCarLoadsList = (props) => {
               return <TotalCarLoadsItem key={index} item={item} />;
             })}
             <tr>
-              <td>Σύνολο</td>
+              <td className="table-sum">Σύνολο</td>
 
               {sums.map((sum, index) => (
                 <td key={index}>{sum}</td>

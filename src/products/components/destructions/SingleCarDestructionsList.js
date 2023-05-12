@@ -66,7 +66,7 @@ const SingleCarDestructionsList = (props) => {
               );
             })}
             <tr>
-              <td>Σύνολο</td>
+              <td className="table-sum">Σύνολο</td>
               <td>-</td>
               {sums.map((sum, index) => (
                 <td key={index}>{sum}</td>

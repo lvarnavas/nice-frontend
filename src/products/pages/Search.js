@@ -99,7 +99,7 @@ const SearchPage = () => {
       case "Αναζήτηση συνολικών επιστροφών":
       case "Αναζήτηση καταστροφών αποθήκης":
         return (
-          <div className="search-container__content-date">
+          <>
             <div className="search-container__content-title">
               Αναζήτηση από:
             </div>
@@ -126,11 +126,11 @@ const SearchPage = () => {
             <div className="search-container__content-btn">
               <Button onClick={noCarSearch}>ΑΝΑΖΗΤΗΣΗ</Button>
             </div>
-          </div>
+          </>
         );
       case "Αναζήτηση βάσει οχήματος":
         return (
-          <div>
+          <>
             <select
               value={selectedCar || ""}
               onChange={(e) => setSelectedCar(e.target.value)}
@@ -145,7 +145,7 @@ const SearchPage = () => {
               ))}
             </select>
             {selectedCar && (
-              <div>
+              <>
                 <select
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
@@ -199,9 +199,9 @@ const SearchPage = () => {
                     </React.Fragment>
                   </div>
                 )}
-              </div>
+              </>
             )}
-          </div>
+          </>
         );
       default:
         return null;
@@ -210,10 +210,10 @@ const SearchPage = () => {
 
   return (
     <div className="search-container">
-      <Card className="search-container-title">
-        <h2>ΑΝΑΖΗΤΗΣΗ ΚΑΤΑΧΩΡΗΣΕΩΝ</h2>
-      </Card>
       <div className="search-container__content">
+        <Card className="search-container-title">
+          <h2>ΑΝΑΖΗΤΗΣΗ ΚΑΤΑΧΩΡΗΣΕΩΝ</h2>
+        </Card>
         <select
           value={searchType}
           onChange={(e) => setSearchType(e.target.value)}

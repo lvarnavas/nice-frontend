@@ -16,13 +16,8 @@ import TotalCarLoads from "./products/pages/loads/TotalCarLoads";
 import SingleCarDestructions from "./products/pages/destructions/SingleCarDestructions";
 import TotalCarDestructions from "./products/pages/destructions/TotalCarDestructions";
 import WarehouseDestructions from "./products/pages/destructions/WarehouseDestructions";
-import DailyCarDestructions from "./products/pages/destructions/DailyCarDestructions";
 import SingleCarReturns from "./products/pages/returns/SingleCarReturns";
 import TotalCarReturns from "./products/pages/returns/TotalCarReturns";
-import AddNewLoad from "./products/pages/loads/AddNewLoad";
-import AddNewReturn from "./products/pages/returns/AddNewReturn";
-import AddNewDestruction from "./products/pages/destructions/AddNewCarDestruction";
-import AddNewWarehouseDestruction from "./products/pages/destructions/AddNewWarehouseDestruction";
 import NotFound from "./NotFound";
 import SearchPage from "./products/pages/Search";
 import AddEntry from "./products/pages/AddEntry";
@@ -52,10 +47,6 @@ const App = () => {
             <TotalCarLoads />
           </Route>
 
-          <Route path="/loads/add-new-load">
-            <AddNewLoad />
-          </Route>
-
           <Route path="/destructions/single-car-destructions">
             <SingleCarDestructions />
           </Route>
@@ -68,18 +59,6 @@ const App = () => {
             <WarehouseDestructions />
           </Route>
 
-          <Route path="/destructions/daily-car-destructions">
-            <DailyCarDestructions />
-          </Route>
-
-          <Route path="/destructions/add-new-destruction">
-            <AddNewDestruction />
-          </Route>
-
-          <Route path="/destructions/add-new-warehouse-destruction">
-            <AddNewWarehouseDestruction />
-          </Route>
-
           <Route path="/returns/single-car-returns">
             <SingleCarReturns />
           </Route>
@@ -88,9 +67,6 @@ const App = () => {
             <TotalCarReturns />
           </Route>
 
-          <Route path="/returns/add-new-return">
-            <AddNewReturn />
-          </Route>
           <Route path="/edit-quantities">
             <EditQuantities />
           </Route>

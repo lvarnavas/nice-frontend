@@ -5,6 +5,7 @@ import ErrorModal from "../../../shared/components/hooks.js/UIElements/ErrorModa
 import Modal from "../../../shared/components/hooks.js/UIElements/Modal";
 import { useHttpClient } from "../../../shared/components/hooks.js/http-hook";
 import moment from "moment";
+import "../shared.css";
 
 const WarehouseDestructionsItem = ({ item, onDelete }) => {
   const currentDate = moment();
@@ -92,7 +93,7 @@ const WarehouseDestructionsItem = ({ item, onDelete }) => {
               <img src={require("../../../edit-btn.png")} alt="edit-btn" />
             </Button>
           )}
-          <br />
+          <div className="spacer"></div>
           {isWithinOneDay ? (
             <Button danger onClick={showDeleteWarningHandler}>
               <img src={require("../../../delete-btn.png")} alt="delete-btn" />

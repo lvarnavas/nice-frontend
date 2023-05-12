@@ -228,155 +228,154 @@ const AddEntry = () => {
 
   return (
     <div className="add-entry_container">
-      <Card className="add-entry_container-title">
-        <h2>ΔΗΜΙΟΥΡΓΙΑ ΝΕΑΣ ΚΑΤΑΧΩΡΗΣΗΣ</h2>
-      </Card>
-      <select value={selectedOption} onChange={handleSelect}>
-        <option value="">Επιλογή καταχώρησης</option>
-        <option value="Φόρτωμα">Φόρτωμα</option>
-        <option value="Επιστροφή">Επιστροφή</option>
-        <option value="Καταστροφή οχήματος">Καταστροφή οχήματος</option>
-        <option value="Καταστροφή αποθήκης">Καταστροφή αποθήκης</option>
-      </select>
-      {selectedOption && (
-        <div className="add-entry_content">
-          <br />
-          {selectedOption === "Καταστροφή αποθήκης" && (
-            <div className="add-entry_content">
-              <br />
-
-              <div className="add-entry_content-title">Ημ/νία καταχώρησης</div>
-              <div className="date-container">
-                <DatePicker
-                  selected={date}
-                  onChange={handleDateChange}
-                  dateFormat="dd/MM/yyyy"
-                  locale={el}
-                  minDate={minDate}
-                  maxDate={maxDate}
-                />
-              </div>
-              <br />
-              <br />
-              <Card className="">
-                <h2>ΕΙΣΑΓΩΓΗ ΠΟΣΟΤΗΤΩΝ</h2>
-              </Card>
-              <br />
-              <br />
-              {productsList.map((product) => (
-                <div className="" key={product.id}>
-                  <Input
-                    id={`product-${product.id}`}
-                    element="input"
-                    type="text"
-                    placeholder="0"
-                    label={product.name}
-                    validators={[
-                      VALIDATOR_MIN(0),
-                      VALIDATOR_MAX(1999),
-                      VALIDATOR_REQUIRE(),
-                    ]}
-                    errorText="Παρακαλώ εισάγετε έναν έγκυρο αριθμό."
-                    onInput={inputHandler}
-                    initialValue="0"
-                    initialValid={true}
+      <div className="add-entry_content">
+        <Card className="add-entry_container-title">
+          <h2>ΔΗΜΙΟΥΡΓΙΑ ΝΕΑΣ ΚΑΤΑΧΩΡΗΣΗΣ</h2>
+        </Card>
+        <select value={selectedOption} onChange={handleSelect}>
+          <option value="" disabled>
+            Επιλογή καταχώρησης
+          </option>
+          <option value="Φόρτωμα">Φόρτωμα</option>
+          <option value="Επιστροφή">Επιστροφή</option>
+          <option value="Καταστροφή οχήματος">Καταστροφή οχήματος</option>
+          <option value="Καταστροφή αποθήκης">Καταστροφή αποθήκης</option>
+        </select>
+        {selectedOption && (
+          <>
+            {selectedOption === "Καταστροφή αποθήκης" && (
+              <div className="add-entry_spacer">
+                <div className="add-entry_content-title">
+                  Ημ/νία καταχώρησης
+                </div>
+                <div className="date-container">
+                  <DatePicker
+                    selected={date}
+                    onChange={handleDateChange}
+                    dateFormat="dd/MM/yyyy"
+                    locale={el}
+                    minDate={minDate}
+                    maxDate={maxDate}
                   />
                 </div>
-              ))}
-              <React.Fragment>
-                <ErrorModal error={error} onClear={clearError} />
-                <Modal
-                  show={showSuccessModal}
-                  header={<div>ΕΠΙΤΥΧΗΣ ΚΑΤΑΧΩΡΗΣΗ</div>}
-                  contentClass="specific-item__modal-content"
-                  footerClass="specific-item__modal-actions"
-                  footer={<Button onClick={successHandler}>OK</Button>}
-                ></Modal>
-                {isLoading && <LoadingSpinner asOverlay />}
-                <div className="add-entry_content-btn">
-                  <Button disabled={!formState.isValid} onClick={submitHandler}>
-                    ΚΑΤΑΧΩΡΗΣΗ
-                  </Button>
-                </div>
-              </React.Fragment>
-            </div>
-          )}
-          {selectedOption !== "Καταστροφή αποθήκης" && (
-            <div className="add-entry_content">
+                <Card className="add-entry_spacer">
+                  <h2>ΕΙΣΑΓΩΓΗ ΠΟΣΟΤΗΤΩΝ</h2>
+                </Card>
+                {productsList.map((product) => (
+                  <div className="add-entry_spacer" key={product.id}>
+                    <Input
+                      id={`product-${product.id}`}
+                      element="input"
+                      type="text"
+                      placeholder="0"
+                      label={product.name}
+                      validators={[
+                        VALIDATOR_MIN(0),
+                        VALIDATOR_MAX(1999),
+                        VALIDATOR_REQUIRE(),
+                      ]}
+                      errorText="Παρακαλώ εισάγετε έναν έγκυρο αριθμό."
+                      onInput={inputHandler}
+                      initialValue="0"
+                      initialValid={true}
+                    />
+                  </div>
+                ))}
+                <React.Fragment>
+                  <ErrorModal error={error} onClear={clearError} />
+                  <Modal
+                    show={showSuccessModal}
+                    header={<div>ΕΠΙΤΥΧΗΣ ΚΑΤΑΧΩΡΗΣΗ</div>}
+                    contentClass="specific-item__modal-content"
+                    footerClass="specific-item__modal-actions"
+                    footer={<Button onClick={successHandler}>OK</Button>}
+                  ></Modal>
+                  {isLoading && <LoadingSpinner asOverlay />}
+                  <div className="add-entry_content-btn">
+                    <Button
+                      disabled={!formState.isValid}
+                      onClick={submitHandler}
+                    >
+                      ΚΑΤΑΧΩΡΗΣΗ
+                    </Button>
+                  </div>
+                </React.Fragment>
+              </div>
+            )}
+            {selectedOption !== "Καταστροφή αποθήκης" && (
               <select value={selectedCar} onChange={handleCarSelect}>
-                <option value="">Επιλογή οχήματος</option>
+                <option value="" disabled>
+                  Επιλογή οχήματος
+                </option>
                 {carList.map((car) => (
                   <option key={car.id} value={car.id}>
                     {car.pinakida}
                   </option>
                 ))}
               </select>
-            </div>
-          )}
-          {selectedCar && (
-            <div>
-              <br />
-              <br />
-              <div className="add-entry_content-title">
-                Ημ/νία καταχώρησης:<br></br>
-              </div>
-              <div className="date-container">
-                <DatePicker
-                  selected={date}
-                  onChange={handleDateChange}
-                  dateFormat="dd/MM/yyyy"
-                  locale={el}
-                  minDate={minDate}
-                  maxDate={maxDate}
-                />
-              </div>
-              <br />
-              <br />
-              <Card className="">
-                <h2>ΕΙΣΑΓΩΓΗ ΠΟΣΟΤΗΤΩΝ</h2>
-              </Card>
-              <br />
-              <br />
-              {productsList.map((product) => (
-                <div className="" key={product.id}>
-                  <Input
-                    id={`product-${product.id}`}
-                    element="input"
-                    type="text"
-                    placeholder="0"
-                    label={product.name}
-                    validators={[
-                      VALIDATOR_MIN(0),
-                      VALIDATOR_MAX(1999),
-                      VALIDATOR_REQUIRE(),
-                    ]}
-                    errorText="Παρακαλώ εισάγετε έναν έγκυρο αιρθμό."
-                    onInput={inputHandler}
-                    initialValue="0"
-                    initialValid={true}
+            )}
+            {selectedCar && (
+              <div className="add-entry_spacer">
+                <div className="add-entry_content-title">
+                  Ημ/νία καταχώρησης:<br></br>
+                </div>
+                <div className="date-container">
+                  <DatePicker
+                    selected={date}
+                    onChange={handleDateChange}
+                    dateFormat="dd/MM/yyyy"
+                    locale={el}
+                    minDate={minDate}
+                    maxDate={maxDate}
                   />
                 </div>
-              ))}
-              <React.Fragment>
-                <ErrorModal error={error} onClear={clearError} />
-                <Modal
-                  show={showSuccessModal}
-                  header={<div>ΕΠΙΤΥΧΗΣ ΚΑΤΑΧΩΡΗΣΗ</div>}
-                  contentClass="specific-item__modal-content"
-                  footerClass="specific-item__modal-actions"
-                  footer={<Button onClick={successHandler}>OK</Button>}
-                ></Modal>
-                {isLoading && <LoadingSpinner asOverlay />}
-                <div className="add-entry_content-btn">
-                  <Button disabled={!formState.isValid} onClick={submitHandler}>
-                    ΚΑΤΑΧΩΡΗΣΗ
-                  </Button>
-                </div>
-              </React.Fragment>
-            </div>
-          )}
-        </div>
-      )}
+                <Card className="add-entry_spacer">
+                  <h2>ΕΙΣΑΓΩΓΗ ΠΟΣΟΤΗΤΩΝ</h2>
+                </Card>
+                {productsList.map((product) => (
+                  <div className="add-entry_spacer" key={product.id}>
+                    <Input
+                      id={`product-${product.id}`}
+                      element="input"
+                      type="text"
+                      placeholder="0"
+                      label={product.name}
+                      validators={[
+                        VALIDATOR_MIN(0),
+                        VALIDATOR_MAX(1999),
+                        VALIDATOR_REQUIRE(),
+                      ]}
+                      errorText="Παρακαλώ εισάγετε έναν έγκυρο αιρθμό."
+                      onInput={inputHandler}
+                      initialValue="0"
+                      initialValid={true}
+                    />
+                  </div>
+                ))}
+                <React.Fragment>
+                  <ErrorModal error={error} onClear={clearError} />
+                  <Modal
+                    show={showSuccessModal}
+                    header={<div>ΕΠΙΤΥΧΗΣ ΚΑΤΑΧΩΡΗΣΗ</div>}
+                    contentClass="specific-item__modal-content"
+                    footerClass="specific-item__modal-actions"
+                    footer={<Button onClick={successHandler}>OK</Button>}
+                  ></Modal>
+                  {isLoading && <LoadingSpinner asOverlay />}
+                  <div className="add-entry_content-btn">
+                    <Button
+                      disabled={!formState.isValid}
+                      onClick={submitHandler}
+                    >
+                      ΚΑΤΑΧΩΡΗΣΗ
+                    </Button>
+                  </div>
+                </React.Fragment>
+              </div>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 };
