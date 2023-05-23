@@ -94,8 +94,6 @@ const AddEntry = () => {
     return `${year}-${month}-${day}`;
   };
 
-  console.log(formatDate(date));
-
   let history = useHistory();
 
   const submitHandler = async (event) => {
@@ -149,7 +147,6 @@ const AddEntry = () => {
     } else if (selectedOption === "Καταστροφή οχήματος") {
       try {
         setShowSuccessModal(false);
-        console.log(typeof selectedCar);
         await sendRequest(
           "http://localhost:5000/api/products/add-car-destructions",
           "POST",
@@ -193,11 +190,8 @@ const AddEntry = () => {
     }
   };
 
-  console.log(selectedCar);
-
   const successHandler = async (event) => {
     if (selectedOption === "Φόρτωμα") {
-      console.log(selectedCar);
       if (selectedCar === "1") {
         history.push(
           `/loads/single-car-loads?carid=1&startdate=${formatDate(

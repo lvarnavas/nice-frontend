@@ -1,5 +1,4 @@
 const TotalCarDestructionsItem = ({ item }) => {
-  console.log(item);
   return (
     <tr>
       {Object.entries(item).map(([key, value], index) => (

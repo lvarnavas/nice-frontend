@@ -39,7 +39,6 @@ const SingleCarDestructions = () => {
         const car = carListData.carslist.find(
           (car) => car.id === parseInt(carId)
         );
-        console.log(car);
         if (car) {
           setCarName(car.pinakida);
         }

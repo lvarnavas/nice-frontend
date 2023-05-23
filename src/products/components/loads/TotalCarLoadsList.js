@@ -20,8 +20,6 @@ const TotalCarLoadsList = (props) => {
     "DD-MM-YYYY"
   );
 
-  console.log(formattedStartDate);
-
   let columnNames = Object.keys(props.items[0]);
 
   // const removeColumn = columnNames.filter(item => item !== )

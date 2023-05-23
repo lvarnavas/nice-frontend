@@ -14,7 +14,6 @@ const WarehouseDestructions = () => {
     "enddate",
     "YYYY-MM-DD"
   );
-  console.log(formattedStartDate, formattedEndDate);
 
   useEffect(() => {
     const fetchDestructions = async () => {
@@ -32,8 +31,6 @@ const WarehouseDestructions = () => {
     };
     fetchDestructions();
   }, [sendRequest, formattedStartDate, formattedEndDate]);
-
-  console.log(loadedDestructions);
 
   const itemDeleteHandler = (deletedItemId) => {
     setLoadedDestructions((prevWarehouseDestructions) =>

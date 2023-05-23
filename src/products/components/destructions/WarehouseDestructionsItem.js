@@ -31,7 +31,6 @@ const WarehouseDestructionsItem = ({ item, onDelete }) => {
 
   const confirmDeleteHandler = async () => {
     setShowConfirmModal(false);
-    console.log(item);
     try {
       await sendRequest(
         `http://localhost:5000/api/products/delete-item/${item.ID}`,
