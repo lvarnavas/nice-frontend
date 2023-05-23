@@ -3,20 +3,20 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import el from "date-fns/locale/el";
-import { useHttpClient } from "../../shared/components/hooks.js/http-hook";
-import Button from "../../shared/components/hooks.js/FormElements/Button";
-import ErrorModal from "../../shared/components/hooks.js/UIElements/ErrorModal";
-import LoadingSpinner from "../../shared/components/hooks.js/UIElements/LoadingSpinner";
-import Modal from "../../shared/components/hooks.js/UIElements/Modal";
+import { useHttpClient } from "../../shared/components/hooks/http-hook";
+import Button from "../../shared/components/FormElements/Button";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
+import Modal from "../../shared/components/UIElements/Modal";
 import { useHistory } from "react-router-dom";
-import { useForm } from "../../shared/components/hooks.js/form-hook";
+import { useForm } from "../../shared/components/hooks/form-hook";
 import {
   VALIDATOR_MAX,
   VALIDATOR_MIN,
   VALIDATOR_REQUIRE,
-} from "../../shared/components/hooks.js/util/validators";
-import Input from "../../shared/components/hooks.js/FormElements/Input";
-import Card from "../../shared/components/hooks.js/UIElements/Card";
+} from "../../shared/components/util/validators";
+import Input from "../../shared/components/FormElements/Input";
+import Card from "../../shared/components/UIElements/Card";
 import "./AddEntry.css";
 
 const AddEntry = () => {
@@ -47,7 +47,6 @@ const AddEntry = () => {
         const carListData = await sendRequest(
           "http://localhost:5000/api/products/get-car-list"
         );
-        console.log(carListData);
         setOriginalCarList(carListData.carslist);
         setCarList(carListData.carslist);
       } catch (err) {}
@@ -87,10 +86,6 @@ const AddEntry = () => {
     setDate(date);
   };
 
-  // const showWarningHandler = () => {
-  //   setShowSuccessModal(true);
-  // };
-
   const formatDate = (inputDate) => {
     const dateObject = new Date(inputDate);
     const year = dateObject.getFullYear();
@@ -98,6 +93,8 @@ const AddEntry = () => {
     const day = String(dateObject.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
   };
+
+  console.log(formatDate(date));
 
   let history = useHistory();
 
@@ -126,7 +123,6 @@ const AddEntry = () => {
           }
         );
         setShowSuccessModal(true);
-        //history.push("loads/total-car-loads");
       } catch (err) {}
     } else if (selectedOption === "Επιστροφή") {
       try {
@@ -149,7 +145,6 @@ const AddEntry = () => {
           }
         );
         setShowSuccessModal(true);
-        //history.push("/returns/total-car-returns");
       } catch (err) {}
     } else if (selectedOption === "Καταστροφή οχήματος") {
       try {
@@ -173,7 +168,6 @@ const AddEntry = () => {
           }
         );
         setShowSuccessModal(true);
-        //history.push("/destructions/total-car-destructions");
       } catch (err) {}
     } else if (selectedOption === "Καταστροφή αποθήκης") {
       setShowSuccessModal(false);
@@ -195,20 +189,46 @@ const AddEntry = () => {
           }
         );
         setShowSuccessModal(true);
-        //history.push("/destructions/total-warehouse-destructions");
       } catch (err) {}
     }
   };
 
+  console.log(selectedCar);
+
   const successHandler = async (event) => {
     if (selectedOption === "Φόρτωμα") {
-      history.push("loads/total-car-loads");
+      console.log(selectedCar);
+      if (selectedCar === "1") {
+        history.push(
+          `/loads/single-car-loads?carid=1&startdate=${formatDate(
+            date
+          )}&enddate=${formatDate(date)}`
+        );
+      } else {
+        history.push(
+          `/loads/total-car-loads?startdate=${formatDate(
+            date
+          )}&enddate=${formatDate(date)}`
+        );
+      }
     } else if (selectedOption === "Επιστροφή") {
-      history.push("returns/total-car-returns");
+      history.push(
+        `/returns/total-car-returns?startdate=${formatDate(
+          date
+        )}&enddate=${formatDate(date)}`
+      );
     } else if (selectedOption === "Καταστροφή οχήματος") {
-      history.push("destructions/total-car-destructions");
+      history.push(
+        `/destructions/total-car-destructions?startdate=${formatDate(
+          date
+        )}&enddate=${formatDate(date)}`
+      );
     } else if (selectedOption === "Καταστροφή αποθήκης") {
-      history.push("destructions/total-warehouse-destructions");
+      history.push(
+        `/destructions/total-warehouse-destructions?startdate=${formState(
+          date
+        )}&enddate=${formatDate(date)}`
+      );
     } else {
       history.push("warehouse-status");
     }

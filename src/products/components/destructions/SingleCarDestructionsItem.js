@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Modal from "../../../shared/components/hooks.js/UIElements/Modal";
-import ErrorModal from "../../../shared/components/hooks.js/UIElements/ErrorModal";
-import LoadingSpinner from "../../../shared/components/hooks.js/UIElements/LoadingSpinner";
-import Button from "../../../shared/components/hooks.js/FormElements/Button";
-import { useHttpClient } from "../../../shared/components/hooks.js/http-hook";
+import Modal from "../../../shared/components/UIElements/Modal";
+import ErrorModal from "../../../shared/components/UIElements/ErrorModal";
+import LoadingSpinner from "../../../shared/components/UIElements/LoadingSpinner";
+import Button from "../../../shared/components/FormElements/Button";
+import { useHttpClient } from "../../../shared/components/hooks/http-hook";
 import moment from "moment";
 import "../shared.css";
 

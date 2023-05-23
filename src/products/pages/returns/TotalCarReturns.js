@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useHttpClient } from "../../../shared/components/hooks.js/http-hook";
+import { useHttpClient } from "../../../shared/components/hooks/http-hook";
 
-import ErrorModal from "../../../shared/components/hooks.js/UIElements/ErrorModal";
-import LoadingSpinner from "../../../shared/components/hooks.js/UIElements/LoadingSpinner";
+import ErrorModal from "../../../shared/components/UIElements/ErrorModal";
+import LoadingSpinner from "../../../shared/components/UIElements/LoadingSpinner";
 import TotalCarReturnsList from "../../components/returns/TotalCarReturnsList";
-import { dateFormater } from "../../../shared/components/hooks.js/dateFormatter";
+import { dateFormater } from "../../../shared/components/dateFormatter";
 
 const TotalCarReturns = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();

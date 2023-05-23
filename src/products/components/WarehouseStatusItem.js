@@ -2,10 +2,9 @@ const WarehouseStatusItem = (props) => {
   return (
     <tbody>
       <tr>
-        {/* <td>{props.id}</td>*/}
         <td>{props.productName}</td>
         <td>{props.quantity}</td>
-        <td>{props.totalQuantity}</td> {/* This line is added */}
+        <td>{props.totalQuantity}</td>
       </tr>
     </tbody>
   );

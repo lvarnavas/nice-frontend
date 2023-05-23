@@ -1,6 +1,6 @@
 import TotalCarLoadsItem from "./TotalCarLoadsItem";
-import { dateFormater } from "../../../shared/components/hooks.js/dateFormatter";
-import Card from "../../../shared/components/hooks.js/UIElements/Card";
+import { dateFormater } from "../../../shared/components/dateFormatter";
+import Card from "../../../shared/components/UIElements/Card";
 import "../shared.css";
 
 const TotalCarLoadsList = (props) => {
@@ -24,6 +24,8 @@ const TotalCarLoadsList = (props) => {
 
   let columnNames = Object.keys(props.items[0]);
 
+  // const removeColumn = columnNames.filter(item => item !== )
+
   // Add a reducer to calculate the sum of all quantities starting from the fourth column
   const sums = columnNames.slice(1).map((columnName) => {
     return props.items.reduce((acc, item) => {
@@ -40,12 +42,20 @@ const TotalCarLoadsList = (props) => {
 
   return (
     <div className="products-components__container-list">
-      <Card>
-        <h2>
-          ΣΥΝΟΛΙΚΑ ΦΟΡΤΩΜΑΤΑ ΑΠΟ <span>{formattedStartDate}</span> ΕΩΣ{" "}
-          <span>{formattedEndDate}</span>
-        </h2>
-      </Card>
+      {formattedStartDate !== formattedEndDate ? (
+        <Card>
+          <h2>
+            ΣΥΝΟΛΙΚΑ ΦΟΡΤΩΜΑΤΑ ΑΠΟ <span>{formattedStartDate}</span> ΕΩΣ{" "}
+            <span>{formattedEndDate}</span>
+          </h2>
+        </Card>
+      ) : (
+        <Card>
+          <h2>
+            ΣΥΝΟΛΙΚΑ ΦΟΡΤΩΜΑΤΑ <span>{formattedStartDate}</span>
+          </h2>
+        </Card>
+      )}
       <div className="products-components__container-list-content">
         <table>
           <thead>

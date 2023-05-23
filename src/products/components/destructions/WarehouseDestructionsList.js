@@ -1,6 +1,6 @@
 import WarehouseDestructionsItem from "./WarehouseDestructionsItem";
-import { dateFormater } from "../../../shared/components/hooks.js/dateFormatter";
-import Card from "../../../shared/components/hooks.js/UIElements/Card";
+import { dateFormater } from "../../../shared/components/dateFormatter";
+import Card from "../../../shared/components/UIElements/Card";
 import "../shared.css";
 
 const WarehouseDestructionsList = (props) => {
@@ -31,12 +31,20 @@ const WarehouseDestructionsList = (props) => {
 
   return (
     <div className="products-components__container-list ">
-      <Card>
-        <h2>
-          ΣΥΝΟΛΙΚΕΣ ΚΑΤΑΣΤΡΟΦΕΣ ΑΠΟΘΗΚΗΣ ΑΠΟ <span>{formattedStartDate}</span>{" "}
-          ΕΩΣ <span>{formattedEndDate}</span>
-        </h2>
-      </Card>
+      {formattedStartDate !== formattedEndDate ? (
+        <Card>
+          <h2>
+            ΣΥΝΟΛΙΚΕΣ ΚΑΤΑΣΤΡΟΦΕΣ ΑΠΟΘΗΚΗΣ ΑΠΟ <span>{formattedStartDate}</span>{" "}
+            ΕΩΣ <span>{formattedEndDate}</span>
+          </h2>
+        </Card>
+      ) : (
+        <Card>
+          <h2>
+            ΣΥΝΟΛΙΚΕΣ ΚΑΤΑΣΤΡΟΦΕΣ ΑΠΟΘΗΚΗΣ <span>{formattedStartDate}</span>
+          </h2>
+        </Card>
+      )}
       <div className="products-components__container-list-content">
         <table>
           <thead>

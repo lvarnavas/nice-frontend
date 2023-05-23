@@ -1,6 +1,6 @@
 import SingleCarDestructionsItem from "./SingleCarDestructionsItem";
-import { dateFormater } from "../../../shared/components/hooks.js/dateFormatter";
-import Card from "../../../shared/components/hooks.js/UIElements/Card";
+import { dateFormater } from "../../../shared/components/dateFormatter";
+import Card from "../../../shared/components/UIElements/Card";
 import "../shared.css";
 
 const SingleCarDestructionsList = (props) => {

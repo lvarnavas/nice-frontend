@@ -6,7 +6,7 @@ import NavLinks from "./NavLinks";
 import SideDrawer from "./SideDrawer";
 import "./MainNavigation.css";
 import Backdrop from "../UIElements/Backdrop";
-import { AuthContext } from "../../context/auth-context";
+import { AuthContext } from "../context/auth-context";
 
 const MainNavigation = (props) => {
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);

@@ -1,16 +1,16 @@
 import React, { useContext } from "react";
 
-import Input from "../../../shared/components/hooks.js/FormElements/Input";
-import Button from "../../../shared/components/hooks.js/FormElements/Button";
-import ErrorModal from "../../../shared/components/hooks.js/UIElements/ErrorModal";
-import LoadingSpinner from "../../../shared/components/hooks.js/UIElements/LoadingSpinner";
-import Card from "../../../shared/components/hooks.js/UIElements/Card";
+import Input from "../../../shared/components/FormElements/Input";
+import Button from "../../../shared/components/FormElements/Button";
+import ErrorModal from "../../../shared/components/UIElements/ErrorModal";
+import LoadingSpinner from "../../../shared/components/UIElements/LoadingSpinner";
+import Card from "../../../shared/components/UIElements/Card";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MAXLENGTH,
-} from "../../../shared/components/hooks.js/util/validators";
-import { useForm } from "../../../shared/components/hooks.js/form-hook";
-import { useHttpClient } from "../../../shared/components/hooks.js/http-hook";
+} from "../../../shared/components/util/validators";
+import { useForm } from "../../../shared/components/hooks/form-hook";
+import { useHttpClient } from "../../../shared/components/hooks/http-hook";
 import { AuthContext } from "../../../shared/components/context/auth-context";
 import "./Auth.css";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";

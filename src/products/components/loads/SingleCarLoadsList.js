@@ -1,6 +1,6 @@
 import SingleCarLoadsItem from "./SingleCarLoadsItem";
-import { dateFormater } from "../../../shared/components/hooks.js/dateFormatter";
-import Card from "../../../shared/components/hooks.js/UIElements/Card";
+import { dateFormater } from "../../../shared/components/dateFormatter";
+import Card from "../../../shared/components/UIElements/Card";
 import "../shared.css";
 
 const SingleCarLoadsList = (props) => {
@@ -40,12 +40,22 @@ const SingleCarLoadsList = (props) => {
 
   return (
     <div className="products-components__container-list">
-      <Card>
-        <h2>
-          ΦΟΡΤΩΜΑΤΑ ΟΧΗΜΑΤΟΣ <span>{props.carName}</span> ΑΠΟ{" "}
-          <span>{formattedStartDate}</span> ΕΩΣ <span>{formattedEndDate}</span>
-        </h2>
-      </Card>
+      {formattedStartDate !== formattedEndDate ? (
+        <Card>
+          <h2>
+            ΦΟΡΤΩΜΑΤΑ ΟΧΗΜΑΤΟΣ <span>{props.carName}</span> ΑΠΟ{" "}
+            <span>{formattedStartDate}</span> ΕΩΣ{" "}
+            <span>{formattedEndDate}</span>
+          </h2>
+        </Card>
+      ) : (
+        <Card>
+          <h2>
+            ΦΟΡΤΩΜΑΤΑ ΟΧΗΜΑΤΟΣ <span>{props.carName}</span> ΣΤΙΣ{" "}
+            <span>{formattedStartDate}</span>
+          </h2>
+        </Card>
+      )}
       <div className="products-components__container-list-content">
         <table>
           <thead>

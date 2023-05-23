@@ -1,18 +1,18 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useLocation, useHistory } from "react-router-dom";
-import { useHttpClient } from "../../shared/components/hooks.js/http-hook";
-import Input from "../../shared/components/hooks.js/FormElements/Input";
-import { useForm } from "../../shared/components/hooks.js/form-hook";
-import LoadingSpinner from "../../shared/components/hooks.js/UIElements/LoadingSpinner";
+import { useHttpClient } from "../../shared/components/hooks/http-hook";
+import Input from "../../shared/components/FormElements/Input";
+import { useForm } from "../../shared/components/hooks/form-hook";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import {
   VALIDATOR_MAX,
   VALIDATOR_MIN,
   VALIDATOR_REQUIRE,
-} from "../../shared/components/hooks.js/util/validators";
-import Modal from "../../shared/components/hooks.js/UIElements/Modal";
-import Button from "../../shared/components/hooks.js/FormElements/Button";
-import Card from "../../shared/components/hooks.js/UIElements/Card";
-import ErrorModal from "../../shared/components/hooks.js/UIElements/ErrorModal";
+} from "../../shared/components/util/validators";
+import Modal from "../../shared/components/UIElements/Modal";
+import Button from "../../shared/components/FormElements/Button";
+import Card from "../../shared/components/UIElements/Card";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import "./EditQuantities.css";
 
 const EditQuantities = () => {

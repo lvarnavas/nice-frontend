@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useHttpClient } from "../../../shared/components/hooks.js/http-hook";
+import { useHttpClient } from "../../../shared/components/hooks/http-hook";
 
-import ErrorModal from "../../../shared/components/hooks.js/UIElements/ErrorModal";
-import LoadingSpinner from "../../../shared/components/hooks.js/UIElements/LoadingSpinner";
+import ErrorModal from "../../../shared/components/UIElements/ErrorModal";
+import LoadingSpinner from "../../../shared/components/UIElements/LoadingSpinner";
 import SingleCarDestructionsList from "../../components/destructions/SingleCarDestructionsList";
 
 const SingleCarDestructions = () => {

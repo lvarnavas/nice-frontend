@@ -1,6 +1,6 @@
-import { dateFormater } from "../../../shared/components/hooks.js/dateFormatter";
+import { dateFormater } from "../../../shared/components/dateFormatter";
 import SingleCarReturnsItem from "./SingleCarReturnsItem";
-import Card from "../../../shared/components/hooks.js/UIElements/Card";
+import Card from "../../../shared/components/UIElements/Card";
 import "../shared.css";
 
 const SingleCarReturnsList = (props) => {

@@ -1,5 +1,5 @@
 import WarehouseStatusItem from "./WarehouseStatusItem";
-import Card from "../../shared/components/hooks.js/UIElements/Card";
+import Card from "../../shared/components/UIElements/Card";
 import "./shared.css";
 
 const WarehouseStatusList = (props) => {
@@ -15,7 +15,7 @@ const WarehouseStatusList = (props) => {
     const status = props.destructionStatus.find(
       (item) => item.product_id === id
     );
-    return status ? status.total_quantity : "N/A";
+    return status ? status.total_quantity : "0";
   };
   return (
     <div className="products-components__container-list">

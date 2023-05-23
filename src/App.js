@@ -6,9 +6,9 @@ import {
   Redirect,
 } from "react-router-dom";
 
-import MainNavigation from "./shared/components/hooks.js/Navigation/MainNavigation";
+import MainNavigation from "./shared/components/Navigation/MainNavigation";
 import { AuthContext } from "./shared/components/context/auth-context";
-import { useAuth } from "./shared/components/hooks.js/auth-hook";
+import { useAuth } from "./shared/components/hooks/auth-hook";
 
 import WarehouseStatus from "./products/pages/WarehouseStatus";
 import SingleCarLoads from "./products/pages/loads/SingleCarLoads";
@@ -22,7 +22,7 @@ import NotFound from "./NotFound";
 import SearchPage from "./products/pages/Search";
 import AddEntry from "./products/pages/AddEntry";
 import EditQuantities from "./products/pages/EditQuantities";
-import LoadingSpinner from "./shared/components/hooks.js/UIElements/LoadingSpinner";
+import LoadingSpinner from "./shared/components/UIElements/LoadingSpinner";
 import Auth from "./users/components/pages/Auth";
 import "./App.css";
 

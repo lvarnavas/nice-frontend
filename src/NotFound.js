@@ -1,4 +1,4 @@
-import Card from "./shared/components/hooks.js/UIElements/Card";
+import Card from "./shared/components/UIElements/Card";
 import "./products/components/shared.css";
 
 const NotFound = () => {

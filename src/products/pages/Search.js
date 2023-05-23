@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { useHttpClient } from "../../shared/components/hooks.js/http-hook";
+import { useHttpClient } from "../../shared/components/hooks/http-hook";
 import DatePicker from "react-datepicker";
-import Button from "../../shared/components/hooks.js/FormElements/Button";
-import LoadingSpinner from "../../shared/components/hooks.js/UIElements/LoadingSpinner";
-import ErrorModal from "../../shared/components/hooks.js/UIElements/ErrorModal";
+import Button from "../../shared/components/FormElements/Button";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import el from "date-fns/locale/el";
-import Card from "../../shared/components/hooks.js/UIElements/Card";
+import Card from "../../shared/components/UIElements/Card";
 import "./Search.css";
 
 const SearchPage = () => {
