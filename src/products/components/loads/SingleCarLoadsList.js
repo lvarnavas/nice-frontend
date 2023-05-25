@@ -41,18 +41,33 @@ const SingleCarLoadsList = (props) => {
   return (
     <div className="products-components__container-list">
       {formattedStartDate !== formattedEndDate ? (
+        props.carName !== "ΝΤΑΛΙΚΑ" ? (
+          <Card>
+            <h2>
+              ΦΟΡΤΩΜΑΤΑ ΟΧΗΜΑΤΟΣ <span>{props.carName}</span> ΑΠΟ{" "}
+              <span>{formattedStartDate}</span> ΕΩΣ{" "}
+              <span>{formattedEndDate}</span>
+            </h2>
+          </Card>
+        ) : (
+          <Card>
+            <h2>
+              ΠΑΡΑΛΑΒΕΣ ΝΤΑΛΙΚΑΣ ΑΠΟ <span>{formattedStartDate}</span> ΕΩΣ{" "}
+              <span>{formattedEndDate}</span>
+            </h2>
+          </Card>
+        )
+      ) : props.carName !== "ΝΤΑΛΙΚΑ" ? (
         <Card>
           <h2>
-            ΦΟΡΤΩΜΑΤΑ ΟΧΗΜΑΤΟΣ <span>{props.carName}</span> ΑΠΟ{" "}
-            <span>{formattedStartDate}</span> ΕΩΣ{" "}
-            <span>{formattedEndDate}</span>
+            ΦΟΡΤΩΜΑΤΑ ΟΧΗΜΑΤΟΣ <span>{props.carName}</span> ΣΤΙΣ{" "}
+            <span>{formattedStartDate}</span>
           </h2>
         </Card>
       ) : (
         <Card>
           <h2>
-            ΦΟΡΤΩΜΑΤΑ ΟΧΗΜΑΤΟΣ <span>{props.carName}</span> ΣΤΙΣ{" "}
-            <span>{formattedStartDate}</span>
+            ΠΑΡΑΛΑΒΕΣ ΝΤΑΛΙΚΑΣ ΣΤΙΣ <span>{formattedStartDate}</span>
           </h2>
         </Card>
       )}
@@ -61,7 +76,7 @@ const SingleCarLoadsList = (props) => {
           <thead>
             <tr>
               {columnNames.map((columnName, index) => (
-                <th key={index}> {getCustomColumnName(columnName)} </th>
+                <th key={index}>{getCustomColumnName(columnName)}</th>
               ))}
             </tr>
           </thead>

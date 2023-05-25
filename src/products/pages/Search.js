@@ -35,10 +35,19 @@ const SearchPage = () => {
         const carListData = await sendRequest(
           "http://localhost:5000/api/products/get-car-list"
         );
-        setCarList(carListData.carslist);
+        if (searchType === "Αναζήτηση βάσει οχήματος") {
+          setCarList(
+            carListData.carslist.filter((car) => car.pinakida !== "ΝΤΑΛΙΚΑ")
+          );
+        } else {
+          setCarList(carListData.carslist);
+        }
       } catch (err) {}
     };
-    if (searchType === "Αναζήτηση βάσει οχήματος") {
+    if (
+      searchType === "Αναζήτηση βάσει οχήματος" ||
+      searchType === "Αναζήτηση παραλαβών νταλίκας"
+    ) {
       fetchCarList();
     }
   }, [sendRequest, searchType]);
@@ -63,12 +72,17 @@ const SearchPage = () => {
       "Αναζήτηση συνολικών επιστροφών": "/returns/total-car-returns",
       "Αναζήτηση καταστροφών αποθήκης":
         "/destructions/total-warehouse-destructions",
+      "Αναζήτηση παραλαβών νταλίκας": "/loads/single-car-loads?carid=1",
     };
 
     const selectedOption = dropDownOptions[searchType];
-    if (selectedOption) {
+    if (selectedOption && searchType !== "Αναζήτηση παραλαβών νταλίκας") {
       history.push(
         `${selectedOption}?startdate=${formattedStartDate}&enddate=${formattedEndDate}`
+      );
+    } else {
+      history.push(
+        `${selectedOption}&startdate=${formattedStartDate}&enddate=${formattedEndDate}`
       );
     }
   };
@@ -98,6 +112,7 @@ const SearchPage = () => {
       case "Αναζήτηση συνολικών καταστροφών οχημάτων":
       case "Αναζήτηση συνολικών επιστροφών":
       case "Αναζήτηση καταστροφών αποθήκης":
+      case "Αναζήτηση παραλαβών νταλίκας":
         return (
           <>
             <div className="search-container__content-title">
@@ -235,6 +250,9 @@ const SearchPage = () => {
           </option>
           <option value="Αναζήτηση βάσει οχήματος">
             Αναζήτηση βάσει οχήματος
+          </option>
+          <option value="Αναζήτηση παραλαβών νταλίκας">
+            Αναζήτηση παραλαβών νταλίκας
           </option>
         </select>
         {renderForm()}

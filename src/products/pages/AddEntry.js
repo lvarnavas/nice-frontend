@@ -23,7 +23,7 @@ const AddEntry = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [selectedOption, setSelectedOption] = useState("");
   const [carList, setCarList] = useState([]);
-  const [selectedCar, setSelectedCar] = useState("");
+  let [selectedCar, setSelectedCar] = useState("");
   const [date, setDate] = useState(new Date());
   const [productsList, setProductsList] = useState([]);
 
@@ -70,11 +70,13 @@ const AddEntry = () => {
     if (
       e.target.value === "Επιστροφή" ||
       e.target.value === "Καταστροφή οχήματος" ||
-      e.target.value === "Καταστροφή αποθήκης"
+      e.target.value === "Καταστροφή αποθήκης" ||
+      e.target.value === "Φόρτωμα"
     ) {
       setCarList(originalCarList.filter((car) => car.pinakida !== "ΝΤΑΛΙΚΑ"));
     } else {
       setCarList(originalCarList);
+      setSelectedCar("1");
     }
   };
 
@@ -100,7 +102,10 @@ const AddEntry = () => {
     event.preventDefault();
     const formattedDate = formatDate(date);
 
-    if (selectedOption === "Φόρτωμα") {
+    if (
+      selectedOption === "Φόρτωμα" ||
+      selectedOption === "Παραλαβή νταλίκας"
+    ) {
       try {
         setShowSuccessModal(false);
         await sendRequest(
@@ -191,20 +196,13 @@ const AddEntry = () => {
   };
 
   const successHandler = async (event) => {
+    event.preventDefault();
     if (selectedOption === "Φόρτωμα") {
-      if (selectedCar === "1") {
-        history.push(
-          `/loads/single-car-loads?carid=1&startdate=${formatDate(
-            date
-          )}&enddate=${formatDate(date)}`
-        );
-      } else {
-        history.push(
-          `/loads/total-car-loads?startdate=${formatDate(
-            date
-          )}&enddate=${formatDate(date)}`
-        );
-      }
+      history.push(
+        `/loads/total-car-loads?startdate=${formatDate(
+          date
+        )}&enddate=${formatDate(date)}`
+      );
     } else if (selectedOption === "Επιστροφή") {
       history.push(
         `/returns/total-car-returns?startdate=${formatDate(
@@ -219,12 +217,16 @@ const AddEntry = () => {
       );
     } else if (selectedOption === "Καταστροφή αποθήκης") {
       history.push(
-        `/destructions/total-warehouse-destructions?startdate=${formState(
+        `/destructions/total-warehouse-destructions?startdate=${formatDate(
           date
         )}&enddate=${formatDate(date)}`
       );
-    } else {
-      history.push("warehouse-status");
+    } else if (selectedOption === "Παραλαβή νταλίκας") {
+      history.push(
+        `/loads/single-car-loads?carid=1&startdate=${formatDate(
+          date
+        )}&enddate=${formatDate(date)}`
+      );
     }
   };
 
@@ -254,120 +256,89 @@ const AddEntry = () => {
           <option value="Επιστροφή">Επιστροφή</option>
           <option value="Καταστροφή οχήματος">Καταστροφή οχήματος</option>
           <option value="Καταστροφή αποθήκης">Καταστροφή αποθήκης</option>
+          <option value="Παραλαβή νταλίκας">Παραλαβή νταλίκας</option>
         </select>
         {selectedOption && (
           <>
             {selectedOption === "Καταστροφή αποθήκης" && (
-              <div className="add-entry_spacer">
-                <div className="add-entry_content-title">
-                  Ημ/νία καταχώρησης
-                </div>
-                <div className="date-container">
-                  <DatePicker
-                    selected={date}
-                    onChange={handleDateChange}
-                    dateFormat="dd/MM/yyyy"
-                    locale={el}
-                    minDate={minDate}
-                    maxDate={maxDate}
-                  />
-                </div>
-                <Card className="add-entry_spacer">
-                  <h2>ΕΙΣΑΓΩΓΗ ΠΟΣΟΤΗΤΩΝ</h2>
-                </Card>
-                {productsList.map((product) => (
-                  <div className="add-entry_spacer" key={product.id}>
-                    <Input
-                      id={`product-${product.id}`}
-                      element="input"
-                      type="text"
-                      placeholder="0"
-                      label={product.name}
-                      validators={[
-                        VALIDATOR_MIN(0),
-                        VALIDATOR_MAX(1999),
-                        VALIDATOR_REQUIRE(),
-                      ]}
-                      errorText="Παρακαλώ εισάγετε έναν έγκυρο αριθμό."
-                      onInput={inputHandler}
-                      initialValue="0"
-                      initialValid={true}
-                    />
-                  </div>
-                ))}
-                <React.Fragment>
-                  <ErrorModal error={error} onClear={clearError} />
+              <>
+                <ErrorModal error={error} onClear={clearError} />
+                <form className="add-entry_spacer" onSubmit={submitHandler}>
+                  {isLoading && <LoadingSpinner asOverlay />}
                   <Modal
                     show={showSuccessModal}
                     header={<div>ΕΠΙΤΥΧΗΣ ΚΑΤΑΧΩΡΗΣΗ</div>}
                     contentClass="specific-item__modal-content"
                     footerClass="specific-item__modal-actions"
-                    footer={<Button onClick={successHandler}>OK</Button>}
+                    footer={
+                      <Button type="sumbit" onClick={successHandler}>
+                        OK
+                      </Button>
+                    }
                   ></Modal>
-                  {isLoading && <LoadingSpinner asOverlay />}
+                  <div className="add-entry_content-title">
+                    Ημ/νία καταχώρησης
+                  </div>
+                  <div className="date-container">
+                    <DatePicker
+                      selected={date}
+                      onChange={handleDateChange}
+                      dateFormat="dd/MM/yyyy"
+                      locale={el}
+                      minDate={minDate}
+                      maxDate={maxDate}
+                    />
+                  </div>
+                  <Card className="add-entry_spacer">
+                    <h2>ΕΙΣΑΓΩΓΗ ΠΟΣΟΤΗΤΩΝ</h2>
+                  </Card>
+                  {productsList.map((product) => (
+                    <div className="add-entry_spacer" key={product.id}>
+                      <Input
+                        id={`product-${product.id}`}
+                        element="input"
+                        type="text"
+                        placeholder="0"
+                        label={product.name}
+                        validators={[
+                          VALIDATOR_MIN(0),
+                          VALIDATOR_MAX(1999),
+                          VALIDATOR_REQUIRE(),
+                        ]}
+                        errorText="Παρακαλώ εισάγετε έναν έγκυρο αριθμό."
+                        onInput={inputHandler}
+                        initialValue="0"
+                        initialValid={true}
+                      />
+                    </div>
+                  ))}
+
                   <div className="add-entry_content-btn">
-                    <Button
-                      disabled={!formState.isValid}
-                      onClick={submitHandler}
-                    >
+                    <Button disabled={!formState.isValid} type="submit">
                       ΚΑΤΑΧΩΡΗΣΗ
                     </Button>
                   </div>
-                </React.Fragment>
-              </div>
+                </form>
+              </>
             )}
-            {selectedOption !== "Καταστροφή αποθήκης" && (
-              <select value={selectedCar} onChange={handleCarSelect}>
-                <option value="" disabled>
-                  Επιλογή οχήματος
-                </option>
-                {carList.map((car) => (
-                  <option key={car.id} value={car.id}>
-                    {car.pinakida}
+            {selectedOption !== "Καταστροφή αποθήκης" &&
+              selectedOption !== "Παραλαβή νταλίκας" && (
+                <select value={selectedCar} onChange={handleCarSelect}>
+                  <option value="" disabled>
+                    Επιλογή οχήματος
                   </option>
-                ))}
-              </select>
-            )}
+                  {carList.map((car) => (
+                    <option key={car.id} value={car.id}>
+                      {car.pinakida}
+                    </option>
+                  ))}
+                </select>
+              )}
             {selectedCar && (
-              <div className="add-entry_spacer">
-                <div className="add-entry_content-title">
-                  Ημ/νία καταχώρησης:<br></br>
-                </div>
-                <div className="date-container">
-                  <DatePicker
-                    selected={date}
-                    onChange={handleDateChange}
-                    dateFormat="dd/MM/yyyy"
-                    locale={el}
-                    minDate={minDate}
-                    maxDate={maxDate}
-                  />
-                </div>
-                <Card className="add-entry_spacer">
-                  <h2>ΕΙΣΑΓΩΓΗ ΠΟΣΟΤΗΤΩΝ</h2>
-                </Card>
-                {productsList.map((product) => (
-                  <div className="add-entry_spacer" key={product.id}>
-                    <Input
-                      id={`product-${product.id}`}
-                      element="input"
-                      type="text"
-                      placeholder="0"
-                      label={product.name}
-                      validators={[
-                        VALIDATOR_MIN(0),
-                        VALIDATOR_MAX(1999),
-                        VALIDATOR_REQUIRE(),
-                      ]}
-                      errorText="Παρακαλώ εισάγετε έναν έγκυρο αιρθμό."
-                      onInput={inputHandler}
-                      initialValue="0"
-                      initialValid={true}
-                    />
-                  </div>
-                ))}
-                <React.Fragment>
-                  <ErrorModal error={error} onClear={clearError} />
+              <>
+                <ErrorModal error={error} onClear={clearError} />
+                <form className="add-entry_spacer" onSubmit={submitHandler}>
+                  {isLoading && <LoadingSpinner asOverlay />}
                   <Modal
                     show={showSuccessModal}
                     header={<div>ΕΠΙΤΥΧΗΣ ΚΑΤΑΧΩΡΗΣΗ</div>}
@@ -375,17 +346,49 @@ const AddEntry = () => {
                     footerClass="specific-item__modal-actions"
                     footer={<Button onClick={successHandler}>OK</Button>}
                   ></Modal>
-                  {isLoading && <LoadingSpinner asOverlay />}
+                  <div className="add-entry_content-title">
+                    Ημ/νία καταχώρησης:<br></br>
+                  </div>
+                  <div className="date-container">
+                    <DatePicker
+                      selected={date}
+                      onChange={handleDateChange}
+                      dateFormat="dd/MM/yyyy"
+                      locale={el}
+                      minDate={minDate}
+                      maxDate={maxDate}
+                    />
+                  </div>
+                  <Card className="add-entry_spacer">
+                    <h2>ΕΙΣΑΓΩΓΗ ΠΟΣΟΤΗΤΩΝ</h2>
+                  </Card>
+                  {productsList.map((product) => (
+                    <div className="add-entry_spacer" key={product.id}>
+                      <Input
+                        id={`product-${product.id}`}
+                        element="input"
+                        type="text"
+                        placeholder="0"
+                        label={product.name}
+                        validators={[
+                          VALIDATOR_MIN(0),
+                          VALIDATOR_MAX(1999),
+                          VALIDATOR_REQUIRE(),
+                        ]}
+                        errorText="Παρακαλώ εισάγετε έναν έγκυρο αιρθμό."
+                        onInput={inputHandler}
+                        initialValue="0"
+                        initialValid={true}
+                      />
+                    </div>
+                  ))}
                   <div className="add-entry_content-btn">
-                    <Button
-                      disabled={!formState.isValid}
-                      onClick={submitHandler}
-                    >
+                    <Button type="submit" disabled={!formState.isValid}>
                       ΚΑΤΑΧΩΡΗΣΗ
                     </Button>
                   </div>
-                </React.Fragment>
-              </div>
+                </form>
+              </>
             )}
           </>
         )}

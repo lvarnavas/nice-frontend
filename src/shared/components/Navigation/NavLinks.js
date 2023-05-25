@@ -38,7 +38,7 @@ const NavLinks = (props) => {
             <NavLink
               to={`/loads/single-car-loads?carid=1&startdate=${currentDate()}&enddate=${currentDate()}`}
             >
-              ΦΟΡΤΩΜΑΤΑ ΝΤΑΛΙΚΑΣ
+              ΠΑΡΑΛΑΒΕΣ ΝΤΑΛΙΚΑΣ
             </NavLink>
             <NavLink
               to={`/destructions/total-car-destructions?startdate=${currentDate()}&enddate=${currentDate()}`}
