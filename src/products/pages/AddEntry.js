@@ -29,6 +29,7 @@ const AddEntry = () => {
 
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [originalCarList, setOriginalCarList] = useState([]);
+  // const [filteredCarList, setFilteredCarList] = useState(carList);
 
   const [formState, inputHandler] = useForm(
     {
@@ -65,15 +66,21 @@ const AddEntry = () => {
   }, [sendRequest]);
 
   const handleSelect = (e) => {
-    setSelectedOption(e.target.value);
+    const selectedOption = e.target.value;
+    setSelectedOption(selectedOption);
     setSelectedCar("");
-    if (
-      e.target.value === "Επιστροφή" ||
-      e.target.value === "Καταστροφή οχήματος" ||
-      e.target.value === "Καταστροφή αποθήκης" ||
-      e.target.value === "Φόρτωμα"
-    ) {
+
+    if (selectedOption === "Φόρτωμα") {
       setCarList(originalCarList.filter((car) => car.pinakida !== "ΝΤΑΛΙΚΑ"));
+    } else if (
+      selectedOption === "Επιστροφή" ||
+      selectedOption === "Καταστροφή οχήματος"
+    ) {
+      setCarList(
+        originalCarList.filter(
+          (car) => car.pinakida !== "ΝΤΑΛΙΚΑ" && car.pinakida !== "ΧΟΝΤΡΙΚΗ"
+        )
+      );
     } else {
       setCarList(originalCarList);
       setSelectedCar("1");
@@ -277,7 +284,7 @@ const AddEntry = () => {
                     }
                   ></Modal>
                   <div className="add-entry_content-title">
-                    Ημ/νία καταχώρησης
+                    Ημ/νία καταχώρησης:
                   </div>
                   <div className="date-container">
                     <DatePicker
@@ -334,7 +341,7 @@ const AddEntry = () => {
                   ))}
                 </select>
               )}
-            {selectedCar && (
+            {selectedCar && selectedOption !== "Καταστροφή αποθήκης" && (
               <>
                 <ErrorModal error={error} onClear={clearError} />
                 <form className="add-entry_spacer" onSubmit={submitHandler}>
@@ -347,7 +354,7 @@ const AddEntry = () => {
                     footer={<Button onClick={successHandler}>OK</Button>}
                   ></Modal>
                   <div className="add-entry_content-title">
-                    Ημ/νία καταχώρησης:<br></br>
+                    Ημ/νία καταχώρησης:
                   </div>
                   <div className="date-container">
                     <DatePicker
