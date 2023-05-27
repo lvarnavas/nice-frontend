@@ -169,10 +169,10 @@ const SearchPage = () => {
                     Επιλέξτε κατηγορία
                   </option>
                   <option value="Φορτώματα">Φορτώματα</option>
-                  <option value="Επιστροφές" disabled={selectedCar === "1"}>
+                  <option value="Επιστροφές" disabled={selectedCar === "24"}>
                     Επιστροφές
                   </option>
-                  <option value="Καταστροφές" disabled={selectedCar === "1"}>
+                  <option value="Καταστροφές" disabled={selectedCar === "24"}>
                     Καταστροφές
                   </option>
                 </select>
