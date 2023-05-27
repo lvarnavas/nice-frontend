@@ -25,7 +25,7 @@ const SingleCarLoadsList = (props) => {
   // Add a reducer to calculate the sum of all quantities starting from the fourth column
   const sums = columnNames.slice(2, -1).map((columnName) => {
     return props.items.reduce((acc, item) => {
-      return acc + item[columnName];
+      return acc + parseInt(item[columnName], 10);
     }, 0);
   });
 
