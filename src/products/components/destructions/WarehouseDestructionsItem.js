@@ -33,7 +33,7 @@ const WarehouseDestructionsItem = ({ item, onDelete }) => {
     setShowConfirmModal(false);
     try {
       await sendRequest(
-        `http://localhost:5000/api/products/delete-item/${item.ID}`,
+        process.env.REACT_APP_BACKEND_URL + `/products/delete-item/${item.ID}`,
         "DELETE",
         JSON.stringify({
           flag: "deleteWarehouseDestructionItem",

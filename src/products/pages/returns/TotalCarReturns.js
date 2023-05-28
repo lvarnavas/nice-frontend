@@ -19,7 +19,8 @@ const TotalCarReturns = () => {
     const fetchCarReturns = async () => {
       try {
         const carReturnsData = await sendRequest(
-          `http://localhost:5000/api/products/returns/${formattedStartDate}/${formattedEndDate}`,
+          process.env.REACT_APP_BACKEND_URL +
+            `/products/returns/${formattedStartDate}/${formattedEndDate}`,
           "POST",
           JSON.stringify({
             flag: "totalCarReturns",

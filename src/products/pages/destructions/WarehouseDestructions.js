@@ -19,7 +19,8 @@ const WarehouseDestructions = () => {
     const fetchDestructions = async () => {
       try {
         const destructionsData = await sendRequest(
-          `http://localhost:5000/api/products/destructions/${formattedStartDate}/${formattedEndDate}`,
+          process.env.REACT_APP_BACKEND_URL +
+            `/products/destructions/${formattedStartDate}/${formattedEndDate}`,
           "POST",
           JSON.stringify({
             flag: "warehouseDestructions",

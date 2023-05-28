@@ -34,7 +34,7 @@ const SingleCarLoadsItem = ({ item, onDelete }) => {
     setShowConfirmModal(false);
     try {
       await sendRequest(
-        `http://localhost:5000/api/products/delete-item/${item.id}`,
+        process.env.REACT_APP_BACKEND_URL + `/products/delete-item/${item.id}`,
         "DELETE",
         JSON.stringify({
           flag: "deleteLoadItem",

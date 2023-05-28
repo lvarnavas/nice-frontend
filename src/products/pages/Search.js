@@ -33,7 +33,7 @@ const SearchPage = () => {
     const fetchCarList = async () => {
       try {
         const carListData = await sendRequest(
-          "http://localhost:5000/api/products/get-car-list"
+          process.env.REACT_APP_BACKEND_URL + "/products/get-car-list"
         );
         if (searchType === "Αναζήτηση βάσει οχήματος") {
           setCarList(

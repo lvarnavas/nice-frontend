@@ -14,7 +14,7 @@ const WarehouseStatus = () => {
     const fetchWarehouse = async () => {
       try {
         const warehouseData = await sendRequest(
-          "http://localhost:5000/api/products/warehouse-status"
+          process.env.REACT_APP_BACKEND_URL + "/products/warehouse-status"
         );
         setLoadedWarehouse(warehouseData.warehouseStatus);
       } catch (err) {}
@@ -26,7 +26,8 @@ const WarehouseStatus = () => {
     const fetchDestructionStatus = async () => {
       try {
         const destructionData = await sendRequest(
-          "http://localhost:5000/api/products/total-products-destructions-status"
+          process.env.REACT_APP_BACKEND_URL +
+            "/products/total-products-destructions-status"
         );
         setDestructionStatus(destructionData.totalProductsDestructions);
       } catch (err) {}

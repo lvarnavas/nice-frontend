@@ -19,7 +19,8 @@ const SingleCarDestructions = () => {
     const fetchCarDestructions = async () => {
       try {
         const carDestructionsData = await sendRequest(
-          `http://localhost:5000/api/products/destructions/${carId}/${startDate}/${endDate}`,
+          process.env.REACT_APP_BACKEND_URL +
+            `/products/destructions/${carId}/${startDate}/${endDate}`,
           "POST",
           JSON.stringify({
             flag: "singleCarDestructions",
@@ -34,7 +35,7 @@ const SingleCarDestructions = () => {
     const fetchCarList = async () => {
       try {
         const carListData = await sendRequest(
-          "http://localhost:5000/api/products/get-car-list"
+          process.env.REACT_APP_BACKEND_URL + "/products/get-car-list"
         );
         const car = carListData.carslist.find(
           (car) => car.id === parseInt(carId)

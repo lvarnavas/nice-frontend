@@ -46,7 +46,7 @@ const AddEntry = () => {
     const fetchCarList = async () => {
       try {
         const carListData = await sendRequest(
-          "http://localhost:5000/api/products/get-car-list"
+          process.env.REACT_APP_BACKEND_URL + "/products/get-car-list"
         );
         setOriginalCarList(carListData.carslist);
         setCarList(carListData.carslist);
@@ -57,7 +57,7 @@ const AddEntry = () => {
     const fetchProductsList = async () => {
       try {
         const productListData = await sendRequest(
-          "http://localhost:5000/api/products/get-products"
+          process.env.REACT_APP_BACKEND_URL + "/products/get-products"
         );
         setProductsList(productListData.productsList);
       } catch (err) {}
@@ -116,7 +116,7 @@ const AddEntry = () => {
       try {
         setShowSuccessModal(false);
         await sendRequest(
-          "http://localhost:5000/api/products/add-loads",
+          process.env.REACT_APP_BACKEND_URL + "/products/add-loads",
           "POST",
           JSON.stringify({
             carId: selectedCar,
@@ -138,7 +138,7 @@ const AddEntry = () => {
       try {
         setShowSuccessModal(false);
         await sendRequest(
-          "http://localhost:5000/api/products/add-returns",
+          process.env.REACT_APP_BACKEND_URL + "/products/add-returns",
           "POST",
           JSON.stringify({
             carId: selectedCar,
@@ -160,7 +160,7 @@ const AddEntry = () => {
       try {
         setShowSuccessModal(false);
         await sendRequest(
-          "http://localhost:5000/api/products/add-car-destructions",
+          process.env.REACT_APP_BACKEND_URL + "/products/add-car-destructions",
           "POST",
           JSON.stringify({
             carId: selectedCar,
@@ -182,7 +182,8 @@ const AddEntry = () => {
       setShowSuccessModal(false);
       try {
         await sendRequest(
-          "http://localhost:5000/api/products/add-warehouse-destructions",
+          process.env.REACT_APP_BACKEND_URL +
+            "/products/add-warehouse-destructions",
           "POST",
           JSON.stringify({
             date: formattedDate,

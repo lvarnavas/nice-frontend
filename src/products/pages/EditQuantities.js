@@ -42,7 +42,7 @@ const EditQuantities = () => {
     if (tid && type) {
       try {
         const response = await sendRequest(
-          "http://localhost:5000/api/products/check-entry",
+          process.env.REACT_APP_BACKEND_URL + "/products/check-entry",
           "POST",
           JSON.stringify({
             flag: `edit${type}`,
@@ -63,7 +63,7 @@ const EditQuantities = () => {
   const fetchProductsList = useCallback(async () => {
     try {
       const productListData = await sendRequest(
-        "http://localhost:5000/api/products/get-products"
+        process.env.REACT_APP_BACKEND_URL + "/products/get-products"
       );
       setProductsList(productListData.productsList);
     } catch (err) {}
@@ -72,7 +72,7 @@ const EditQuantities = () => {
   const fetchQuantities = useCallback(async () => {
     try {
       const quantitiesData = await sendRequest(
-        "http://localhost:5000/api/products/get-quantities",
+        process.env.REACT_APP_BACKEND_URL + "/products/get-quantities",
         "POST",
         JSON.stringify({
           id: `${tid}`,
@@ -157,7 +157,7 @@ const EditQuantities = () => {
     try {
       setShowConfirmModal(false);
       await sendRequest(
-        "http://localhost:5000/api/products/edit-entry",
+        process.env.REACT_APP_BACKEND_URL + "/products/edit-entry",
         "PATCH",
         JSON.stringify({
           transactionid: tid, // ok

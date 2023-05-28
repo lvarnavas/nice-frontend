@@ -19,7 +19,8 @@ const TotalCarLoads = () => {
     const fetchCarLoads = async () => {
       try {
         const carLoadsData = await sendRequest(
-          `http://localhost:5000/api/products/loads/${formattedStartDate}/${formattedEndDate}`,
+          process.env.REACT_APP_BACKEND_URL +
+            `/products/loads/${formattedStartDate}/${formattedEndDate}`,
           "POST",
           JSON.stringify({
             flag: "totalCarLoads",
