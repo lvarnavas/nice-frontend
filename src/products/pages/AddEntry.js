@@ -78,7 +78,7 @@ const AddEntry = () => {
     ) {
       setCarList(
         originalCarList.filter(
-          (car) => car.pinakida !== "ΝΤΑΛΙΚΑ" && car.pinakida !== "ΧΟΝΤΡΙΚΗ"
+          (car) => car.pinakida !== "ΝΤΑΛΙΚΑ" && car.pinakida !== "ΧΟΝΔΡΙΚΗ"
         )
       );
     } else {
@@ -310,7 +310,7 @@ const AddEntry = () => {
                         label={product.name}
                         validators={[
                           VALIDATOR_MIN(0),
-                          VALIDATOR_MAX(1999),
+                          VALIDATOR_MAX(5000),
                           VALIDATOR_REQUIRE(),
                         ]}
                         errorText="Παρακαλώ εισάγετε έναν έγκυρο αριθμό."
@@ -380,7 +380,7 @@ const AddEntry = () => {
                         label={product.name}
                         validators={[
                           VALIDATOR_MIN(0),
-                          VALIDATOR_MAX(1999),
+                          VALIDATOR_MAX(5000),
                           VALIDATOR_REQUIRE(),
                         ]}
                         errorText="Παρακαλώ εισάγετε έναν έγκυρο αιρθμό."

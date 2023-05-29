@@ -75,6 +75,11 @@ const App = () => {
 
           <Route path="/addentry" component={AddEntry} />
           <Route path="/auth" element={<Redirect to="/" />} />
+          <Route path="/">
+            <div className="image-container">
+              <img src={require("./nice-logo.png")} alt="nice-logo" />
+            </div>
+          </Route>
           <Route>
             <NotFound />
           </Route>
