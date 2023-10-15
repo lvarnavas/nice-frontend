@@ -70,6 +70,11 @@ const NavLinks = (props) => {
       )}
       {!auth.isLoggedIn && (
         <li>
+          <a href="https://katerini.nicewh.gr">ΑΠΟΘΗΚΗ ΚΑΤΕΡΙΝΗΣ</a>
+        </li>
+      )}
+      {!auth.isLoggedIn && (
+        <li>
           <NavLink to="/auth">ΛΟΓΑΡΙΑΣΜΟΣ</NavLink>
         </li>
       )}
