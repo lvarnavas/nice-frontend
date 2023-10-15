@@ -69,11 +69,11 @@ export const dateFormater = (sDate, eDate, dateType = "") => {
       };
 
       formattedStartDate = new Date(startDate).toLocaleDateString(
-        "en-GB",
+        "el-GR",
         dateFormatOptions
       );
       formattedEndDate = new Date(endDate).toLocaleDateString(
-        "en-GB",
+        "el-GR",
         dateFormatOptions
       );
       // YYYY-MM-DD
