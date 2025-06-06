@@ -1,6 +1,6 @@
-# Nice Backend - React Frontend
+# Nice - Frontend
 
-This is the React front-end application for the Nice Backend project. It connects to a back-end API server to fetch and manage data.
+This is the React front-end application. It connects to a back-end API server to fetch and manage data.
 
 ## Prerequisites
 
