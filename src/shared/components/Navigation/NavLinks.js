@@ -78,16 +78,16 @@ const NavLinks = (props) => {
           <NavLink to="/auth">ΛΟΓΑΡΙΑΣΜΟΣ</NavLink>
         </li>
       )}
-      {auth.isLoggedIn && (
+            {auth.isLoggedIn && (
         <li>
-          <button onClick={auth.logout}>ΑΠΟΣΥΝΔΕΣΗ</button>
+          <NavLink to="/report" exact>
+            ΑΝΑΦΟΡΑ
+          </NavLink>
         </li>
       )}
       {auth.isLoggedIn && (
         <li>
-          <NavLink to="/report" exact>
-            Report
-          </NavLink>
+          <button onClick={auth.logout}>ΑΠΟΣΥΝΔΕΣΗ</button>
         </li>
       )}
     </ul>
