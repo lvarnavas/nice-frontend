@@ -56,10 +56,10 @@ const Report = () => {
     // Prepare table body with difference and color
     const tableBody = [
       [
-        { text: "Προϊόν", style: "tableHeader" },
-        { text: "Πραγματικές τιμές", style: "tableHeader" },
-        { text: "Τιμές πλατφόρμας", style: "tableHeader" },
-        { text: "Απόκλιση", style: "tableHeader" }
+        { text: "Προϊόν", style: "tableHeader", alignment: "center" },
+        { text: "Τιμές αποθήκης", style: "tableHeader", alignment: "center" },
+        { text: "Τιμές πλατφόρμας", style: "tableHeader", alignment: "center" },
+        { text: "Απόκλιση", style: "tableHeader", alignment: "center" }
       ],
       ...products.map((prod) => {
         const userQty = Number(formState.inputs[prod.id]?.value || 0);
@@ -67,12 +67,13 @@ const Report = () => {
         const actualQty = Number(ws ? ws.current_quantity : 0);
         const diff = userQty - actualQty;
         return [
-          prod.name,
-          userQty,
-          actualQty,
+          { text: prod.name, alignment: "center" },
+          { text: userQty, alignment: "center" },
+          { text: actualQty, alignment: "center" },
           {
             text: diff,
-            color: diff !== 0 ? "red" : "black"
+            color: diff !== 0 ? "red" : "black",
+            alignment: "center"
           }
         ];
       }),
@@ -94,6 +95,17 @@ const Report = () => {
             widths: ["*", "*", "*", "*"],
             body: tableBody,
           },
+          layout: {
+            hLineColor: () => '#aaa',
+            vLineColor: () => '#aaa',
+            hLineWidth: () => 0.5,
+            vLineWidth: () => 0.5,
+            paddingLeft: () => 4,
+            paddingRight: () => 4,
+            paddingTop: () => 6,
+            paddingBottom: () => 6,
+            fillColor: (rowIndex) => rowIndex === 0 ? '#f5f5f5' : null,
+          },
         },
       ],
       styles: {
@@ -101,17 +113,20 @@ const Report = () => {
           fontSize: 24, // Larger title
           bold: true,
           margin: [0, 0, 0, 2],
+          alignment: "center"
         },
         date: {
           fontSize: 10,
           italics: true,
           color: 'black', // Date in black
           margin: [0, 0, 0, 10],
+          alignment: "center"
         },
         tableHeader: {
           bold: true,
           fontSize: 12,
           color: 'black',
+          alignment: "center"
         }
       },
     };
@@ -125,7 +140,7 @@ const Report = () => {
 
   return (
     <div className="report-container">
-      <h2 className="report-title">Warehouse Report</h2>
+      <h2 className="report-title">Report Αποθήκης</h2>
       <form>
         {products.map((prod) => (
           <div className="report-form-group" key={prod.id}>
@@ -141,7 +156,7 @@ const Report = () => {
       </form>
       <div className="report-generate-btn">
         <Button type="button" onClick={generatePDF}>
-          Generate
+          ΥΠΟΒΟΛΗ
         </Button>
       </div>
     </div>
