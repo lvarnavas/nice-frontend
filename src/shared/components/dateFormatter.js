@@ -84,3 +84,11 @@ export const dateFormater = (sDate, eDate, dateType = "") => {
 
   return { formattedStartDate, formattedEndDate };
 };
+
+export function getBusinessDate() {
+  const now = new Date();
+  if (now.getHours() < 4) {
+    now.setDate(now.getDate() - 1);
+  }
+  return now;
+}

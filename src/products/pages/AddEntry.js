@@ -18,13 +18,14 @@ import {
 import Input from "../../shared/components/FormElements/Input";
 import Card from "../../shared/components/UIElements/Card";
 import "./AddEntry.css";
+import { getBusinessDate } from '../../shared/components/dateFormatter';
 
 const AddEntry = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [selectedOption, setSelectedOption] = useState("");
   const [carList, setCarList] = useState([]);
   let [selectedCar, setSelectedCar] = useState("");
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(getBusinessDate());
   const [productsList, setProductsList] = useState([]);
 
   const [showSuccessModal, setShowSuccessModal] = useState(false);
