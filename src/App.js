@@ -24,6 +24,7 @@ import AddEntry from "./products/pages/AddEntry";
 import EditQuantities from "./products/pages/EditQuantities";
 import LoadingSpinner from "./shared/components/UIElements/LoadingSpinner";
 import Auth from "./users/components/pages/Auth";
+import Report from "./products/pages/Report";
 import "./App.css";
 
 const App = () => {
@@ -75,6 +76,9 @@ const App = () => {
 
           <Route path="/addentry" component={AddEntry} />
           <Route path="/auth" element={<Redirect to="/" />} />
+          <Route path="/report" exact>
+            <Report />
+          </Route>
           <Route path="/">
             <div className="image-container">
               <img src={require("./nice-logo.png")} alt="nice-logo" />
