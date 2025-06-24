@@ -83,4 +83,28 @@
 .specific-item__modal-actions {
   padding: 1rem;
   text-align: center;
+}
+
+.report-date-picker {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.report-date-picker label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.report-date-picker .react-datepicker-wrapper {
+  width: auto;
+}
+
+.report-date-picker .react-datepicker-wrapper input {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  width: 120px;
+  text-align: center;
 } 

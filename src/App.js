@@ -25,6 +25,7 @@ import EditQuantities from "./products/pages/EditQuantities";
 import LoadingSpinner from "./shared/components/UIElements/LoadingSpinner";
 import Auth from "./users/components/pages/Auth";
 import Report from "./products/pages/Report";
+import ReportRange from "./products/pages/ReportRange";
 import "./App.css";
 
 const App = () => {
@@ -78,6 +79,9 @@ const App = () => {
           <Route path="/auth" element={<Redirect to="/" />} />
           <Route path="/report" exact>
             <Report />
+          </Route>
+          <Route path="/report-range" exact>
+            <ReportRange />
           </Route>
           <Route path="/">
             <div className="image-container">
