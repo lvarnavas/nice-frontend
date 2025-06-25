@@ -18,8 +18,10 @@ const Report = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [products, setProducts] = useState([]);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [successModalHeader, setSuccessModalHeader] = useState("");
   const [pdfUrl, setPdfUrl] = useState(null);
   const [shouldGenerate, setShouldGenerate] = useState(false);
+  const [shouldCalibrate, setShouldCalibrate] = useState(false);
   const [formState, inputHandler, setFormData] = useForm({}, false);
 
   // Fetch products
@@ -67,6 +69,7 @@ const Report = () => {
         const blob = response instanceof Blob ? response : new Blob([response]);
         const url = window.URL.createObjectURL(blob);
         setPdfUrl(url);
+        setSuccessModalHeader("ΕΠΙΤΥΧΗΣ ΔΗΜΙΟΥΡΓΙΑ ΑΝΑΦΟΡΑΣ");
         setShowSuccessModal(true);
       } catch (err) {
         // Error is handled by ErrorModal via useHttpClient
@@ -81,14 +84,48 @@ const Report = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shouldGenerate, sendRequest, formState]);
 
+  useEffect(() => {
+    const calibrateDatabase = async () => {
+      try {
+        setShowSuccessModal(false);
+
+        const formData = {};
+        Object.keys(formState.inputs).forEach((key) => {
+          formData[key] = formState.inputs[key].value;
+        });
+
+        await sendRequest(
+          `${process.env.REACT_APP_BACKEND_URL}/products/calibrate-warehouse`,
+          "POST",
+          JSON.stringify({ formData }),
+          { "Content-Type": "application/json" }
+        );
+
+        setSuccessModalHeader("Η ΒΑΣΗ ΔΕΔΟΜΕΝΩΝ ΕΝΗΜΕΡΩΘΗΚΕ");
+        setShowSuccessModal(true);
+      } catch (err) {
+      } finally {
+        setShouldCalibrate(false);
+      }
+    };
+
+    if (shouldCalibrate) {
+      calibrateDatabase();
+    }
+  }, [shouldCalibrate, sendRequest, formState]);
+
   const handleGenerateClick = () => {
     setShouldGenerate(true);
+  };
+
+  const handleCalibrateClick = () => {
+    setShouldCalibrate(true);
   };
 
   const handleSuccessModalOk = () => {
     if (pdfUrl) {
       // Open a new tab and trigger download with custom filename
-      const filename = `warehouse_report_${formatDate(new Date())}.pdf`;
+      const filename = `daily_report_${formatDate(new Date())}.pdf`;
       const newTab = window.open();
       if (newTab) {
         newTab.document.write(`<!DOCTYPE html><html><body></body></html>`);
@@ -131,7 +168,7 @@ const Report = () => {
       <ErrorModal error={error} onClear={clearError} />
       <Modal
         show={showSuccessModal}
-        header={<div>ΕΠΙΤΥΧΗΣ ΔΗΜΙΟΥΡΓΙΑ ΑΝΑΦΟΡΑΣ</div>}
+        header={<div>{successModalHeader}</div>}
         contentClass="specific-item__modal-content"
         footerClass="specific-item__modal-actions"
         footer={
@@ -169,6 +206,11 @@ const Report = () => {
       <div className="report-generate-btn">
         <Button type="button" onClick={handleGenerateClick} disabled={!formState.isValid}>
           ΛΗΨΗ ΑΝΑΦΟΡΑΣ
+        </Button>
+      </div>
+      <div className="report-generate-btn">
+        <Button type="button" onClick={handleCalibrateClick} disabled={!formState.isValid}>
+          UPDATE DATABASE
         </Button>
       </div>
     </div>
