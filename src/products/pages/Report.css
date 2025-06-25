@@ -40,8 +40,7 @@
 }
 
 .report-title-card {
-  width: 100%;
-  max-width: 400px;
+  display: inline-block;
   margin-bottom: 24px;
   text-align: center;
 }
@@ -108,3 +107,16 @@
   width: 120px;
   text-align: center;
 } 
+
+.report-update-card {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.report-section-title {
+  margin-top: 0.75rem;
+  font-weight: bold;
+  text-align: center;
+}

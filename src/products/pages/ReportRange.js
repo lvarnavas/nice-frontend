@@ -8,7 +8,6 @@ import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import Modal from "../../shared/components/UIElements/Modal";
 import el from "date-fns/locale/el";
 import "./ReportRange.css";
-import { dateFormater } from "../../shared/components/dateFormatter";
 
 const ReportRange = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();

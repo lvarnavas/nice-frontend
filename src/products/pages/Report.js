@@ -23,6 +23,7 @@ const Report = () => {
   const [shouldGenerate, setShouldGenerate] = useState(false);
   const [shouldCalibrate, setShouldCalibrate] = useState(false);
   const [formState, inputHandler, setFormData] = useForm({}, false);
+  const [showCalibrateConfirm, setShowCalibrateConfirm] = useState(false);
 
   // Fetch products
   useEffect(() => {
@@ -119,6 +120,15 @@ const Report = () => {
   };
 
   const handleCalibrateClick = () => {
+  setShowCalibrateConfirm(true);
+};
+
+  const cancelCalibrateHandler = () => {
+    setShowCalibrateConfirm(false);
+  };
+
+  const confirmCalibrateHandler = () => {
+    setShowCalibrateConfirm(false);
     setShouldCalibrate(true);
   };
 
@@ -163,58 +173,99 @@ const Report = () => {
     );
   }
 
-  return (
-    <div className="report-container">
-      <ErrorModal error={error} onClear={clearError} />
-      <Modal
-        show={showSuccessModal}
-        header={<div>{successModalHeader}</div>}
-        contentClass="specific-item__modal-content"
-        footerClass="specific-item__modal-actions"
-        footer={
-          <Button onClick={handleSuccessModalOk}>
-            OK
+ return (
+  <div className="report-container">
+    <ErrorModal error={error} onClear={clearError} />
+    {/* Confirmation Modal for Update Database */}
+    <Modal
+      show={showCalibrateConfirm}
+      onCancel={cancelCalibrateHandler}
+      header={
+    <span>
+      ΠΡΟΣΟΧΗ!
+      <br />
+      <br />
+      Ελέγξτε προσεκτικά όλα τα στοιχεία που καταχωρήσατε πριν συνεχίσετε. 
+      <br />
+      Η ενέργεια αυτή δεν μπορεί να αναιρεθεί.
+      <br />
+      <br />
+      Η ΚΑΤΑΣΤΑΣΗ ΘΑΛΑΜΟΥ θα ενημερωθεί.
+    </span>
+  }
+      footerClass="place-item__modal-actions"
+      footer={
+        <React.Fragment>
+          <div className="products-components__item-modal-btn">
+          <Button inverse onClick={cancelCalibrateHandler}>
+            ΑΚΥΡΩΣΗ
           </Button>
-        }
-      />
-      {isLoading && <LoadingSpinner asOverlay />}
-      <Card className="report-title-card">
-        <h2 className="report-title">ΑΝΑΦΟΡΑ ΗΜΕΡΑΣ</h2>
-      </Card>
-      <form>
-        {products.map((prod) => (
-          <div className="report-form-group" key={prod.id}>
-            <Input
-              id={prod.id}
-              element="input"
-              type="text"
-              placeholder="0"
-              label={prod.name}
-              validators={[
-                VALIDATOR_MIN(0),
-                VALIDATOR_MAX(5000),
-                VALIDATOR_REQUIRE(),
-              ]}
-              errorText="Παρακαλώ εισάγετε έναν έγκυρο αριθμό."
-              onInput={inputHandler}
-              initialValue="0"
-              initialValid={true}
-            />
+          <Button danger onClick={confirmCalibrateHandler}>
+            ΕΠΙΒΕΒΑΙΩΣΗ
+          </Button>
           </div>
-        ))}
-      </form>
-      <div className="report-generate-btn">
-        <Button type="button" onClick={handleGenerateClick} disabled={!formState.isValid}>
-          ΛΗΨΗ ΑΝΑΦΟΡΑΣ
+        </React.Fragment>
+      }
+    >
+      <p>Είστε σίγουροι ότι θέλετε να ενημερώσετε τη βάση δεδομένων;</p>
+    </Modal>
+    <Modal
+      show={showSuccessModal}
+      header={<div>{successModalHeader}</div>}
+      contentClass="specific-item__modal-content"
+      footerClass="specific-item__modal-actions"
+      footer={
+        <Button onClick={handleSuccessModalOk}>
+          OK
         </Button>
-      </div>
-      <div className="report-generate-btn">
-        <Button type="button" onClick={handleCalibrateClick} disabled={!formState.isValid}>
-          UPDATE DATABASE
-        </Button>
-      </div>
+      }
+    />
+    {isLoading && <LoadingSpinner asOverlay />}
+    <Card className="report-title-card">
+      <h2 className="report-title">ΚΑΤΑΧΩΡΗΣΗ ΤΙΜΩΝ & ΑΝΑΦΟΡΑ ΗΜΕΡΑΣ</h2>
+    </Card>
+    <form>
+      {products.map((prod) => (
+        <div className="report-form-group" key={prod.id}>
+          <Input
+            id={prod.id}
+            element="input"
+            type="text"
+            placeholder="0"
+            label={prod.name}
+            validators={[
+              VALIDATOR_MIN(0),
+              VALIDATOR_MAX(5000),
+              VALIDATOR_REQUIRE(),
+            ]}
+            errorText="Παρακαλώ εισάγετε έναν έγκυρο αριθμό."
+            onInput={inputHandler}
+            initialValue="0"
+            initialValid={true}
+          />
+        </div>
+      ))}
+    </form>
+    <div className="report-generate-btn">
+      <Button type="button" onClick={handleGenerateClick} disabled={!formState.isValid}>
+        ΛΗΨΗ ΑΝΑΦΟΡΑΣ
+      </Button>
     </div>
-  );
+      <br />
+
+    <Card className="report-title-card">
+        <h2 className="report-title">
+          ΕΝΗΜΕΡΩΣΗ ΚΑΤΑΣΤΑΣΗΣ ΘΑΛΑΜΟΥ ΜΕ ΤΙΣ ΚΑΤΑΧΩΡΗΣΕΙΣ ΑΠΟ ΤΗΝ ΑΝΑΦΟΡΑ
+        </h2>
+    </Card>
+        <Button type="button" danger onClick={handleCalibrateClick} disabled={!formState.isValid}>
+          ΕΝΗΜΕΡΩΣΗ ΒΑΣΗΣ ΔΕΔΟΜΕΝΩΝ
+        </Button>
+        <br />
+        <br />
+        <br />
+  </div>  
+);
 };
 
 export default Report;
