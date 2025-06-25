@@ -55,12 +55,32 @@
   position: relative;
 }
 
+/* Remove white background for active dropdown buttons */
+.dropdown .dropdown-btn.active {
+  background: transparent;
+  color: white;
+}
+
+/* Add white background only on hover for dropdown buttons */
+.dropdown:hover > .dropdown-btn,
+.dropdown .dropdown-btn:hover {
+  background: white;
+  color: #292929;
+  border-color: #292929;
+}
+
 .dropdown .dropdown-btn {
   display: block;
   color: white;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  border-radius: 2px;
+  box-shadow: 0 0 1px 2px white;
+  transition: background 0.2s, color 0.2s;
 }
 
 .dropdown-content {
@@ -78,10 +98,12 @@
   display: block;
   text-align: left;
   margin-top: 14px;
+  border-radius: 2px;
 }
 
 .dropdown-content a:hover {
   color: #292929;
+  background: white;
 }
 
 .dropdown:hover .dropdown-content {

@@ -23,6 +23,7 @@ const NavLinks = (props) => {
   }
 
   return (
+    // ...existing code...
     <ul className="navbar">
       {auth.isLoggedIn && (
         <li className="dropdown">
@@ -59,6 +60,17 @@ const NavLinks = (props) => {
         </li>
       )}
       {auth.isLoggedIn && (
+        <li className="dropdown">
+          <NavLink to="#" className="dropdown-btn">
+            ΑΝΑΦΟΡΑ ΑΠΟΘΗΚΗΣ <span>▼</span>
+          </NavLink>
+          <div className="dropdown-content">
+            <NavLink to="/report">ΑΝΑΦΟΡΑ ΗΜΕΡΑΣ</NavLink>
+            <NavLink to="/report-range">ΑΝΑΦΟΡΑ ΔΙΑΣΤΗΜΑΤΟΣ</NavLink>
+          </div>
+        </li>
+      )}
+      {auth.isLoggedIn && (
         <li>
           <NavLink to="/search">ΑΝΑΖΗΤΗΣΗ</NavLink>
         </li>
@@ -80,24 +92,11 @@ const NavLinks = (props) => {
       )}
       {auth.isLoggedIn && (
         <li>
-          <NavLink to="/report" exact>
-            ΑΝΑΦΟΡΑ
-          </NavLink>
-        </li>
-      )}
-      {auth.isLoggedIn && (
-        <li>
-          <NavLink to="/report-range" exact>
-            ΑΝΑΦΟΡΑ ΔΙΑΣΤΗΜΑΤΟΣ
-          </NavLink>
-        </li>
-      )}
-      {auth.isLoggedIn && (
-        <li>
           <button onClick={auth.logout}>ΑΠΟΣΥΝΔΕΣΗ</button>
         </li>
       )}
     </ul>
+// ...existing code...
   );
 };
 
