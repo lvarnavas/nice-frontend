@@ -62,7 +62,7 @@ const NavLinks = (props) => {
       {auth.isLoggedIn && (
         <li className="dropdown">
           <NavLink to="#" className="dropdown-btn">
-            ΑΝΑΦΟΡΑ ΑΠΟΘΗΚΗΣ <span>▼</span>
+            ΑΝΑΦΟΡΑ ΘΑΛΑΜΟΥ <span>▼</span>
           </NavLink>
           <div className="dropdown-content">
             <NavLink to="/report">ΑΝΑΦΟΡΑ ΗΜΕΡΑΣ</NavLink>

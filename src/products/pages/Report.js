@@ -142,7 +142,7 @@ const Report = () => {
       />
       {isLoading && <LoadingSpinner asOverlay />}
       <Card className="report-title-card">
-        <h2 className="report-title">ΑΝΑΦΟΡΑ ΑΠΟΘΗΚΗΣ</h2>
+        <h2 className="report-title">ΑΝΑΦΟΡΑ ΗΜΕΡΑΣ</h2>
       </Card>
       <form>
         {products.map((prod) => (
