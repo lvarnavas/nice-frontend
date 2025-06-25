@@ -251,19 +251,16 @@ const Report = () => {
         ΛΗΨΗ ΑΝΑΦΟΡΑΣ
       </Button>
     </div>
-      <br />
-
     <Card className="report-title-card">
         <h2 className="report-title">
           ΕΝΗΜΕΡΩΣΗ ΚΑΤΑΣΤΑΣΗΣ ΘΑΛΑΜΟΥ ΜΕ ΤΙΣ ΚΑΤΑΧΩΡΗΣΕΙΣ ΑΠΟ ΤΗΝ ΑΝΑΦΟΡΑ
         </h2>
     </Card>
+    <div className="update-database-btn">
         <Button type="button" danger onClick={handleCalibrateClick} disabled={!formState.isValid}>
           ΕΝΗΜΕΡΩΣΗ ΒΑΣΗΣ ΔΕΔΟΜΕΝΩΝ
         </Button>
-        <br />
-        <br />
-        <br />
+    </div>
   </div>  
 );
 };

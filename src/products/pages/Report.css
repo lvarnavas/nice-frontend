@@ -53,7 +53,7 @@
 }
 
 .report-generate-btn {
-  margin: 32px 0;
+  margin: 40px 0;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -119,4 +119,8 @@
   margin-top: 0.75rem;
   font-weight: bold;
   text-align: center;
+}
+
+.update-database-btn {
+  margin-bottom: 4rem;
 }
