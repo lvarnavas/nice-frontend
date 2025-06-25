@@ -26,6 +26,7 @@ import LoadingSpinner from "./shared/components/UIElements/LoadingSpinner";
 import Auth from "./users/components/pages/Auth";
 import Report from "./products/pages/Report";
 import ReportRange from "./products/pages/ReportRange";
+import ViewAllReports from "./reports/pages/ViewAllReports";
 import "./App.css";
 
 const App = () => {
@@ -82,6 +83,9 @@ const App = () => {
           </Route>
           <Route path="/report-range" exact>
             <ReportRange />
+          </Route>
+          <Route path="/view-all-reports" exact>
+            <ViewAllReports />
           </Route>
           <Route path="/">
             <div className="image-container">

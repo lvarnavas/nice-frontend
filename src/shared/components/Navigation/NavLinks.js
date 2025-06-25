@@ -67,6 +67,7 @@ const NavLinks = (props) => {
           <div className="dropdown-content">
             <NavLink to="/report">ΑΝΑΦΟΡΑ ΗΜΕΡΑΣ</NavLink>
             <NavLink to="/report-range">ΑΝΑΦΟΡΑ ΔΙΑΣΤΗΜΑΤΟΣ</NavLink>
+            <NavLink to="/view-all-reports">ΠΡΟΒΟΛΗ ΑΝΑΦΟΡΩΝ</NavLink>
           </div>
         </li>
       )}
