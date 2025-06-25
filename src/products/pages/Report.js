@@ -168,7 +168,7 @@ const Report = () => {
       </form>
       <div className="report-generate-btn">
         <Button type="button" onClick={handleGenerateClick} disabled={!formState.isValid}>
-          ΔΗΜΙΟΥΡΓΙΑ PDF
+          ΛΗΨΗ ΑΝΑΦΟΡΑΣ
         </Button>
       </div>
     </div>

@@ -124,8 +124,8 @@ const handleGenerateClick = () => {
           <h2 className="report-range-title">ΑΝΑΦΟΡΑ ΔΙΑΣΤΗΜΑΤΟΣ</h2>
         </Card>
         <div className="report-range-form-group">
-          <div className="report-range-date-picker">
-            <label>Από:</label>
+          <div className="report-range-label">Αναζήτηση από:</div>
+          <div className="report-range-date-centered">
             <DatePicker
               selected={startDate}
               onChange={(date) => setStartDate(date)}
@@ -133,8 +133,8 @@ const handleGenerateClick = () => {
               locale={el}
             />
           </div>
-          <div className="report-range-date-picker">
-            <label>Έως:</label>
+          <div className="report-range-label">Αναζήτηση έως:</div>
+          <div className="report-range-date-centered">
             <DatePicker
               selected={endDate}
               onChange={(date) => setEndDate(date)}
@@ -145,7 +145,7 @@ const handleGenerateClick = () => {
         </div>
         <div className="report-range-btn">
           <Button type="button" onClick={handleGenerateClick}>
-            ΔΗΜΙΟΥΡΓΙΑ ΑΝΑΦΟΡΑΣ
+            ΛΗΨΗ ΑΝΑΦΟΡΑΣ
           </Button>
         </div>
       </div>

@@ -127,7 +127,7 @@ const SearchPage = () => {
               />
             </div>
             <div className="search-container__content-title">
-              Αναζήτηση εώς:
+              Αναζήτηση έως:
             </div>
             <div className="date-container">
               <DatePicker
@@ -191,7 +191,7 @@ const SearchPage = () => {
                       />
                     </div>
                     <div className="search-container__content-title">
-                      Αναζήτηση εώς:
+                      Αναζήτηση έως:
                     </div>
                     <div className="date-container">
                       <DatePicker
