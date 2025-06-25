@@ -36,11 +36,15 @@ const ReportRange = () => {
       setShowSuccessModal(false);
       setPdfUrl(null);
 
-      const { formattedStartDate, formattedEndDate } = dateFormater(
-        "startdate",
-        "enddate",
-        "YYYY-MM-DD"
-      );
+      const formatApiDate = (date) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+      };
+
+      const formattedStartDate = formatApiDate(startDate);
+      const formattedEndDate = formatApiDate(endDate);
 
       const response = await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/products/generate-date-range-report/${formattedStartDate}/${formattedEndDate}`,
