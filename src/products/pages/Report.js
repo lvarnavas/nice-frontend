@@ -18,6 +18,8 @@ const Report = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [products, setProducts] = useState([]);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [pdfUrl, setPdfUrl] = useState(null);
+  const [shouldGenerate, setShouldGenerate] = useState(false);
   const [formState, inputHandler, setFormData] = useForm({}, false);
 
   // Fetch products
@@ -41,52 +43,80 @@ const Report = () => {
     fetchData();
   }, [sendRequest, setFormData]);
 
-  const generatePDF = async () => {
-    try {
-      setShowSuccessModal(false);
-      // Convert form state to simple object with just the values
-      const formData = {};
-      Object.keys(formState.inputs).forEach(key => {
-        formData[key] = formState.inputs[key].value;
-      });
+  useEffect(() => {
+    const generatePDF = async () => {
+      try {
+        setShowSuccessModal(false);
+        setPdfUrl(null);
 
-      // Make request to backend
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/products/generate-report`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ formData }),
-        }
-      );
+        // Convert form state to simple object with just the values
+        const formData = {};
+        Object.keys(formState.inputs).forEach(key => {
+          formData[key] = formState.inputs[key].value;
+        });
 
-      if (!response.ok) {
-        throw new Error('Could not generate report');
+        // Make request to backend using sendRequest with 'blob' responseType
+        const response = await sendRequest(
+          `${process.env.REACT_APP_BACKEND_URL}/products/generate-report`,
+          'POST',
+          JSON.stringify({ formData }),
+          { 'Content-Type': 'application/json', Accept: 'application/pdf' },
+          'blob'
+        );
+
+        const blob = response instanceof Blob ? response : new Blob([response]);
+        const url = window.URL.createObjectURL(blob);
+        setPdfUrl(url);
+        setShowSuccessModal(true);
+      } catch (err) {
+        // Error is handled by ErrorModal via useHttpClient
+      } finally {
+        setShouldGenerate(false);
       }
+    };
 
-      // Get the blob from the response
-      const blob = await response.blob();
-      
-      // Create a URL for the blob
-      const url = window.URL.createObjectURL(blob);
-      
-      // Create a temporary link and click it to download the file
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `warehouse_report_${new Date().toLocaleDateString('en-GB').split('/').join('-')}.pdf`;
-      document.body.appendChild(a);
-      a.click();
-      
-      // Cleanup
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
-      setShowSuccessModal(true);
-    } catch (err) {
-      console.error('Error generating report:', err);
+    if (shouldGenerate) {
+      generatePDF();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [shouldGenerate, sendRequest, formState]);
+
+  const handleGenerateClick = () => {
+    setShouldGenerate(true);
   };
+
+  const handleSuccessModalOk = () => {
+    if (pdfUrl) {
+      // Open a new tab and trigger download with custom filename
+      const filename = `warehouse_report_${formatDate(new Date())}.pdf`;
+      const newTab = window.open();
+      if (newTab) {
+        newTab.document.write(`<!DOCTYPE html><html><body></body></html>`);
+        const script = newTab.document.createElement('script');
+        script.innerHTML = `
+          const blobUrl = "${pdfUrl}";
+          const a = document.createElement('a');
+          a.href = blobUrl;
+          a.download = "${filename}";
+          document.body.appendChild(a);
+          a.click();
+          setTimeout(() => { window.close(); }, 100);
+        `;
+        newTab.document.body.appendChild(script);
+      }
+      window.URL.revokeObjectURL(pdfUrl);
+      setPdfUrl(null);
+    }
+    setShowSuccessModal(false);
+  };
+
+  // Helper to format date for filename
+  function formatDate(date) {
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  }
 
   if (!products.length) {
     return (
@@ -105,7 +135,7 @@ const Report = () => {
         contentClass="specific-item__modal-content"
         footerClass="specific-item__modal-actions"
         footer={
-          <Button onClick={() => setShowSuccessModal(false)}>
+          <Button onClick={handleSuccessModalOk}>
             OK
           </Button>
         }
@@ -137,7 +167,7 @@ const Report = () => {
         ))}
       </form>
       <div className="report-generate-btn">
-        <Button type="button" onClick={generatePDF} disabled={!formState.isValid}>
+        <Button type="button" onClick={handleGenerateClick} disabled={!formState.isValid}>
           ΔΗΜΙΟΥΡΓΙΑ PDF
         </Button>
       </div>
