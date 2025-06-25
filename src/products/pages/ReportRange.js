@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import { useHttpClient } from "../../shared/components/hooks/http-hook";
 import Button from "../../shared/components/FormElements/Button";
@@ -14,6 +14,7 @@ const ReportRange = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [pdfUrl, setPdfUrl] = useState(null);
+  const [shouldGenerate, setShouldGenerate] = useState(false);
   
   // Initialize with first and last day of current month
   const firstDayOfMonth = new Date(
@@ -29,41 +30,46 @@ const ReportRange = () => {
   const [startDate, setStartDate] = useState(firstDayOfMonth);
   const [endDate, setEndDate] = useState(lastDayOfMonth);
 
+  useEffect(() => {
   const generatePDF = async () => {
     try {
       setShowSuccessModal(false);
       setPdfUrl(null);
-      // Format dates to YYYY-MM-DD
-      
+
       const { formattedStartDate, formattedEndDate } = dateFormater(
         "startdate",
         "enddate",
         "YYYY-MM-DD"
       );
 
-      // Make request to backend
-      const response = await fetch(
+      const response = await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/products/generate-date-range-report/${formattedStartDate}/${formattedEndDate}`,
-        {
-          method: 'GET',
-        }
+        'GET',
+        null,
+        { Accept: 'application/pdf' },
+        'blob' // Specify response type as blob
       );
 
-      if (!response.ok) {
-        throw new Error('Could not generate report');
-      }
-
-      // Get the blob from the response
-      const blob = await response.blob();
-      
-      // Create a URL for the blob
+      const blob = response instanceof Blob ? response : new Blob([response]);
       const url = window.URL.createObjectURL(blob);
       setPdfUrl(url);
       setShowSuccessModal(true);
     } catch (err) {
-      console.error('Error generating report:', err);
+      // Error is handled by ErrorModal via useHttpClient
+    } finally {
+      setShouldGenerate(false);
     }
   };
+
+  if (shouldGenerate) {
+    generatePDF();
+  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [shouldGenerate, sendRequest, startDate, endDate]);
+
+const handleGenerateClick = () => {
+  setShouldGenerate(true);
+};
 
   const handleSuccessModalOk = () => {
     if (pdfUrl) {
@@ -138,7 +144,7 @@ const ReportRange = () => {
           </div>
         </div>
         <div className="report-range-btn">
-          <Button type="button" onClick={generatePDF}>
+          <Button type="button" onClick={handleGenerateClick}>
             ΔΗΜΙΟΥΡΓΙΑ ΑΝΑΦΟΡΑΣ
           </Button>
         </div>

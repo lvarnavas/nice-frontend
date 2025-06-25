@@ -6,8 +6,9 @@ export const useHttpClient = () => {
 
   const activeHttpRequests = useRef([]);
 
+  // Added responseType argument with default "json"
   const sendRequest = useCallback(
-    async (url, method = "GET", body = null, headers = {}) => {
+    async (url, method = "GET", body = null, headers = {}, responseType = "json") => {
       setIsLoading(true);
       const httpAbortCtrl = new AbortController();
       activeHttpRequests.current.push(httpAbortCtrl);
@@ -20,14 +21,26 @@ export const useHttpClient = () => {
           signal: httpAbortCtrl.signal,
         });
 
-        const responseData = await response.json();
+        let responseData;
+        if (responseType === "blob") {
+          responseData = await response.blob();
+        } else if (responseType === "text") {
+          responseData = await response.text();
+        } else {
+          responseData = await response.json();
+        }
 
         activeHttpRequests.current = activeHttpRequests.current.filter(
           (reqCtrl) => reqCtrl !== httpAbortCtrl
         );
 
         if (!response.ok) {
-          throw new Error(responseData.message);
+          // For blob/text, responseData may not have .message, so fallback to statusText
+          const errorMessage =
+            responseData && responseData.message
+              ? responseData.message
+              : response.statusText || "Request failed!";
+          throw new Error(errorMessage);
         }
         setIsLoading(false);
         return responseData;
