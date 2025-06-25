@@ -124,7 +124,7 @@ const handleGenerateClick = () => {
       {isLoading && <LoadingSpinner asOverlay />}
       <div className="report-range-content">
         <Card className="report-range-title-card">
-          <h2 className="report-range-title">ΑΝΑΦΟΡΑ ΔΙΑΣΤΗΜΑΤΟΣ</h2>
+          <h2 className="report-range-title">ΔΙΑΣΤΗΜΑ ΑΝΑΦΟΡΑΣ</h2>
         </Card>
         <div className="report-range-form-group">
           <div className="report-range-label">Αναζήτηση από:</div>
