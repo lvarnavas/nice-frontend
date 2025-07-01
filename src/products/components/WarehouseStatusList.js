@@ -17,22 +17,35 @@ const WarehouseStatusList = (props) => {
     );
     return status ? status.total_quantity : "0";
   };
-  return (
-    <div className="products-components__container-list">
-      <Card>
-        <h2>ΚΑΤΑΣΤΑΣΗ ΘΑΛΑΜΟΥ</h2>
-      </Card>
-      <div className="products-components__container-list-content">
-        <table>
-          <thead>
-            <tr>
+
+  const customOrder = [
+  1, 2, 3, 4, 5, 6, 7, 8, 11, 10, 12, 14, 9
+];
+
+const filteredAndSortedItems = props.items
+  .filter((item) => item.product_id !== 13) // Remove SIMONS CUBE
+  .sort(
+    (a, b) =>
+      customOrder.indexOf(a.product_id) - customOrder.indexOf(b.product_id)
+  );
+
+return (
+  <div className="products-components__container-list">
+    <Card>
+      <h2>ΚΑΤΑΣΤΑΣΗ ΘΑΛΑΜΟΥ</h2>
+    </Card>
+    <div className="products-components__container-list-content">
+      <table>
+        <thead>
+          <tr>
               {/*<th>ID</th> */}
-              <th>Όνομα Προίόντος</th>
-              <th>Ποσότητα</th>
-              <th>Κατεστραμμένα</th>
-            </tr>
-          </thead>
-          {props.items.map((warehouse) => {
+            <th>Όνομα Προίόντος</th>
+            <th>Ποσότητα</th>
+            <th>Κατεστραμμένα</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredAndSortedItems.map((warehouse) => {
             return (
               <WarehouseStatusItem
                 key={warehouse.product_id}
@@ -43,10 +56,13 @@ const WarehouseStatusList = (props) => {
               />
             );
           })}
-        </table>
-      </div>
+        </tbody>
+      </table>
     </div>
-  );
+  </div>
+);
+
+  
 };
 
 export default WarehouseStatusList;

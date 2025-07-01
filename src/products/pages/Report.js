@@ -235,7 +235,7 @@ const Report = () => {
             label={prod.name}
             validators={[
               VALIDATOR_MIN(0),
-              VALIDATOR_MAX(5000),
+              VALIDATOR_MAX(15000),
               VALIDATOR_REQUIRE(),
             ]}
             errorText="Παρακαλώ εισάγετε έναν έγκυρο αριθμό."
