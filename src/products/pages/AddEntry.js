@@ -19,6 +19,7 @@ import Input from "../../shared/components/FormElements/Input";
 import Card from "../../shared/components/UIElements/Card";
 import "./AddEntry.css";
 import { getBusinessDate } from '../../shared/components/dateFormatter';
+import { filterAndSortProducts } from '../../shared/components/util/customProductOrder';
 
 const AddEntry = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -60,7 +61,7 @@ const AddEntry = () => {
         const productListData = await sendRequest(
           process.env.REACT_APP_BACKEND_URL + "/products/get-products"
         );
-        setProductsList(productListData.productsList);
+        setProductsList(filterAndSortProducts(productListData.productsList));
       } catch (err) {}
     };
     fetchProductsList();
@@ -302,7 +303,7 @@ const AddEntry = () => {
                     <h2>ΕΙΣΑΓΩΓΗ ΠΟΣΟΤΗΤΩΝ</h2>
                   </Card>
                   {productsList.map((product) => (
-                    <div className="add-entry_spacer" key={product.id}>
+                    <div className="form-control-group" key={product.id}>
                       <Input
                         id={`product-${product.id}`}
                         element="input"
@@ -372,7 +373,7 @@ const AddEntry = () => {
                     <h2>ΕΙΣΑΓΩΓΗ ΠΟΣΟΤΗΤΩΝ</h2>
                   </Card>
                   {productsList.map((product) => (
-                    <div className="add-entry_spacer" key={product.id}>
+                    <div className="form-control-group" key={product.id}>
                       <Input
                         id={`product-${product.id}`}
                         element="input"

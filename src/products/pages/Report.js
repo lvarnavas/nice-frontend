@@ -12,7 +12,9 @@ import {
   VALIDATOR_MAX,
   VALIDATOR_REQUIRE,
 } from "../../shared/components/util/validators";
+import { filterAndSortProducts } from '../../shared/components/util/customProductOrder';
 import "./Report.css";
+import { useHistory } from "react-router-dom";
 
 const Report = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -24,6 +26,8 @@ const Report = () => {
   const [shouldCalibrate, setShouldCalibrate] = useState(false);
   const [formState, inputHandler, setFormData] = useForm({}, false);
   const [showCalibrateConfirm, setShowCalibrateConfirm] = useState(false);
+  const [successType, setSuccessType] = useState(null);
+  const history = useHistory();
 
   // Fetch products
   useEffect(() => {
@@ -33,7 +37,7 @@ const Report = () => {
         const productsRes = await sendRequest(
           process.env.REACT_APP_BACKEND_URL + "/products/get-products"
         );
-        setProducts(productsRes.productsList);
+        setProducts(filterAndSortProducts(productsRes.productsList));
 
         // Initialize form fields
         const formFields = {};
@@ -71,6 +75,7 @@ const Report = () => {
         const url = window.URL.createObjectURL(blob);
         setPdfUrl(url);
         setSuccessModalHeader("ΕΠΙΤΥΧΗΣ ΔΗΜΙΟΥΡΓΙΑ ΑΝΑΦΟΡΑΣ");
+        setSuccessType("report");
         setShowSuccessModal(true);
       } catch (err) {
         // Error is handled by ErrorModal via useHttpClient
@@ -103,6 +108,7 @@ const Report = () => {
         );
 
         setSuccessModalHeader("Η ΒΑΣΗ ΔΕΔΟΜΕΝΩΝ ΕΝΗΜΕΡΩΘΗΚΕ");
+        setSuccessType("calibrate");
         setShowSuccessModal(true);
       } catch (err) {
       } finally {
@@ -155,6 +161,10 @@ const Report = () => {
       setPdfUrl(null);
     }
     setShowSuccessModal(false);
+    if (successType === "calibrate") {
+      history.push("/warehouse-status");
+    }
+    setSuccessType(null);
   };
 
   // Helper to format date for filename
@@ -226,7 +236,7 @@ const Report = () => {
     </Card>
     <form>
       {products.map((prod) => (
-        <div className="report-form-group" key={prod.id}>
+        <div className="form-control-group" key={prod.id}>
           <Input
             id={prod.id}
             element="input"

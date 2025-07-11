@@ -14,6 +14,7 @@ import Button from "../../shared/components/FormElements/Button";
 import Card from "../../shared/components/UIElements/Card";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import "./EditQuantities.css";
+import { filterAndSortProducts } from '../../shared/components/util/customProductOrder';
 
 const EditQuantities = () => {
   const [entryExists, setEntryExists] = useState(false);
@@ -65,7 +66,7 @@ const EditQuantities = () => {
       const productListData = await sendRequest(
         process.env.REACT_APP_BACKEND_URL + "/products/get-products"
       );
-      setProductsList(productListData.productsList);
+      setProductsList(filterAndSortProducts(productListData.productsList));
     } catch (err) {}
   }, [sendRequest]);
 
@@ -225,7 +226,7 @@ const EditQuantities = () => {
           <br />
           <br />
           {productsList.map((product, index) => (
-            <div key={product.id}>
+            <div className="form-control-group" key={product.id}>
               <Input
                 id={`product-${product.id}`}
                 element="input"
