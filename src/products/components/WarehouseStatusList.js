@@ -18,9 +18,7 @@ const WarehouseStatusList = (props) => {
     return status ? status.total_quantity : "0";
   };
 
-  const customOrder = [
-  1, 2, 3, 4, 5, 6, 7, 8, 11, 10, 12, 14, 9
-];
+  const customOrder = [  1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 9, 14 ];
 
 const filteredAndSortedItems = props.items
   .filter((item) => item.product_id !== 13) // Remove SIMONS CUBE
