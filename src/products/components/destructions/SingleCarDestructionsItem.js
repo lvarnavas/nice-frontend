@@ -9,7 +9,7 @@ import "../shared.css";
 
 const SingleCarDestructionsItem = ({ item, onDelete }) => {
   const currentDate = moment();
-  const itemDate = moment(item.date, "YYYY-MM-DD"); // assuming date format is "YYYY-MM-DD"
+  const itemDate = moment(item.date); // assuming date format is "YYYY-MM-DD"
   const diffInDays = itemDate.diff(currentDate, "days");
   const isWithinOneDay = diffInDays >= -1 && diffInDays <= 1;
   //END DATE

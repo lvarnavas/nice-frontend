@@ -19,7 +19,7 @@ const SingleCarReturnsList = (props) => {
     "enddate",
     "DD-MM-YYYY"
   );
-
+  console.log(formattedStartDate, formattedEndDate);
   const columnNames = Object.keys(props.items[0]);
   columnNames.push("-");
   // Add a reducer to calculate the sum of all quantities starting from the fourth column
