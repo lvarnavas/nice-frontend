@@ -66,7 +66,10 @@ const EditQuantities = () => {
       const productListData = await sendRequest(
         process.env.REACT_APP_BACKEND_URL + "/products/get-products"
       );
-      setProductsList(filterAndSortProducts(productListData.productsList));
+      const filteredProducts = filterAndSortProducts(
+        productListData.productsList
+      ).filter((p) => p.id !== 13);
+      setProductsList(filteredProducts);
     } catch (err) {}
   }, [sendRequest]);
 
@@ -209,14 +212,14 @@ const EditQuantities = () => {
     );
   }
 
-  const toStringQuantitiesArray = loadedQuantities
-    ? loadedQuantities.map((obj) => {
-        return {
-          ...obj,
-          quantity: obj.quantity.toString(),
-        };
-      })
-    : [];
+  const quantitiesByProductId = loadedQuantities
+    ? new Map(
+        loadedQuantities.map((obj) => [
+          obj.products_id,
+          obj.quantity != null ? String(obj.quantity) : "0",
+        ])
+      )
+    : new Map();
 
   return (
     <div className="edit-quantities_container">
@@ -242,7 +245,7 @@ const EditQuantities = () => {
                 initialValue={
                   requestCompleted
                     ? formState.inputs[`product-${product.id}`].value
-                    : toStringQuantitiesArray[index].quantity
+                    : quantitiesByProductId.get(product.id)
                 }
                 initialValid={true}
               />
