@@ -1,14 +1,13 @@
 import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../context/auth-context";
-import { getBusinessDate } from "../dateFormatter";
 import "./NavLinks.css";
 
 const NavLinks = (props) => {
   const auth = useContext(AuthContext);
 
   function currentDate() {
-    const date = getBusinessDate();
+    const date = new Date();
     const dateFormatter = new Intl.DateTimeFormat("el-GR", {
       year: "numeric",
       month: "2-digit",

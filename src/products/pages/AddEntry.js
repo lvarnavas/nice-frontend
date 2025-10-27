@@ -18,7 +18,6 @@ import {
 import Input from "../../shared/components/FormElements/Input";
 import Card from "../../shared/components/UIElements/Card";
 import "./AddEntry.css";
-import { getBusinessDate } from '../../shared/components/dateFormatter';
 import { filterAndSortProducts } from '../../shared/components/util/customProductOrder';
 
 const AddEntry = () => {
@@ -26,7 +25,7 @@ const AddEntry = () => {
   const [selectedOption, setSelectedOption] = useState("");
   const [carList, setCarList] = useState([]);
   let [selectedCar, setSelectedCar] = useState("");
-  const [date, setDate] = useState(getBusinessDate());
+  const [date, setDate] = useState(new Date());
   const [productsList, setProductsList] = useState([]);
 
   const [showSuccessModal, setShowSuccessModal] = useState(false);
