@@ -11,7 +11,8 @@ const SingleCarDestructionsItem = ({ item, onDelete }) => {
   const currentDate = moment();
   const itemDate = moment(item.date); // assuming date format is "YYYY-MM-DD"
   const diffInDays = itemDate.diff(currentDate, "days");
-  const isWithinOneDay = diffInDays >= -1 && diffInDays <= 1;
+  // If it's the first day of the month, disable editing (prevent editing previous day)
+  const isWithinOneDay = currentDate.date() === 1 ? false : diffInDays >= -1 && diffInDays <= 1;
   //END DATE
 
   const [showConfirmModal, setShowConfirmModal] = useState(false);

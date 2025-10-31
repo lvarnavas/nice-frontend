@@ -16,7 +16,8 @@ const SingleCarLoadsItem = ({ item, onDelete }) => {
   const diffInDays = itemDate.diff(currentDate, "days");
 
   // Determine if the item date is within one day of the current date
-  const isWithinOneDay = diffInDays >= -1 && diffInDays <= 1;
+  // If it's the first day of the month, disable editing (prevent editing previous day)
+  const isWithinOneDay = currentDate.date() === 1 ? false : diffInDays >= -1 && diffInDays <= 1;
   //END DATE
 
   const [showConfirmModal, setShowConfirmModal] = useState(false);

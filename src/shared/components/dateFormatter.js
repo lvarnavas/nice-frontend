@@ -82,6 +82,8 @@ export const dateFormater = (sDate, eDate, dateType = "") => {
     }
   }
 
+  console.log("Formatted Start Date: ", formattedStartDate);
+  console.log("Formatted End Date: ", formattedEndDate);
   return { formattedStartDate, formattedEndDate };
 };
 

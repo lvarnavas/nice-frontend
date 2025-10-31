@@ -240,15 +240,22 @@ const AddEntry = () => {
   };
 
   const currentDate = new Date();
-  const minDate = new Date(
-    currentDate.getFullYear(),
-    currentDate.getMonth(),
-    currentDate.getDate() - 1
-  );
+  // On the 1st day of the month, don't allow selection of the previous day (last day of previous month)
+  const minDate = currentDate.getDate() === 1 
+    ? new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth(),
+        currentDate.getDate()
+      )
+    : new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth(),
+        currentDate.getDate() - 1
+      );
   const maxDate = new Date(
     currentDate.getFullYear(),
     currentDate.getMonth(),
-    currentDate.getDate() + 1
+    currentDate.getDate()
   );
 
   return (
