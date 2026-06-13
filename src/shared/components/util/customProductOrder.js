@@ -1,6 +1,6 @@
 // Utility to filter and sort products according to the custom order used in WarehouseStatusList.js
 
-const customOrder = [  1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 9, 14 ];
+const customOrder = [  1, 2, 3, 4, 5, 6, 7, 8, 15, 10, 11, 12, 9, 14, 16 ];
 
 /**
  * Filters out product with id 13 and sorts the list according to the custom order.
